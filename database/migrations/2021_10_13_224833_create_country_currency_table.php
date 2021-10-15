@@ -17,9 +17,6 @@ class CreateCountryCurrencyTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('country_id');
             $table->unsignedInteger('currency_id');
-            $table->timestamp('created_at')->useCurrent()->nullable();
-            $table->timestamp('updated_at')->useCurrent()->nullable();
-            $table->softDeletes();
             
             $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
             $table->foreign('currency_id')->references('id')->on('currencies')->onDelete('cascade');
