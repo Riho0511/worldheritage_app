@@ -1,0 +1,166 @@
+body {
+    color: white;
+    font-family: sans-serif;
+    font-weight: bold;
+    margin: 0;
+    text-align: center;
+    position: relative;
+}
+
+#application {
+    background-image: url("https://world-heritage-images.s3.ap-northeast-1.amazonaws.com/background1.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+}
+
+main {
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.box {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+    height: calc(540px - 20px);
+    margin: auto;
+    padding: 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: calc(310px - 20px);
+}
+
+label {
+    display: block;
+    font-size: 13px;
+    text-align: left;
+}
+
+input {
+    background-color: rgba(255, 255, 255, 0.85);
+    border: 1px solid #DDD;
+    border-radius: 3px;
+    font-size: 14px;
+    outline: none;
+    padding: 0.8em;
+    width: calc(210px - 2px);
+}
+
+input[type="checkbox"] {
+    width: 13px;
+}
+
+a {
+    color: rgba(255, 255, 255, 0.7);
+    display: inline-block;
+    margin: 5px auto;
+}
+
+a:hover {
+    opacity: 0.7;
+}
+
+
+/* button */
+.button-middle {
+    background-color: rgba(0, 60, 255, 0.8);
+    border: 1px solid rgba(130, 130, 130, 0.5);
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: calc(37px - 2px);
+    margin: 10px;
+    width: calc(130px - 2px);
+}
+
+.button-middle:hover {
+    opacity: 0.8;
+}
+
+.button-guest {
+    background-color: rgba(198, 194, 194, 0.9);
+    border: 1px solid rgba(130, 130, 130, 0.3);
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: calc(33px - 2px);
+    width: calc(130px - 2px);
+}
+
+.button-guest a {
+    color: white;
+    text-decoration: none;
+}
+
+
+/* form element */
+.required:after {
+    background-color: #C44;
+    border-radius: 4px;
+    color: white;
+    content: "必須";
+    font-size: 0.6em;
+    margin-left: 1.0em;
+    padding: 2px 6px 2px 6px;
+    vertical-align: 0.25em;
+}
+
+.warning {
+    color: gray;
+    font-size: 10px;
+    margin: 0;
+    text-align: left;
+}
+
+.error-message {
+    color: red;
+    font-size: 13px;
+    text-align: left;
+}
+
+
+/* others */
+.ml30 {
+    margin-left: 30px;
+}
+
+
+.login, .register, .password-reset {
+    margin: 0 auto;
+    width: 290px;
+}
+
+.check-label {
+    display: inline;
+}
+
+.input-form {
+    margin-bottom: 15px;
+}
+
+.password-reset h1 {
+    font-size: 25px;
+    margin-top: 110px;
+}
+
+.reset-form {
+    margin: 0 auto;
+    width: 290px;
+}
+
+.guest {
+    border-top: 1px solid rgb(198, 194, 194);
+    margin-top: 15px;
+}
+
+.guest p {
+    font-size: 14px;
+}
