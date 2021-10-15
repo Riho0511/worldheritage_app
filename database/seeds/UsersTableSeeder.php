@@ -18,7 +18,7 @@ class UsersTableSeeder extends Seeder
             [
                 'name' => 'ゲスト',
                 'email' => 'guest@guest.com',
-                'password' => 'password',
+                'password' => Hash::make('password'),
                 'remember_token' => Str::random(60),
                 'created_at' => $now,
                 'updated_at' => $now
@@ -26,7 +26,7 @@ class UsersTableSeeder extends Seeder
             [
                 'name' => 'テスト',
                 'email' => 'test@test.com',
-                'password' => 'password',
+                'password' => Hash::make('password'),
                 'remember_token' => Str::random(60),
                 'created_at' => $now,
                 'updated_at' => $now
