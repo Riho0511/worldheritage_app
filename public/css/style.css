@@ -140,6 +140,23 @@ a:hover {
 }
 
 
+/* ranking */
+.ranking_tables {
+    margin: 0 auto;
+    width: 90%;
+}
+
+.table_split {
+    display: flex;
+}
+
+.ranking {
+    margin: 0 auto 20px;
+    width: 50%;
+    min-width: 320px;
+}
+
+
 /* currency edit page */
 .currencies_edit {
     margin: 20px auto;
@@ -172,6 +189,20 @@ a:hover {
 	margin-left: auto;
 	margin-right: auto;
 	width: calc(50% - 34px);
+}
+
+.collected {
+	background-color: rgba(248, 155, 48, 0.7);
+}
+
+.collected a {
+	background-color: rgba(248, 155, 48, 0.7);
+	color: white;
+	font-weight: bold;
+}
+
+.collected a:hover {
+	background-color: rgba(248, 155, 48, 0.3);
 }
 
 
@@ -298,6 +329,10 @@ a:hover {
 }
 
 @media (max-width: 675px) {
+    .table_split {
+        display: block;
+    }
+    
     .images-list li {
 	    width: 50%;
     }

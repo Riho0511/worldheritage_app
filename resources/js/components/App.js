@@ -11,6 +11,7 @@ import {
     HeritageEdit, 
     Home, 
     Mypage,
+    Ranking,
     State 
 } from './index'; 
 
@@ -21,6 +22,7 @@ function App() {
                 <Switch>
                     <Route exact path="/" component={Home} />
                     <Route exact path="/mypage" component={Mypage} />
+                    <Route exact path="/ranking" component={Ranking} />
                     <Route exact path="/country/currency/list" component={CurrenciesEdit} />
                     <Route path="/country/state/:id" component={State} />
                     <Route path="/country/:id/heritage/create" component={HeritageCreate} />

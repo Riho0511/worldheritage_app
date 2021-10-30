@@ -46,6 +46,16 @@ const Heritage = () => {
             setImages(res.data.images);
             setAuthId(res.data.auth);
             setStateId(res.data.state);
+            if (res.data.niced === null) {
+                setNiced(false);
+            } else {
+                setNiced(true);
+            }
+            if (res.data.collected === null) {
+                setCollected(false);
+            } else {
+                setCollected(true);
+            }
         };
         
         getData();

@@ -7,6 +7,7 @@ use App\Heritage;
 use App\Currency;
 use App\Image;
 use App\Nice;
+use App\Collect;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -23,10 +24,15 @@ class CountryController extends Controller
     }
     
     // 州別国一覧画面
-    public function state($state, Country $country) {
+    public function state($state, Country $country, Collect $collect) {
         $countries = $country->where('state', $state)->get();
         $auth = Auth::id();
-        $return_info = ['countries' => $countries, 'auth' => $auth];
+        $col = $collect->whereNotNull('country_id')->where('user_id', $auth)->get();
+        $collected = [];
+        foreach($col as $c) {
+            array_push($collected, $c->country_id);
+        }
+        $return_info = ['countries' => $countries, 'auth' => $auth, 'collected' => $collected];
         
         return response()->json($return_info);
     }
@@ -44,7 +50,7 @@ class CountryController extends Controller
     }
     
     // 国情報画面
-    public function country(Country $country, Image $image, Nice $nice) {
+    public function country(Country $country, Image $image, Nice $nice, Collect $collect) {
         $heritages = $country->heritages()->get();
         $currencies = $country->currencies()->get();
         $images = [];
@@ -53,17 +59,20 @@ class CountryController extends Controller
         }
         $auth = Auth::id();
         $niced = $nice->where('country_id', $country->id)->where('user_id', $auth)->first();
-        $return_info = ['country' => $country, 'heritages' => $heritages, 'currencies' => $currencies, 'images' => $images, 'auth' => $auth, 'niced' => $niced];
+        $collected = $collect->where('country_id', $country->id)->where('user_id', $auth)->first();
+        $return_info = ['country' => $country, 'heritages' => $heritages, 'currencies' => $currencies, 'images' => $images, 'auth' => $auth, 'niced' => $niced, 'collected' => $collected];
         
         return response()->json($return_info);
     }
     
     // 世界遺産情報画面
-    public function heritage(Country $country, Heritage $heritage, Image $image) {
+    public function heritage(Country $country, Heritage $heritage, Image $image, Nice $nice, Collect $collect) {
         $currency = $country->currencies()->first();
         $images = $image->where('heritage_id', $heritage->id)->get();
         $auth = Auth::id();
-        $return_info = ['country' => $country, 'heritage' => $heritage, 'currency' => $currency, 'images' => $images, 'state' => $country->state, 'auth' => $auth];
+        $niced = $nice->where('heritage_id', $country->id)->where('user_id', $auth)->first();
+        $collected = $collect->where('heritage_id', $country->id)->where('user_id', $auth)->first();
+        $return_info = ['country' => $country, 'heritage' => $heritage, 'currency' => $currency, 'images' => $images, 'state' => $country->state, 'auth' => $auth, 'niced' => $niced, 'collected' => $collected];
         
         return response()->json($return_info);
     }

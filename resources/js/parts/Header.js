@@ -8,6 +8,7 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import EditIcon from '@mui/icons-material/Edit';
+import FestivalIcon from '@mui/icons-material/Festival';
 import IconButton from '@mui/material/IconButton';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Menu from '@mui/material/Menu';
@@ -158,6 +159,12 @@ const Header = (props) => {
                     <p>マイページ</p>
                 </MenuItem>
             }
+            <MenuItem component={Link} to="/ranking">
+                <IconButton size="large" color="inherit">
+                    <FestivalIcon />
+                </IconButton>
+                <p>ランキング</p>
+            </MenuItem>
             <MenuItem onClick={logout}>
                 <IconButton size="large" color="inherit">
                     <LogoutIcon />
@@ -214,6 +221,15 @@ const Header = (props) => {
                                 マイページ
                             </Button>
                         }
+                        <Button 
+                            variant={"contained"} 
+                            className={classes.button}
+                            component={Link}
+                            to="/ranking"
+                            startIcon={<FestivalIcon />}
+                        >
+                            ランキング
+                        </Button>
                         <Button 
                             variant={"contained"} 
                             className={classes.button}
