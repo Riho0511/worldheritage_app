@@ -1,14 +1,37 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Header } from '../parts/index'; 
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Link, useLocation } from 'react-router-dom';
+import { AlertInfo, Header } from '../parts/index'; 
 
-// alert、通貨編集ページ
+
 const Home = () => {
-    const headerMenu = {'menu1':true, 'menu2':false, 'menu3':false, 'menu4':false, 'menu5':false};
+    const location = useLocation();
+    const message = location.state;
+    const [authId, setAuthId] = useState(0);
+    const headerMenu = authId !== 1 ? {'menu1':true, 'menu2':false, 'menu3':false, 'menu4':false, 'menu5':false}
+                                    : {'menu1':false, 'menu2':false, 'menu3':false, 'menu4':false, 'menu5':false};
+    const headerAuth = authId !== 1 ? true : false;
+    
+    
+    useEffect(() => {
+        const getData = async () => {
+            const res = await axios.get(`/api`);
+            setAuthId(res.data);
+        };
+        
+        getData();
+    }, []);
+    
     
     return (
         <>
-            <Header headerMenu={headerMenu} />
+            <Header headerMenu={headerMenu} headerAuth={headerAuth} />
+            
+            {/* 削除通知アラート */}
+            {message !== undefined && 
+                <AlertInfo message={message} />
+            }
+            
             <div className="states">
                 <ul className="button-large">
                     <li><Link to="/country/state/1">アジア</Link></li>

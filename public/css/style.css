@@ -10,9 +10,9 @@ ul {
     padding: 0;
 }
 
-/*img {*/
-/*    object-fit: cover;*/
-/*}*/
+img {
+    object-fit: cover;
+}
 
 label {
     display: block;
@@ -90,60 +90,8 @@ a:hover {
 }
 
 .button-large li a {
-	border-radius: 10px;
+	border-radius: 6px;
 }
-
-/*.store {*/
-/*    background-color: rgb(0, 60, 255);*/
-/*    cursor: pointer;*/
-/*    color: rgb(255, 255, 255);*/
-/*    margin: 5px 0;*/
-/*    padding: 0;*/
-/*}*/
-
-/*.store:hover {*/
-/*    background-color: rgba(0, 60, 255, 0.7);*/
-/*}*/
-
-/*.delete {*/
-/*    background-color: rgb(255, 0, 0);*/
-/*    cursor: pointer;*/
-/*    color: rgb(255, 255, 255);*/
-/*    margin: 15px 0;*/
-/*    padding: 0;*/
-/*}*/
-
-/*.delete:hover {*/
-/*    background-color: rgba(255, 0, 0, 0.7);*/
-/*}*/
-
-/*.provisional-delete {*/
-/*    cursor: pointer;*/
-/*    line-height: 40px;*/
-/*    width: calc(47px - 2px);*/
-/*}*/
-
-/*.provisional-delete {*/
-/*    margin-left: 10px;*/
-/*}*/
-
-/*.file_button {*/
-/*    background-color: #999;*/
-/*    border-radius: 4px;*/
-/*    color: #fff;*/
-/*    display: inline-block;*/
-/*    margin-top: 10px;*/
-/*    overflow: hidden;*/
-/*    padding: 10px 20px;*/
-/*    position: relative;*/
-/*    text-align: center;*/
-/*    transition: .3s ease;*/
-/*    width: calc(190px - 40px);*/
-/*}*/
-
-/*.file_button:hover {*/
-/*    background-color: #CCC;*/
-/*}*/
 
 /*.heart-not-follow {*/
 /*    display: inline-block;*/
@@ -208,11 +156,11 @@ a:hover {
     text-align: left;
 }
 
-/*.error-message {*/
-/*    color: red;*/
-/*    font-size: 12px;*/
-/*    text-align: left;*/
-/*}*/
+.error-message {
+    color: red;
+    font-size: 12px;
+    text-align: left;
+}
 
 /*.currency-select {*/
 /*    font-size: 10px;*/
@@ -224,14 +172,6 @@ a:hover {
 /*    margin-bottom: 10px;*/
 /*}*/
 
-/*.list-box {*/
-/*    border: 1px solid #DDD;*/
-/*    height: calc(125px - 2px);*/
-/*    margin: 0 auto;*/
-/*    overflow: auto;*/
-/*    text-align: left;*/
-/*    width: calc(230px - 2px);*/
-/*}*/
 
 /*@keyframes fadeout {*/
 /*    0% {*/
@@ -256,9 +196,9 @@ a:hover {
 /*}*/
 
 /* others */
-/*.ml5 {*/
-/*    margin-left: 5px;*/
-/*}*/
+.ml15 {
+    margin-left: 15px;
+}
 
 .ml30 {
     margin-left: 30px;
@@ -268,10 +208,15 @@ a:hover {
     margin-top: 15px;
 }
 
+.buttons {
+    margin: 15px auto;
+    width: 65px;
+}
+
 .noting-data {
     line-height: 60px;
     margin: 0 auto;
-    width: 330px;
+    max-width: 330px;
 }
 
 .noting-data p {
@@ -294,15 +239,24 @@ a:hover {
 
 
 /* currency edit page */
-/*.currency_table td {*/
-/*    padding: 0 5px;*/
-/*}*/
+.currencies_edit {
+    margin: 20px auto;
+    width: 360px;
+}
 
-/*.delete_select {*/
-/*    background-color: rgb(255, 0, 0);*/
-/*    color: #fff;*/
-/*    transition: none;*/
-/*}*/
+.currencies_edit ul {
+    padding: 0;
+}
+
+.currencies_edit li {
+    padding-bottom: 0;
+    padding-top: 0;
+}
+
+.currencies_edit p {
+    color: red;
+    text-align: center;
+}
 
 
 /* state page */
@@ -329,10 +283,6 @@ a:hover {
     margin-bottom: 8px;
 }
 
-/*.state-label {*/
-/*    display: inline-block;*/
-/*    font-size: 13px;*/
-/*}*/
 
 /* country information page */
 .images-list {
@@ -355,41 +305,43 @@ a:hover {
     order: 1;
 }
 
-/*.images-list p {*/
-/*    text-align: center;*/
-/*    margin-top: 0;*/
-/*}*/
+.image-split div {
+    margin: 0 auto;
+    padding-left: 0;
+    padding-right: 0;
+}
 
-/*.image-square {*/
-/*    width: 250px;*/
-/*    height: 250px;*/
-/*}*/
-
-/*.follow-form {*/
-/*    display: inline;*/
-/*}*/
-
-
-/* country edit page */
-/*.edit_country_information {*/
-/*    margin: 0 auto;*/
-/*    width: 290px;*/
-/*}*/
-
-/*.edit_country_information div {*/
-/*    margin-bottom: 10px;*/
-/*}*/
-
+.images-list p {
+    font-size: 17px;
+    text-align: center;
+}
 
 /* heritage create page */
-/*.create_heritage {*/
-/*    margin: 0 auto;*/
-/*    width: 290px;*/
-/*}*/
+.create_heritage {
+    margin: 0 auto;
+    width: 290px;
+}
 
-/*.create_heritage div {*/
-/*    margin-bottom: 10px;*/
-/*}*/
+.create_heritage div {
+    margin-bottom: 8px;
+}
+
+.photo {
+    margin-bottom: 15px;
+    margin-top: 15px;
+    text-align: center;
+}
+
+#preview {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#preview img {
+    margin: 3px;
+    width: calc(145px - 6px);
+    height: calc(145px - 6px);
+}
 
 
 /* heritage informaiton */
@@ -407,80 +359,15 @@ a:hover {
 
 .heritage-info {
     width: 40%;
-    /*margin-top: 80px;*/
     margin: 0;
 }
 
 
 /* heritage edit page */
-/*.edit_heritage_information {*/
-/*    margin: 0 auto;*/
-/*    width: 290px;*/
-/*}*/
+.overflow {
+    overflow: hidden;
+}
 
-/*.edit_heritage_information div {*/
-/*    margin-bottom: 10px;*/
-/*}*/
-
-/*.edit-image {*/
-/*    width: 230px;*/
-/*}*/
-
-
-/* slider */
-
-
-/*.modal {*/
-/*  max-width: 300px;*/
-/*  margin: 0 auto;*/
-/*}*/
-
-/*.modal p {*/
-/*  font-size: 15px;*/
-/*  margin: 0 0 20px;*/
-/*}*/
-
-/*#mask {*/
-/*  background:rgba(0,0,0,0.4);*/
-/*  bottom: 0;*/
-/*  left: 0;*/
-/*  position: fixed;*/
-/*  right: 0;*/
-/*  top: 0;*/
-/*  z-index: 1;*/
-/*}*/
-
-/*#modal {*/
-/*  background: #fff;*/
-/*  border-radius: 4px;*/
-/*  left: 0;*/
-/*  margin: 0 auto;*/
-/*  max-width: 400px;*/
-/*  padding: 20px 20px 0 20px;*/
-/*  position: absolute;*/
-/*  right: 0;*/
-/*  top: 40px;*/
-/*  transition: transform 0.4s;*/
-/*  width: calc(300px - 40px);*/
-/*  z-index: 2;*/
-/*}*/
-
-/*#mask.hidden {*/
-/*  display: none;*/
-/*} */
-
-/*#modal.hidden {*/
-/*  transform: translate(0,-500px);*/
-/*}*/
-
-
-/* responsive */
-/*@media (max-width: 1110px) {*/
-/*    .image-square {*/
-/*      height: 200px;*/
-/*      width: 200px;*/
-/*    }*/
-/*}*/
 
 @media (max-width: 890px) {
     .image-square {
@@ -497,6 +384,10 @@ a:hover {
         display: block;
     }
     
+    .image-split div {
+        width: 50%;
+    }
+    
     .images {
         margin: 0 auto;
         min-width: 375px;
@@ -505,11 +396,6 @@ a:hover {
 }
 
 @media (max-width: 675px) {
-    .images-list ul:after, .images-list ul:before {
-        content: "";
-        width: 50%;
-    }
-
     .images-list li {
 	    width: 50%;
     }
@@ -528,19 +414,6 @@ a:hover {
     }
     
     .countries .button-large li {
-	    width: calc(100% - 34px);
+	    width: 100%;
     }
-
-    .image-split:after, .image-split:before {
-        width: 50%;
-    }
-
-    .image-split > div {
-	    width: 50%;
-    }
-
-    /*.image-square {*/
-    /*    height: 150px;*/
-    /*    width: 150px;*/
-    /*}*/
 }

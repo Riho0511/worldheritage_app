@@ -9,6 +9,10 @@ class Currency extends Model
 {
     use SoftDeletes;
     
+    protected $fillable = [
+        'unit'
+    ];
+    
     public function countries() {
         return $this->belongsToMany('App\Country');
     }

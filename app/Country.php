@@ -9,6 +9,15 @@ class Country extends Model
 {
     use SoftDeletes;
     
+    protected $fillable = [
+        'name',
+        'official_name',
+        'capital',
+        'time_difference',
+        'plane_movement',
+        'state',
+    ];
+    
     public function heritages() {
         return $this->hasMany('App\Heritage');
     }
