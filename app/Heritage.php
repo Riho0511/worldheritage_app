@@ -22,4 +22,12 @@ class Heritage extends Model
     public function images() {
         return $this->hasMany('App\Image');
     }
+    
+    public function collects() {
+        return $this->hasMany('App\Collect');
+    }
+    
+    public function nices() {
+        return $this->hasMany('App\Nice');
+    }
 }

@@ -54,7 +54,7 @@ const State = () => {
             <div className="countries">
                 <h2>{state}</h2>
                 {countries.length === 0 ? 
-                    <Paper className="noting-data" elevation={5}><p>登録されている国はありません。</p></Paper>
+                    <Paper className="noting-data" elevation={5}><p>登録されている国はありません</p></Paper>
                 :
                     <ul className="button-large">
                         {countries.map(country => {
