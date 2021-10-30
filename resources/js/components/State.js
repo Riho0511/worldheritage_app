@@ -8,12 +8,13 @@ import { Header } from '../parts/index';
 // alert
 const State = () => {
     const stateId = parseInt(useParams().id);
-    const [state, setState] = useState('');
     const [authId, setAuthId] = useState(0);
     const [countries, setCountries] = useState([]);
     const headerMenu = authId !== 1 ? {'menu1':false, 'menu2':true, 'menu3':false, 'menu4':false, 'menu5':false}
                                     : {'menu1':false, 'menu2':false, 'menu3':false, 'menu4':false, 'menu5':false};
     const headerAuth = authId !== 1 ? true : false;
+    const [state, setState] = useState('');
+    const [collected, setCollected] = useState([]);
     
     
     // 州名をセット
@@ -41,11 +42,12 @@ const State = () => {
             const res = await axios.get(`/api/country/state/${stateId}`);
             setCountries(res.data.countries);
             setAuthId(res.data.auth);
+            setCollected(res.data.collected);
         };
         
         getData();
         setStateName(stateId);
-    }, [setCountries]);
+    }, [setCountries, setAuthId, setCollected]);
         
         
     return (
@@ -59,7 +61,7 @@ const State = () => {
                     <ul className="button-large">
                         {countries.map(country => {
                             return (
-                                <li key={country.id}><Link to={`/country/${country.id}`}>{country.name}</Link></li>
+                                <li key={country.id} className={collected.includes(country.id) ? "collected" : ""}><Link to={`/country/${country.id}`}>{country.name}</Link></li>
                             );
                         })}
                     </ul>
