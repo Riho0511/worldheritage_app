@@ -13,5 +13,26 @@ require('./bootstrap');
  */
 
 require('./components/App');
+require('./components/Country');
+require('./components/CountryCreate');
+require('./components/CountryEdit');
+require('./components/CurrenciesEdit');
+require('./components/Heritage');
+require('./components/HeritageCreate');
+require('./components/HeritageEdit');
+require('./components/Home');
+require('./components/State');
+require('./components/index');
 
+require('./parts/AlertInfo');
+require('./parts/CheckModal');
+require('./parts/CountryForm');
+require('./parts/CountryInformation');
+require('./parts/CurrenciesList');
+require('./parts/DeleteImagesList');
 require('./parts/Header');
+require('./parts/HeritageCard');
+require('./parts/HeritageForm');
+require('./parts/HeritageInformation');
+require('./parts/SwiperImages');
+require('./parts/index');

@@ -9,6 +9,12 @@ class Heritage extends Model
 {
     use SoftDeletes;
     
+    protected $fillable = [
+        'country_id',
+        'name',
+        'entrance_fee',
+    ];
+    
     public function country() {
         return $this->belongsTo('App\Country');
     }

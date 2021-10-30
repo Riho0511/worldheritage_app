@@ -9,6 +9,11 @@ class Image extends Model
 {
     use SoftDeletes;
     
+    protected $fillable = [
+        'heritage_id',
+        'image',
+    ];
+    
     public function heritage() {
         return $this->belongsTo('App\Heritage');
     }

@@ -1,7 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter , Route, Switch } from 'react-router-dom';
-import { Home } from './index'; 
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { 
+    Country, 
+    CountryCreate, 
+    CountryEdit, 
+    CurrenciesEdit, 
+    Heritage, 
+    HeritageCreate, 
+    HeritageEdit, 
+    Home, 
+    State 
+} from './index'; 
 
 function App() {
     return (
@@ -9,6 +19,14 @@ function App() {
             <>
                 <Switch>
                     <Route exact path="/" component={Home} />
+                    <Route exact path="/country/currency/list" component={CurrenciesEdit} />
+                    <Route path="/country/state/:id" component={State} />
+                    <Route path="/country/:id/heritage/create" component={HeritageCreate} />
+                    <Route path="/country/:id/heritage/:id/edit" component={HeritageEdit} />
+                    <Route path="/country/:id/heritage/:id" component={Heritage} />
+                    <Route path="/country/create/:id" component={CountryCreate} />
+                    <Route path="/country/:id/edit" component={CountryEdit} />
+                    <Route path="/country/:id" component={Country} />
                 </Switch>
             </>
         </BrowserRouter>
