@@ -50,6 +50,11 @@ const Country = () => {
             } else {
                 setNiced(true);
             }
+            if (res.data.collected === null) {
+                setCollected(false);
+            } else {
+                setCollected(true);
+            }
         };
         
         getData();

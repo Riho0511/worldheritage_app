@@ -19,6 +19,7 @@ Route::group(['middleware' => 'auth'], function() {
         return view('app');
     });
     Route::get('/api', 'CountryController@index');
+    Route::get('/api/ranking', 'UserController@ranking');
     Route::get('/api/mypage', 'UserController@mypage');
     Route::post('/api/currency', 'CurrencyController@delete');
     Route::post('/api/country', 'CountryController@store');

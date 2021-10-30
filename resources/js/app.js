@@ -22,6 +22,7 @@ require('./components/HeritageCreate');
 require('./components/HeritageEdit');
 require('./components/Home');
 require('./components/Mypage');
+require('./components/Ranking');
 require('./components/State');
 require('./components/index');
 
@@ -35,5 +36,6 @@ require('./parts/Header');
 require('./parts/HeritageCard');
 require('./parts/HeritageForm');
 require('./parts/HeritageInformation');
+require('./parts/RankTable');
 require('./parts/SwiperImages');
 require('./parts/index');
