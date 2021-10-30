@@ -17,7 +17,6 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import PublicIcon from '@mui/icons-material/Public';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import ListItemText from '@mui/material/ListItemText';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 
@@ -152,7 +151,7 @@ const Header = (props) => {
             onClose={handleMobileMenuClose}
         >
             {props.headerAuth &&
-                <MenuItem component={Link} to={`/mypage/${props.userId}`}>
+                <MenuItem component={Link} to="/mypage">
                     <IconButton size="large" color="inherit">
                         <AccountCircleIcon />
                     </IconButton>
@@ -209,7 +208,7 @@ const Header = (props) => {
                                 variant={"contained"} 
                                 className={classes.button}
                                 component={Link}
-                                to={`/mypage/${props.userId}`}
+                                to="/mypage"
                                 startIcon={<AccountCircleIcon />}
                             >
                                 マイページ

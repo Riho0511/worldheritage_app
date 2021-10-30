@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Carbon\Carbon;
 
 class CountryCurrencyTableSeeder extends Seeder
 {
@@ -80,11 +79,6 @@ class CountryCurrencyTableSeeder extends Seeder
             
         ];
         
-        $now = Carbon::now();
-        foreach($params as $param) {
-            $param['created_at'] = $now;
-            $param['updated_at'] = $now;
-        }
         DB::table('country_currency')->insert($params);
     }
 }

@@ -6,4 +6,5 @@ export { default as Heritage } from './Heritage';
 export { default as HeritageCreate } from './HeritageCreate';
 export { default as HeritageEdit } from './HeritageEdit';
 export { default as Home } from './Home';
+export { default as Mypage } from './Mypage';
 export { default as State } from './State';
