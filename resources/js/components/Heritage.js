@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { makeStyles } from '@mui/styles';
+import AirplaneTicketIcon from '@mui/icons-material/AirplaneTicket';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import { Link, useRouteMatch, useLocation, useHistory } from 'react-router-dom';
 import { AlertInfo, CheckModal, Header, HeritageInformation, SwiperImages } from '../parts/index'; 
 
@@ -32,6 +34,8 @@ const Heritage = () => {
     const [currency, setCurrency] = useState([]);
     const [images, setImages] = useState([]);
     const [stateId, setStateId] = useState('');
+    const [niced, setNiced] = useState(false);
+    const [collected, setCollected] = useState(false);
     
     useEffect(() => {
         const getData = async () => {
@@ -61,6 +65,70 @@ const Heritage = () => {
                 console.log(error)
             });
     });
+    
+    // 行ったことある
+    const collect = useCallback(async () => {
+        await axios
+            .post('/api/heritage/' + heritageId + '/user/' + authId + '/collect')
+            .then(response => {
+                history.push({
+                    pathname: '/country/' + countryId + '/heritage/' + heritageId,
+                    state: response.data,
+                });
+                setCollected(true);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    });
+    
+    // 行ったことがない
+    const nocollect = useCallback(async () => {
+        await axios
+            .post('/api/heritage/' + heritageId + '/user/' + authId + '/nocollect')
+            .then(response => {
+                history.push({
+                    pathname: '/country/' + countryId + '/heritage/' + heritageId,
+                    state: response.data,
+                });
+                setCollected(false);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    });
+    
+    // お気に入り登録
+    const nice = useCallback(async () => {
+        await axios
+            .post('/api/heritage/' + heritageId + '/user/' + authId + '/nice')
+            .then(response => {
+                history.push({
+                    pathname: '/country/' + countryId + '/heritage/' + heritageId,
+                    state: response.data,
+                });
+                setNiced(true);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    });
+    
+    // お気に入り解除
+    const unnice = useCallback(async () => {
+        await axios
+            .post('/api/heritage/' + heritageId + '/user/' + authId + '/unnice')
+            .then(response => {
+                history.push({
+                    pathname: '/country/' + countryId + '/heritage/' + heritageId,
+                    state: response.data,
+                });
+                setNiced(false);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    });
 
         
     return (
@@ -84,6 +152,10 @@ const Heritage = () => {
                             entranceFee={heritage.entrance_fee}
                             unit={currency.unit}
                         />
+                        <Stack direction="row" spacing={1} className={classes.root}>
+                            <Button color="warning" variant={collected ? "contained" : "outlined"} endIcon={<AirplaneTicketIcon />} onClick={collected ? () => nocollect() : () => collect()}>コレクト</Button>
+                            <Button color="error" variant={niced ? "contained" : "outlined"} endIcon={<ThumbUpAltIcon />} onClick={niced ? () => unnice() : () => nice()}>お気に入り</Button>
+                        </Stack>
                     </div>
                 </div>
             </div>

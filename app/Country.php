@@ -25,4 +25,12 @@ class Country extends Model
     public function currencies() {
         return $this->belongsToMany('App\Currency');
     }
+    
+    public function collects() {
+        return $this->hasMany('App\Collect');
+    }
+ 
+    public function nices() {
+        return $this->hasMany('App\Nice');
+    }
 }

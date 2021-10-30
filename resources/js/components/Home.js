@@ -16,7 +16,7 @@ const Home = () => {
     useEffect(() => {
         const getData = async () => {
             const res = await axios.get(`/api`);
-            setAuthId(res.data);
+            setAuthId(res.data.auth);
         };
         
         getData();

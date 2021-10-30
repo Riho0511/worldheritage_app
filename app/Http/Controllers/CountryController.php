@@ -6,6 +6,7 @@ use App\Country;
 use App\Heritage;
 use App\Currency;
 use App\Image;
+use App\Nice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -16,7 +17,9 @@ class CountryController extends Controller
     // ホーム画面
     public function index() {
         $auth = Auth::id();
-        return response()->json($auth);
+        $return_info = ['auth' => $auth];
+        
+        return response()->json($return_info);
     }
     
     // 州別国一覧画面
@@ -41,7 +44,7 @@ class CountryController extends Controller
     }
     
     // 国情報画面
-    public function country(Country $country, Image $image) {
+    public function country(Country $country, Image $image, Nice $nice) {
         $heritages = $country->heritages()->get();
         $currencies = $country->currencies()->get();
         $images = [];
@@ -49,7 +52,8 @@ class CountryController extends Controller
             array_push($images, $image->where('heritage_id', $heritage->id)->first());
         }
         $auth = Auth::id();
-        $return_info = ['country' => $country, 'heritages' => $heritages, 'currencies' => $currencies, 'images' => $images, 'auth' => $auth];
+        $niced = $nice->where('country_id', $country->id)->where('user_id', $auth)->first();
+        $return_info = ['country' => $country, 'heritages' => $heritages, 'currencies' => $currencies, 'images' => $images, 'auth' => $auth, 'niced' => $niced];
         
         return response()->json($return_info);
     }
