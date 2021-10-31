@@ -78,6 +78,6 @@ class HeritageController extends Controller
         }
         $heritage->delete();
         
-        return response()->json('世界遺産の削除が完了しました！');
+        return response()->json('世界遺産削除が完了しました！');
     }
 }

@@ -24,8 +24,8 @@ const Heritage = () => {
     const location = useLocation();
     const message = location.state;
     const [authId, setAuthId] = useState(0);
-    const headerMenu = {'menu1':false, 'menu2':false, 'menu3':false, 'menu4':false, 'menu5':true};
-    const headerAuth = authId !== 1 ? true : false;
+    const [authchecker, setAuthchecker] = useState('');
+    const headerMenu = {'menu1':false, 'menu2':false, 'menu3':false, 'menu4':false, 'menu5':true, 'check':true};
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [open, setOpen] = useState(false);
@@ -37,6 +37,7 @@ const Heritage = () => {
     const [niced, setNiced] = useState(false);
     const [collected, setCollected] = useState(false);
     
+    
     useEffect(() => {
         const getData = async () => {
             const res = await axios.get(`/api/country/${countryId}/heritage/${heritageId}`);
@@ -46,11 +47,25 @@ const Heritage = () => {
             setImages(res.data.images);
             setAuthId(res.data.auth);
             setStateId(res.data.state);
+            
+            switch (res.data.auth) {
+                case null:
+                    setAuthchecker('guest');
+                    break;
+                case 1:
+                    setAuthchecker('admin');
+                    break;
+                default:
+                    setAuthchecker('user');
+                    break;
+            }
+            
             if (res.data.niced === null) {
                 setNiced(false);
             } else {
                 setNiced(true);
             }
+            
             if (res.data.collected === null) {
                 setCollected(false);
             } else {
@@ -72,7 +87,7 @@ const Heritage = () => {
                 });
             })
             .catch(error => {
-                console.log(error)
+                console.log(error);
             });
     });
     
@@ -139,11 +154,11 @@ const Heritage = () => {
                 console.log(error);
             });
     });
-
+    
         
     return (
         <>
-            <Header headerMenu={headerMenu} headerAuth={headerAuth} countryId={countryId} heritageId={heritageId} />
+            <Header headerMenu={headerMenu} authchecker={authchecker} countryId={countryId} heritageId={heritageId} />
             
              {/* 国追加通知アラート */}
             {message !== undefined && 
@@ -162,10 +177,14 @@ const Heritage = () => {
                             entranceFee={heritage.entrance_fee}
                             unit={currency.unit}
                         />
-                        <Stack direction="row" spacing={1} className={classes.root}>
-                            <Button color="warning" variant={collected ? "contained" : "outlined"} endIcon={<AirplaneTicketIcon />} onClick={collected ? () => nocollect() : () => collect()}>コレクト</Button>
-                            <Button color="error" variant={niced ? "contained" : "outlined"} endIcon={<ThumbUpAltIcon />} onClick={niced ? () => unnice() : () => nice()}>お気に入り</Button>
-                        </Stack>
+                        {authchecker === 'guest' ? 
+                            <Button color="error" variant={niced ? "contained" : "outlined"} endIcon={<ThumbUpAltIcon />} onClick={niced ? () => setNiced(false) : () => setNiced(true)}>お気に入り</Button>
+                        :
+                            <Stack direction="row" spacing={1} className={classes.root}>
+                                <Button color="warning" variant={collected ? "contained" : "outlined"} endIcon={<AirplaneTicketIcon />} onClick={collected ? () => nocollect() : () => collect()}>コレクト</Button>
+                                <Button color="error" variant={niced ? "contained" : "outlined"} endIcon={<ThumbUpAltIcon />} onClick={niced ? () => unnice() : () => nice()}>お気に入り</Button>
+                            </Stack>
+                        }
                     </div>
                 </div>
             </div>
@@ -178,7 +197,7 @@ const Heritage = () => {
                         <Button variant="outlined" component={Link} to="/">州を選ぶ</Button>
                     </Stack>
                 </div>
-                {headerAuth && 
+                {authchecker === 'admin' && 
                     <div className="mt15">
                         <Button onClick={() => handleOpen()} variant="contained" color="error">削除</Button>
                     </div>

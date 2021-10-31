@@ -23,9 +23,8 @@ const Country = () => {
     const location = useLocation();
     const message = location.state;
     const [authId, setAuthId] = useState(0);
-    const headerMenu = authId !== 1 ? {'menu1':false, 'menu2':false, 'menu3':true, 'menu4':true, 'menu5':false}
-                                    : {'menu1':false, 'menu2':false, 'menu3':false, 'menu4':false, 'menu5':false};
-    const headerAuth = authId !== 1 ? true : false;
+    const [authchecker, setAuthchecker] = useState('');
+    const headerMenu = authchecker === 'admin' && {'menu1':false, 'menu2':false, 'menu3':true, 'menu4':true, 'menu5':false, 'check':true};
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [open, setOpen] = useState(false);
@@ -45,11 +44,25 @@ const Country = () => {
             setCurrencies(res.data.currencies);
             setImages(res.data.images);
             setAuthId(res.data.auth);
+            
+            switch (res.data.auth) {
+                case null:
+                    setAuthchecker('guest');
+                    break;
+                case 1:
+                    setAuthchecker('admin');
+                    break;
+                default:
+                    setAuthchecker('user');
+                    break;
+            }
+            
             if (res.data.niced === null) {
                 setNiced(false);
             } else {
                 setNiced(true);
             }
+            
             if (res.data.collected === null) {
                 setCollected(false);
             } else {
@@ -142,7 +155,7 @@ const Country = () => {
         
     return (
         <>
-            <Header headerMenu={headerMenu} headerAuth={headerAuth} countryId={countryId} stateId={country.state} />
+            <Header headerMenu={headerMenu} authchecker={authchecker} countryId={countryId} stateId={country.state} />
             
             {/* 国追加通知アラート */}
             {message !== undefined && 
@@ -157,10 +170,14 @@ const Country = () => {
                 timeDifference={country.time_difference}
                 planeMovement={country.plane_movement}
             />
-            <Stack direction="row" spacing={1} className={classes.root}>
-                <Button color="warning" variant={collected ? "contained" : "outlined"} endIcon={<AirplaneTicketIcon />} onClick={collected ? () => nocollect() : () => collect()}>コレクト</Button>
-                <Button color="error" variant={niced ? "contained" : "outlined"} endIcon={<ThumbUpAltIcon />} onClick={niced ? () => unnice() : () => nice()}>お気に入り</Button>
-            </Stack>
+            {authchecker === 'guest' ?
+                <Button color="error" variant={niced ? "contained" : "outlined"} endIcon={<ThumbUpAltIcon />} onClick={niced ? () => setNiced(false) : () => setNiced(true)}>お気に入り</Button>
+            :
+                <Stack direction="row" spacing={1} className={classes.root}>
+                    <Button color="warning" variant={collected ? "contained" : "outlined"} endIcon={<AirplaneTicketIcon />} onClick={collected ? () => nocollect() : () => collect()}>コレクト</Button>
+                    <Button color="error" variant={niced ? "contained" : "outlined"} endIcon={<ThumbUpAltIcon />} onClick={niced ? () => unnice() : () => nice()}>お気に入り</Button>
+                </Stack>
+            }
             <div className="images-list">
                 {images.length === 0 ?
                     <Paper className="noting-data" elevation={5}><p>登録されている世界遺産はありません</p></Paper>
@@ -172,6 +189,7 @@ const Country = () => {
                                     key={image.id} 
                                     image={image.image} 
                                     heritageName={heritages[index].name} 
+                                    collected={collected}
                                     countryId={countryId} 
                                     heritageId={heritages[index].id} 
                                 />
@@ -186,7 +204,7 @@ const Country = () => {
                     <Button variant="outlined" component={Link} to={`/country/state/${country.state}`}>国を選ぶ</Button>
                     <Button variant="outlined" component={Link} to="/">州を選ぶ</Button>
                 </Stack>
-                {headerAuth && 
+                {authchecker === 'admin' && 
                     <div className="mt15">
                         <Button onClick={() => handleOpen()} variant="contained" color="error">削除</Button>
                     </div>

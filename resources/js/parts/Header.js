@@ -69,7 +69,7 @@ const Header = (props) => {
     
     // ホームに戻る
     const toHome = () => {
-        window.location.href = "/";
+        window.location.href = "/home";
     }
     
     // ボタン一覧(左端)
@@ -87,7 +87,7 @@ const Header = (props) => {
                 vertical: 'top',
                 horizontal: 'right',
             }}
-            open={isMenuOpen}
+            open={headerMenu.check !== undefined && isMenuOpen}
             onClose={handleMenuClose}
         >
         {headerMenu.menu1 && (
@@ -151,7 +151,7 @@ const Header = (props) => {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
-            {props.headerAuth &&
+            {props.authchecker !== 'guest' &&
                 <MenuItem component={Link} to="/mypage">
                     <IconButton size="large" color="inherit">
                         <AccountCircleIcon />
@@ -179,8 +179,7 @@ const Header = (props) => {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static" className={classes.bar}>
                 <Toolbar>
-                    {/* ゲスト認証時は使用不可 */}
-                    {props.headerAuth && 
+                    {props.authchecker !== 'guest' && 
                         <IconButton
                             size="large"
                             edge="start"
@@ -200,7 +199,7 @@ const Header = (props) => {
                         世界遺産アプリ
                     </Typography>
                     <Box sx={{ flexGrow: 1 }} />
-                    {!props.headerAuth &&
+                    {props.authchecker === 'guest' &&
                         <Typography
                             component="div"
                             noWrap
@@ -210,7 +209,7 @@ const Header = (props) => {
                         </Typography>
                     }
                     <Box sx={{ display: { xs: 'none', sm: 'flex' } }} className={classes.button}>
-                        {props.headerAuth &&
+                        {props.authchecker !== 'guest' &&
                             <Button 
                                 variant={"contained"} 
                                 className={classes.button}

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 import { Header } from '../parts/index';
 
 
 const Mypage = () => {
+    const history = useHistory();
     const [user, setUser] = useState('');
     const headerMenu = {'menu1':false, 'menu2':false, 'menu3':false, 'menu4':false, 'menu5':false};
     const headerAuth = true;
@@ -25,6 +27,9 @@ const Mypage = () => {
                 <p>{user.name}</p>
                 <p>{user.email}</p>
             </div>
+            <footer className="buttons">
+                <Button variant="outlined" onClick={() => history.goBack()}>戻る</Button>
+            </footer>
         </>
     );
 };

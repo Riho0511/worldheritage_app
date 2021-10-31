@@ -36,7 +36,7 @@
     <div class="guest">
         <p>アカウントを作成せずにログインしたい方</p>
         <button class="button-guest">
-            <a href="{{ route('login.guest') }}">Guest</a>
+            <a href="/home">Guest</a>
         </button>
     </div>
 </div>

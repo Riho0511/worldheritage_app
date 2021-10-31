@@ -17,7 +17,11 @@ class CountryController extends Controller
 {
     // ホーム画面
     public function index() {
-        $auth = Auth::id();
+        if (Auth::check()) {
+            $auth = Auth::id();
+        } else {
+            $auth = null;
+        }
         $return_info = ['auth' => $auth];
         
         return response()->json($return_info);
@@ -26,7 +30,11 @@ class CountryController extends Controller
     // 州別国一覧画面
     public function state($state, Country $country, Collect $collect) {
         $countries = $country->where('state', $state)->get();
-        $auth = Auth::id();
+        if (Auth::check()) {
+            $auth = Auth::id();
+        } else {
+            $auth = null;
+        }
         $col = $collect->whereNotNull('country_id')->where('user_id', $auth)->get();
         $collected = [];
         foreach($col as $c) {
@@ -57,10 +65,19 @@ class CountryController extends Controller
         foreach ($heritages as $heritage) {
             array_push($images, $image->where('heritage_id', $heritage->id)->first());
         }
-        $auth = Auth::id();
+        if (Auth::check()) {
+            $auth = Auth::id();
+        } else {
+            $auth = null;
+        }
         $niced = $nice->where('country_id', $country->id)->where('user_id', $auth)->first();
         $collected = $collect->where('country_id', $country->id)->where('user_id', $auth)->first();
-        $return_info = ['country' => $country, 'heritages' => $heritages, 'currencies' => $currencies, 'images' => $images, 'auth' => $auth, 'niced' => $niced, 'collected' => $collected];
+        $col = $collect->whereNotNull('heritage_id')->where('user_id', $auth)->get();
+        $heritageCollected = [];
+        foreach($col as $c) {
+            array_push($heritageCollected, $c->heritage_id);
+        }
+        $return_info = ['country' => $country, 'heritages' => $heritages, 'currencies' => $currencies, 'images' => $images, 'auth' => $auth, 'niced' => $niced, 'collected' => $collected, 'heritageCollected' => $heritageCollected];
         
         return response()->json($return_info);
     }
@@ -69,7 +86,11 @@ class CountryController extends Controller
     public function heritage(Country $country, Heritage $heritage, Image $image, Nice $nice, Collect $collect) {
         $currency = $country->currencies()->first();
         $images = $image->where('heritage_id', $heritage->id)->get();
-        $auth = Auth::id();
+        if (Auth::check()) {
+            $auth = Auth::id();
+        } else {
+            $auth = null;
+        }
         $niced = $nice->where('heritage_id', $country->id)->where('user_id', $auth)->first();
         $collected = $collect->where('heritage_id', $country->id)->where('user_id', $auth)->first();
         $return_info = ['country' => $country, 'heritage' => $heritage, 'currency' => $currency, 'images' => $images, 'state' => $country->state, 'auth' => $auth, 'niced' => $niced, 'collected' => $collected];

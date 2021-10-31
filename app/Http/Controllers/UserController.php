@@ -16,7 +16,11 @@ class UserController extends Controller
 {
     // マイページ
     public function mypage() {
-        $authId = Auth::id();
+        if (Auth::check()) {
+            $auth = Auth::id();
+        } else {
+            $auth = null;
+        }
         $user = new User;
         $userInfo = $user->where('id', $authId)->first();
         $return_info = ['user' => $userInfo];
@@ -26,7 +30,11 @@ class UserController extends Controller
     
     // ランキング
     public function ranking(Country $country, Heritage $heritage, Nice $nice, Collect $collect) {
-        $auth = Auth::id();
+        if (Auth::check()) {
+            $auth = Auth::id();
+        } else {
+            $auth = null;
+        }
         $niceCountries = $nice->whereNotNull('country_id')->select(DB::raw('count(*) as cnt, country_id'))->groupBy('country_id')->orderBy('cnt', 'desc')->limit(3)->get();
         $niceHeritages = $nice->whereNotNull('heritage_id')->select(DB::raw('count(*) as cnt, heritage_id'))->groupBy('heritage_id')->orderBy('cnt', 'desc')->limit(3)->get();
         $collectCountries = $collect->whereNotNull('country_id')->select(DB::raw('count(*) as cnt, country_id'))->groupBy('country_id')->orderBy('cnt', 'desc')->limit(3)->get();

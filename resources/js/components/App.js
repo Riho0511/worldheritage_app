@@ -6,10 +6,11 @@ import {
     CountryCreate, 
     CountryEdit, 
     CurrenciesEdit, 
-    Heritage, 
-    HeritageCreate, 
-    HeritageEdit, 
-    Home, 
+    Heritage,
+    HeritageCreate,
+    HeritageEdit,
+    Home,
+    Login,
     Mypage,
     Ranking,
     State 
@@ -20,7 +21,8 @@ function App() {
         <BrowserRouter>
             <>
                 <Switch>
-                    <Route exact path="/" component={Home} />
+                    <Route exact path="/" component={Login} />
+                    <Route exact path="/home" component={Home} />
                     <Route exact path="/mypage" component={Mypage} />
                     <Route exact path="/ranking" component={Ranking} />
                     <Route exact path="/country/currency/list" component={CurrenciesEdit} />

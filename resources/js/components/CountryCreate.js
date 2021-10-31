@@ -9,8 +9,8 @@ import { CountryForm, Header } from '../parts/index';
 const CountryCreate = () => {
     const history = useHistory();
     const stateId = parseInt(useParams().id);
-    const headerMenu = {'menu1':false, 'menu2':false, 'menu3':false, 'menu4':false, 'menu5':false};
-    const headerAuth = true;
+    const headerMenu = {'menu1':false, 'menu2':false, 'menu3':false, 'menu4':false, 'menu5':false, 'check':false};
+    const authchecker = 'admin';
     const [currenciesList, setCurrenciesList] = useState([]);
     const [name, setName] = useState('');
     const [officialName, setOfficialName] = useState('');
@@ -51,6 +51,7 @@ const CountryCreate = () => {
             return;
         }
         
+        // 通貨が登録されていない場合は実行しない
         if (currencies.length == 0 && newCurrencies.length == 0) {
             return;
         }
@@ -84,7 +85,7 @@ const CountryCreate = () => {
         
     return (
         <>
-            <Header headerMenu={headerMenu} headerAuth={headerAuth} />
+            <Header headerMenu={headerMenu} authchecker={authchecker} />
             <h2>国追加</h2>
             <CountryForm 
                 currenciesList={currenciesList}

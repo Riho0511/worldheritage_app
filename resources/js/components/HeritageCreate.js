@@ -10,8 +10,8 @@ import HeritageForm from '../parts/HeritageForm';
 const HeritageCreate = () => {
     const history = useHistory();
     const countryId = parseInt(useParams().id);
-    const headerMenu = {'menu1':false, 'menu2':false, 'menu3':false, 'menu4':false, 'menu5':false};
-    const headerAuth = true;
+    const headerMenu = {'menu1':false, 'menu2':false, 'menu3':false, 'menu4':false, 'menu5':false, 'check':false};
+    const authchecker = 'admin';
     const [name, setName] = useState('');
     const [entranceFee, setEntranceFee] = useState('');
     const [images, setImages] = useState([]);
@@ -23,9 +23,9 @@ const HeritageCreate = () => {
             if (p.length == 0) {
                 check = true;
             }
-        })
+        });
         return check;
-    }
+    };
     
     // 世界遺産追加
     const createHeritage = useCallback(async (name, entranceFee, images) => {
@@ -61,7 +61,7 @@ const HeritageCreate = () => {
 
     return (
         <>
-            <Header headerMenu={headerMenu} headerAuth={headerAuth} />
+            <Header headerMenu={headerMenu} authchecker={authchecker} />
             <h2>世界遺産追加</h2>
             <HeritageForm 
                 name={name}

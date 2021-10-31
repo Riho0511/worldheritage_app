@@ -10,8 +10,8 @@ const CountryEdit = () => {
     const history = useHistory();
     const countryId = parseInt(useParams().id);
     let stateId = useLocation().search.split('=')[1];
-    const headerMenu = {'menu1':false, 'menu2':false, 'menu3':false, 'menu4':false, 'menu5':false};
-    const headerAuth = true;
+    const headerMenu = {'menu1':false, 'menu2':false, 'menu3':false, 'menu4':false, 'menu5':false, 'check':false};
+    const authchecker = 'user';
     const [currenciesList, setCurrenciesList] = useState([]);
     const [name, setName] = useState('');
     const [officialName, setOfficialName] = useState('');
@@ -94,7 +94,7 @@ const CountryEdit = () => {
         
     return (
         <>
-            <Header headerMenu={headerMenu} headerAuth={headerAuth} />
+            <Header headerMenu={headerMenu} authchecker={authchecker} />
             <h2>国編集</h2>
             <CountryForm 
                 currenciesList={currenciesList}
