@@ -12,8 +12,8 @@ const HeritageEdit = () => {
     const countryId = parseInt(url.split('/')[2]);
     const heritageId = parseInt(url.split('/')[4]);
     const history = useHistory();
-    const headerMenu = {'menu1':false, 'menu2':false, 'menu3':false, 'menu4':false, 'menu5':false};
-    const headerAuth = true;
+    const headerMenu = {'menu1':false, 'menu2':false, 'menu3':false, 'menu4':false, 'menu5':false, 'check':false};
+    const authchecker = 'user';
     const [name, setName] = useState('');
     const [entranceFee, setEntranceFee] = useState('');
     const [existImages, setExistImages] = useState([]);
@@ -102,7 +102,7 @@ const HeritageEdit = () => {
     
     return (
         <>
-            <Header headerMenu={headerMenu} headerAuth={headerAuth} />
+            <Header headerMenu={headerMenu} authchecker={authchecker} />
             <h2>世界遺産編集</h2>
             <HeritageForm 
                 name={name}

@@ -16,19 +16,28 @@ class UsersTableSeeder extends Seeder
         
         $params = [
             [
-                'name' => 'ゲスト',
-                'email' => 'guest@guest.com',
+                'name' => '管理者',
+                'email' => 'admin@admin.com',
                 // 'image' => 'no-profile.png',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('admin-password'),
                 'remember_token' => Str::random(60),
                 'created_at' => $now,
                 'updated_at' => $now
             ],
             [
-                'name' => 'テスト',
-                'email' => 'test@test.com',
+                'name' => 'ユーザー1',
+                'email' => 'test1@test.com',
                 // 'image' => 'no-profile.png',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('testpassword1'),
+                'remember_token' => Str::random(60),
+                'created_at' => $now,
+                'updated_at' => $now
+            ],
+            [
+                'name' => 'ユーザー2',
+                'email' => 'test2@test.com',
+                // 'image' => 'no-profile.png',
+                'password' => Hash::make('testpassword2'),
                 'remember_token' => Str::random(60),
                 'created_at' => $now,
                 'updated_at' => $now

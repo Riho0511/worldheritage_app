@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import { Header, RankTable } from '../parts/index';
 
 
 const Ranking = () => {
     const history = useHistory();
-    const [authId, setAuthId] = useState(0);
-    const headerMenu = authId !== 1 ? {'menu1':false, 'menu2':false, 'menu3':true, 'menu4':true, 'menu5':false}
-                                    : {'menu1':false, 'menu2':false, 'menu3':false, 'menu4':false, 'menu5':false};
-    const headerAuth = authId !== 1 ? true : false;
+    const [authchecker, setAuthchecker] = useState('');
+    const headerMenu = {'menu1':false, 'menu2':false, 'menu3':false, 'menu4':false, 'menu5':false, 'check':false};
     const [niceCountries, setNiceCountries] = useState([]);
     const [niceHeritages, setNiceHeritages] = useState([]);
     const [collectCountries, setCollectCountries] = useState([]);
@@ -19,20 +17,31 @@ const Ranking = () => {
     useEffect(() => {
         const getData = async () => {
             const res = await axios.get('/api/ranking');
-            setAuthId(res.data.auth);
             setNiceCountries(res.data.niceCountries);
             setNiceHeritages(res.data.niceHeritages);
             setCollectCountries(res.data.collectCountries);
             setCollectHeritages(res.data.collectHeritages);
+            
+            switch (res.data.auth) {
+                case null:
+                    setAuthchecker('guest');
+                    break;
+                case 1:
+                    setAuthchecker('admin');
+                    break;
+                default:
+                    setAuthchecker('user');
+                    break;
+            }
         };
         
         getData();
-    }, [setAuthId, setNiceCountries, setNiceHeritages, setCollectCountries, setCollectHeritages]);
+    }, []);
     
     
     return (
         <>
-            <Header headerMenu={headerMenu} headerAuth={headerAuth} />
+            <Header headerMenu={headerMenu} authchecker={authchecker} />
             <h2>みんなのベスト3</h2>
             <div className="ranking_tables">
                 <div className="table_split">

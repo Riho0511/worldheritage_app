@@ -8,8 +8,8 @@ import Stack from '@mui/material/Stack';
 
 const CurrenciesEdit = () => {
     const history = useHistory();
-    const headerMenu = {'menu1':false, 'menu2':false, 'menu3':false, 'menu4':false, 'menu5':false};
-    const headerAuth = true;
+    const headerMenu = {'menu1':false, 'menu2':false, 'menu3':false, 'menu4':false, 'menu5':false, 'check':false};
+    const authchecker = 'admin';
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [open, setOpen] = useState(false);
@@ -38,7 +38,7 @@ const CurrenciesEdit = () => {
             .post('/api/currency', { data: checked })
             .then(response => {
                 history.push({
-                    pathname: '/',
+                    pathname: '/home',
                     state: response.data,
                 });
             })
@@ -50,7 +50,7 @@ const CurrenciesEdit = () => {
     
     return (
         <>
-            <Header headerMenu={headerMenu} headerAuth={headerAuth} />
+            <Header headerMenu={headerMenu} authchecker={authchecker} />
             <div className="currencies_edit">
                 <h2>通貨編集</h2>
                 <p className="error-message">削除する通貨にチェックを入れてください。</p>
@@ -60,7 +60,7 @@ const CurrenciesEdit = () => {
             <footer className="buttons">
                 <Stack spacing={2}>
                     <Button color="error" onClick={() => handleOpen()} variant="contained">削除</Button>
-                    <Button variant="outlined" component={Link} to="/">戻る</Button>
+                    <Button variant="outlined" component={Link} to="/home">戻る</Button>
                 </Stack>
             </footer>
         </>

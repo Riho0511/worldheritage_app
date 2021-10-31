@@ -21,6 +21,7 @@ require('./components/Heritage');
 require('./components/HeritageCreate');
 require('./components/HeritageEdit');
 require('./components/Home');
+require('./components/Login');
 require('./components/Mypage');
 require('./components/Ranking');
 require('./components/State');
