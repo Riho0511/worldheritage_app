@@ -42,18 +42,6 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
     
-    // ゲストユーザーログイン
-    private const GUEST_USER_ID = 1;
-
-     public function guestLogin()
-    {
-        if (Auth::loginUsingId(self::GUEST_USER_ID)) {
-            return redirect('/');
-        }
-
-        return redirect('/');
-    }
-    
     // ログアウト
     protected function loggedOut(Request $request)
     {

@@ -5,14 +5,12 @@ import Paper from '@mui/material/Paper';
 import { Link, useParams } from 'react-router-dom';
 import { Header } from '../parts/index'; 
 
-// alert
+
 const State = () => {
     const stateId = parseInt(useParams().id);
-    const [authId, setAuthId] = useState(0);
+    const [authchecker, setAuthchecker] = useState('');
     const [countries, setCountries] = useState([]);
-    const headerMenu = authId !== 1 ? {'menu1':false, 'menu2':true, 'menu3':false, 'menu4':false, 'menu5':false}
-                                    : {'menu1':false, 'menu2':false, 'menu3':false, 'menu4':false, 'menu5':false};
-    const headerAuth = authId !== 1 ? true : false;
+    const headerMenu = authchecker === 'admin' && {'menu1':false, 'menu2':true, 'menu3':false, 'menu4':false, 'menu5':false, 'check':true};
     const [state, setState] = useState('');
     const [collected, setCollected] = useState([]);
     
@@ -41,18 +39,28 @@ const State = () => {
         const getData = async () => {
             const res = await axios.get(`/api/country/state/${stateId}`);
             setCountries(res.data.countries);
-            setAuthId(res.data.auth);
             setCollected(res.data.collected);
+            switch (res.data.auth) {
+                case null:
+                    setAuthchecker('guest');
+                    break;
+                case 1:
+                    setAuthchecker('admin');
+                    break;
+                default:
+                    setAuthchecker('user');
+                    break;
+            }
         };
         
         getData();
         setStateName(stateId);
-    }, [setCountries, setAuthId, setCollected]);
+    }, []);
         
         
     return (
         <>
-            <Header headerMenu={headerMenu} headerAuth={headerAuth} state={stateId} />
+            <Header headerMenu={headerMenu} authchecker={authchecker} state={stateId} />
             <div className="countries">
                 <h2>{state}</h2>
                 {countries.length === 0 ? 
@@ -68,7 +76,7 @@ const State = () => {
                 }
             </div>
             <footer>
-                <Button variant="outlined" component={Link} to="/">州を選ぶ</Button>
+                <Button variant="outlined" component={Link} to="/home">州を選ぶ</Button>
             </footer>
         </>
     );

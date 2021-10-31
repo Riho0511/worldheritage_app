@@ -7,16 +7,24 @@ import { AlertInfo, Header } from '../parts/index';
 const Home = () => {
     const location = useLocation();
     const message = location.state;
-    const [authId, setAuthId] = useState(0);
-    const headerMenu = authId !== 1 ? {'menu1':true, 'menu2':false, 'menu3':false, 'menu4':false, 'menu5':false}
-                                    : {'menu1':false, 'menu2':false, 'menu3':false, 'menu4':false, 'menu5':false};
-    const headerAuth = authId !== 1 ? true : false;
+    const [authchecker, setAuthchecker] = useState('');
+    const headerMenu = authchecker === 'admin' && {'menu1':true, 'menu2':false, 'menu3':false, 'menu4':false, 'menu5':false, 'check':true};
     
     
     useEffect(() => {
         const getData = async () => {
-            const res = await axios.get(`/api`);
-            setAuthId(res.data.auth);
+            const res = await axios.get(`/api/home`);
+            switch (res.data.auth) {
+                case null:
+                    setAuthchecker('guest');
+                    break;
+                case 1:
+                    setAuthchecker('admin');
+                    break;
+                default:
+                    setAuthchecker('user');
+                    break;
+            }
         };
         
         getData();
@@ -25,7 +33,7 @@ const Home = () => {
     
     return (
         <>
-            <Header headerMenu={headerMenu} headerAuth={headerAuth} />
+            <Header headerMenu={headerMenu} authchecker={authchecker} />
             
             {/* 削除通知アラート */}
             {message !== undefined && 

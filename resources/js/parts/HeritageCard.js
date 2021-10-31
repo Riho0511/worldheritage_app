@@ -33,6 +33,12 @@ const useStyles3 = makeStyles({
         fontSize: 20,
         marginTop: '0.35em'
     },
+    collected: {
+        color: "rgb(248, 155, 48)",
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginTop: '0.35em'
+    }
 });
 
 
@@ -53,7 +59,7 @@ const HeritageCard = (props) => {
                 alt={props.heritageName + 'の画像'}
             />
             <CardContent className={classes2.root}>
-                <Typography className={classes3.root} gutterBottom variant="h5" component="p">
+                <Typography className={props.collected ? classes3.collected : classes3.root} gutterBottom variant="h5" component="p">
                     {props.heritageName}
                 </Typography>
             </CardContent>
