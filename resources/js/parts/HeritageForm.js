@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { makeStyles } from '@mui/styles';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
@@ -9,8 +10,18 @@ const Input = styled('input')({
   display: 'none',
 });
 
+const useStyles = makeStyles({
+    root: {
+        border: "2px solid blue",
+        borderRadius: 4,
+        height: 55,
+        margin: 0,
+    },
+});
+
 
 const HeritageForm = (props) => {
+    const classes = useStyles();
     const [errorNameCheck, setErrorNameCheck] = useState(false);
     const [errorNameMessage, setErrorNameMessage] = useState('');
     const [errorEntranceFeeCheck, setErrorEntranceFeeCheck] = useState(false);
@@ -80,6 +91,7 @@ const HeritageForm = (props) => {
                     <TextField
                         autoComplete='off'
                         autoFocus={true}
+                        className={classes.root}
                         error={errorNameCheck}
                         fullWidth={true}
                         helperText={errorNameMessage}
@@ -94,6 +106,7 @@ const HeritageForm = (props) => {
                     <p className="warning">数字入力</p>
                     <TextField
                         autoComplete='off'
+                        className={classes.root}
                         error={errorEntranceFeeCheck}
                         fullWidth={true}
                         helperText={errorEntranceFeeMessage}

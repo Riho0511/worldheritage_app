@@ -11,7 +11,7 @@ const AlertInfo = (props) => {
     const [open, setOpen] = useState(true);
 
     return (
-        <Box sx={{ width: '45vw', position: 'absolute' }}>
+        <Box sx={{ width: '45vw', position: 'fixed', top: '70px', left: '10px', zIndex: 99 }}>
             <Collapse in={open}>
                 <Alert
                     action={

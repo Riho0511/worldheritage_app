@@ -1,3 +1,4 @@
+export { default as CommentList } from './CommentList';
 export { default as Country } from './Country';
 export { default as CountryCreate } from './CountryCreate';
 export { default as CountryEdit } from './CountryEdit';

@@ -43,6 +43,7 @@ const HeritageCreate = () => {
             data.append('images[' + index + ']', file);
         });
         const headers = { "content-type": "multipart/form-data" };
+        
         await axios
             .post('/api/heritage', data, { headers })
             .then(response => {

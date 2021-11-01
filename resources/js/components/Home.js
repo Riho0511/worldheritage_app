@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useLocation } from 'react-router-dom';
-import { AlertInfo, Header } from '../parts/index'; 
+import { AlertInfo, Header } from '../parts/index';
 
 
 const Home = () => {

@@ -30,4 +30,8 @@ class Heritage extends Model
     public function nices() {
         return $this->hasMany('App\Nice');
     }
+    
+    public function comments() {
+        return $this->hasMany('App\Comment');
+    }
 }

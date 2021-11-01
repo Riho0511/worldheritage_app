@@ -53,7 +53,7 @@ const CurrenciesEdit = () => {
             <Header headerMenu={headerMenu} authchecker={authchecker} />
             <div className="currencies_edit">
                 <h2>通貨編集</h2>
-                <p className="error-message">削除する通貨にチェックを入れてください。</p>
+                <p className="error-message">削除する通貨にチェックを入れてください</p>
                 <CurrenciesList currenciesList={currenciesList} checked={checked} setChecked={setChecked} />
             </div>
             <CheckModal open={open} handleClose={handleClose} deleted={deleted} />

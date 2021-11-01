@@ -13,6 +13,7 @@ require('./bootstrap');
  */
 
 require('./components/App');
+require('./components/CommentList');
 require('./components/Country');
 require('./components/CountryCreate');
 require('./components/CountryEdit');
@@ -29,6 +30,7 @@ require('./components/index');
 
 require('./parts/AlertInfo');
 require('./parts/CheckModal');
+require('./parts/Comment');
 require('./parts/CountryForm');
 require('./parts/CountryInformation');
 require('./parts/CurrenciesList');
@@ -37,6 +39,7 @@ require('./parts/Header');
 require('./parts/HeritageCard');
 require('./parts/HeritageForm');
 require('./parts/HeritageInformation');
+require('./parts/PostComment');
 require('./parts/RankTable');
 require('./parts/SwiperImages');
 require('./parts/index');
