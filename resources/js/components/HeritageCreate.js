@@ -43,6 +43,7 @@ const HeritageCreate = () => {
             data.append('images[' + index + ']', file);
         });
         const headers = { "content-type": "multipart/form-data" };
+        
         await axios
             .post('/api/heritage', data, { headers })
             .then(response => {
@@ -71,7 +72,7 @@ const HeritageCreate = () => {
                 setImages={setImages}
             />
             {images.length > 0 &&
-                <p>現在選択されている画像 {images.length}枚</p>
+                <p className="white">現在選択されている画像 {images.length}枚</p>
             }
             <footer className="mt15 buttons">
                 <Stack spacing={2}>

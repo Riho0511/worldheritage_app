@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { 
+    CommentList,
     Country, 
     CountryCreate, 
     CountryEdit, 
@@ -12,6 +13,7 @@ import {
     Home,
     Login,
     Mypage,
+    MypageEdit,
     Ranking,
     State 
 } from './index'; 
@@ -24,11 +26,13 @@ function App() {
                     <Route exact path="/" component={Login} />
                     <Route exact path="/home" component={Home} />
                     <Route exact path="/mypage" component={Mypage} />
+                    <Route exact path="/mypage/edit" component={MypageEdit} />
                     <Route exact path="/ranking" component={Ranking} />
                     <Route exact path="/country/currency/list" component={CurrenciesEdit} />
                     <Route path="/country/state/:id" component={State} />
                     <Route path="/country/:id/heritage/create" component={HeritageCreate} />
                     <Route path="/country/:id/heritage/:id/edit" component={HeritageEdit} />
+                    <Route path="/country/:id/heritage/:id/comments" component={CommentList} />
                     <Route path="/country/:id/heritage/:id" component={Heritage} />
                     <Route path="/country/create/:id" component={CountryCreate} />
                     <Route path="/country/:id/edit" component={CountryEdit} />

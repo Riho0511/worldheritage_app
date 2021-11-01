@@ -10,8 +10,8 @@ const CountryEdit = () => {
     const history = useHistory();
     const countryId = parseInt(useParams().id);
     let stateId = useLocation().search.split('=')[1];
-    const headerMenu = {'menu1':false, 'menu2':false, 'menu3':false, 'menu4':false, 'menu5':false, 'check':false};
     const authchecker = 'user';
+    const headerMenu = {'menu1':false, 'menu2':false, 'menu3':false, 'menu4':false, 'menu5':false, 'check':false};
     const [currenciesList, setCurrenciesList] = useState([]);
     const [name, setName] = useState('');
     const [officialName, setOfficialName] = useState('');
@@ -21,6 +21,17 @@ const CountryEdit = () => {
     const [timeDifference, setTimeDifference] = useState('');
     const [planeMovement, setPlaneMovement] = useState('');
     const [state, setState] = useState('');
+    const [errorNameCheck, setErrorNameCheck] = useState(false);
+    const [errorNameMessage, setErrorNameMessage] = useState('');
+    const [errorOfficialNameCheck, setErrorOfficialNameCheck] = useState(false);
+    const [errorOfficialNameMessage, setErrorOfficialNameMessage] = useState('');
+    const [errorCapitalCheck, setErrorCapitalCheck] = useState(false);
+    const [errorCapitalMessage, setErrorCapitalMessage] = useState('');
+    const [errorCurrenciesCheck, setErrorCurrenciesCheck] = useState(false);
+    const [errorTimeDifferenceCheck, setErrorTimeDifferenceCheck] = useState(false);
+    const [errorTimeDifferenceMessage, setErrorTimeDifferenceMessage] = useState('');
+    const [errorPlaneMovementCheck, setErrorPlaneMovementCheck] = useState(false);
+    const [errorPlaneMovementMessage, setErrorPlaneMovementMessage] = useState('');
     
     
     useEffect(() => {
@@ -43,51 +54,85 @@ const CountryEdit = () => {
         getData();
     }, []);
     
-    // 空欄チェック
+     // 空欄チェック
     const postCheck = (...prop) => {
         let check = false;
+        let array = [];
         prop.forEach(p => {
             if (p.length == 0) {
                 check = true;
+                array.push(true);
+            } else {
+                array.push(false);
             }
-        })
-        return check;
-    }
+        });
+        array.push(check);
+        return array;
+    };
     
     // 国アップデート
     const updateCountry = useCallback(async (name, officialName, capital, currencies, newCurrencies, timeDifference, planeMovement, state) => {
         
         // 空欄がある場合は実行しない
         const check = postCheck(name, officialName, capital, timeDifference, planeMovement);
-        if (check) {
+        if (check.slice(-1)[0]) {
+            for (let i=0; i < check.length-1; i++) {
+                if (check[i]) {
+                    switch (i) {
+                        case 0:
+                            setErrorNameCheck(true);
+                            setErrorNameMessage('国名を入力してください');
+                            break;
+                        case 1:
+                            setErrorOfficialNameCheck(true);
+                            setErrorOfficialNameMessage('正式名称を入力してください');
+                            break;
+                        case 2: 
+                            setErrorCapitalCheck(true);
+                            setErrorCapitalMessage('首都を入力してください');
+                            break;
+                        case 3:
+                            setErrorTimeDifferenceCheck(true);
+                            setErrorTimeDifferenceMessage('時差を入力してください');
+                            break;
+                        case 4:
+                            setErrorPlaneMovementCheck(true);
+                            setErrorPlaneMovementMessage('飛行機時間を入力してください');
+                            break;
+                    }
+                }
+            }
             return;
         }
         
+        // 通貨が登録されていない場合は実行しない
         if (currencies.length == 0 && newCurrencies.length == 0) {
+            setErrorCurrenciesCheck(true);
             return;
         }
         
         const data = {
             name: name,
-            officialName: officialName,
+            official_name: officialName,
             capital: capital,
             currencies: currencies,
-            newCurrencies: newCurrencies,
-            timeDifference: timeDifference, 
-            planeMovement: planeMovement,
+            new_currencies: newCurrencies,
+            time_difference: timeDifference, 
+            plane_movement: planeMovement,
             state: state
-        }
+        };
         
         await axios
             .put('/api/country/' + countryId, { data: data })
             .then(response => {
                 history.push({
                     pathname: '/country/' + countryId,
-                    state: response.data,
+                    state: response.data.message,
                 });
             })
             .catch(error => {
-                console.log(error)
+                alert('国情報の更新に失敗しました');
+                console.log(error);
             });
     });
         
@@ -98,23 +143,25 @@ const CountryEdit = () => {
             <h2>国編集</h2>
             <CountryForm 
                 currenciesList={currenciesList}
-                name={name}
-                setName={setName}
-                officialName={officialName}
-                setOfficialName={setOfficialName}
-                capital={capital}
-                setCapital={setCapital}
-                currencies={currencies}
-                setCurrencies={setCurrencies}
-                newCurrencies={newCurrencies}
-                setNewCurrencies={setNewCurrencies}
-                timeDifference={timeDifference}
-                setTimeDifference={setTimeDifference}
-                planeMovement={planeMovement}
-                setPlaneMovement={setPlaneMovement}
-                state={state}
-                setState={setState}
-                stateId={stateId}
+                name={name} setName={setName}
+                officialName={officialName} setOfficialName={setOfficialName}
+                capital={capital} setCapital={setCapital}
+                currencies={currencies} setCurrencies={setCurrencies}
+                newCurrencies={newCurrencies} setNewCurrencies={setNewCurrencies}
+                timeDifference={timeDifference} setTimeDifference={setTimeDifference}
+                planeMovement={planeMovement} setPlaneMovement={setPlaneMovement}
+                state={state} setState={setState} stateId={stateId}
+                errorNameCheck={errorNameCheck} setErrorNameCheck={setErrorNameCheck}
+                errorNameMessage={errorNameMessage} setErrorNameMessage={setErrorNameMessage}
+                errorOfficialNameCheck={errorOfficialNameCheck}  setErrorOfficialNameCheck={setErrorOfficialNameCheck}
+                errorOfficialNameMessage={errorOfficialNameMessage} setErrorOfficialNameMessage={setErrorOfficialNameMessage}
+                errorCapitalCheck={errorCapitalCheck} setErrorCapitalCheck={setErrorCapitalCheck}
+                errorCapitalMessage={errorCapitalMessage} setErrorCapitalMessage={setErrorCapitalMessage}
+                errorCurrenciesCheck={errorCurrenciesCheck} setErrorCurrenciesCheck={setErrorCurrenciesCheck}
+                errorTimeDifferenceCheck={errorTimeDifferenceCheck}  setErrorTimeDifferenceCheck={setErrorTimeDifferenceCheck}
+                errorTimeDifferenceMessage={errorTimeDifferenceMessage} setErrorTimeDifferenceMessage={setErrorTimeDifferenceMessage}
+                errorPlaneMovementCheck={errorPlaneMovementCheck} setErrorPlaneMovementCheck={setErrorPlaneMovementCheck}
+                errorPlaneMovementMessage={errorPlaneMovementMessage} setErrorPlaneMovementMessage={setErrorPlaneMovementMessage}
             />
             <footer className="buttons">
                 <Stack spacing={2}>

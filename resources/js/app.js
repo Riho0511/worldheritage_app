@@ -13,6 +13,7 @@ require('./bootstrap');
  */
 
 require('./components/App');
+require('./components/CommentList');
 require('./components/Country');
 require('./components/CountryCreate');
 require('./components/CountryEdit');
@@ -23,12 +24,14 @@ require('./components/HeritageEdit');
 require('./components/Home');
 require('./components/Login');
 require('./components/Mypage');
+require('./components/MypageEdit');
 require('./components/Ranking');
 require('./components/State');
 require('./components/index');
 
 require('./parts/AlertInfo');
 require('./parts/CheckModal');
+require('./parts/Comment');
 require('./parts/CountryForm');
 require('./parts/CountryInformation');
 require('./parts/CurrenciesList');
@@ -37,6 +40,9 @@ require('./parts/Header');
 require('./parts/HeritageCard');
 require('./parts/HeritageForm');
 require('./parts/HeritageInformation');
+require('./parts/MyCard');
+require('./parts/MyList');
+require('./parts/PostComment');
 require('./parts/RankTable');
 require('./parts/SwiperImages');
 require('./parts/index');

@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'image', 'password'
     ];
 
     /**
@@ -45,5 +45,9 @@ class User extends Authenticatable
  
     public function nices() {
         return $this->hasMany('App\Nice');
+    }
+    
+    public function comments() {
+        return $this->hasMany('App\Comment');
     }
 }

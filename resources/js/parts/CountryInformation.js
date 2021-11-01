@@ -3,7 +3,7 @@ import React from 'react';
 const CountryInformation = (props) => {
     return (
         <>
-            <table>
+            <table className="country_information">
                 <tbody>
                     <tr>
                         <th>正式名称：</th>

@@ -26,6 +26,7 @@ Route::get('/api/home', 'CountryController@index');
 Route::get('/api/ranking', 'UserController@ranking');
 Route::get('/api/country/state/{state}', 'CountryController@state');
 Route::get('/api/country/{country}', 'CountryController@country');
+Route::get('/api/country/{country}/heritage/{heritage}/comments', 'CommentController@commentList');
 Route::get('/api/country/{country}/heritage/{heritage}', 'CountryController@heritage');
 
 // 会員限定
@@ -34,6 +35,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/api/currency', 'CurrencyController@delete'); // 管理者限定
     Route::post('/api/country', 'CountryController@store'); // 管理者限定
     Route::post('/api/heritage', 'HeritageController@store'); // 管理者限定
+    Route::post('/api/mypage/{user}/update', 'UserController@update');
+    Route::get('/api/mypage/edit', 'UserController@edit');
     Route::get('/api/country/currency/list', 'CurrencyController@list'); // 管理者限定
     Route::get('/api/country/create/{state}', 'CountryController@countryCreate'); // 管理者限定
     Route::put('/api/country/{country}',  'CountryController@update');
@@ -50,4 +53,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/api/heritage/{heritage}/user/{user}/unnice', 'NiceController@unniceHeritage');
     Route::post('/api/heritage/{heritage}/user/{user}/collect', 'CollectController@collectHeritage');
     Route::post('/api/heritage/{heritage}/user/{user}/nocollect', 'CollectController@nocollectHeritage');
+    Route::post('/api/heritage/{heritage}/user/{user}/comment', 'CommentController@comment');
+    Route::post('/api/heritage/{heritage}/user/{user}/comment/delete', 'CommentController@delete');
+    Route::post('/api/heritage/{heritage}/user/{user}/images', 'HeritageController@postImages');
 });
