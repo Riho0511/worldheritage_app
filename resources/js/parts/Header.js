@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { makeStyles } from '@mui/styles';
+import axios from 'axios';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import AppBar from '@mui/material/AppBar';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
@@ -20,19 +20,16 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
-
-const useStyles = makeStyles({
-    button: {
-        backgroundImage: 'linear-gradient(150deg, rgba(66, 6, 192, 1) 40%, rgba(101, 11, 166, 1) 68%, rgba(68, 10, 151, 1) 90%)',
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: 'rgb(30,30,35)'
     },
-    bar: {
-        backgroundImage: 'linear-gradient(150deg, rgba(3, 0, 180, 1) 10%, rgba(66, 6, 192, 1) 40%, rgba(101, 11, 166, 1) 68%, rgba(68, 10, 151, 1) 90%)',
-    }
+  }
 });
 
 
 const Header = (props) => {
-    const classes = useStyles();
     const headerMenu = props.headerMenu;
     const [moreAnchorEl, setMoreAnchorEl] = useState(null);
     const isMenuOpen = Boolean(moreAnchorEl);
@@ -176,84 +173,54 @@ const Header = (props) => {
 
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static" className={classes.bar}>
-                <Toolbar>
-                    {props.authchecker !== 'guest' && 
-                        <IconButton
-                            size="large"
-                            edge="start"
-                            color="inherit"
-                            sx={{ mr: 2 }}
-                            onClick={handleMenuOpen}
-                        >
-                            <MenuIcon />
-                        </IconButton>
-                    }
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="div"
-                        onClick={() => toHome()}
-                    >
-                        世界遺産アプリ
-                    </Typography>
-                    <Box sx={{ flexGrow: 1 }} />
-                    {props.authchecker === 'guest' &&
-                        <Typography
-                            component="div"
-                            noWrap
-                            sx={{ mr: 2 }}
-                        >
-                            ようこそゲストさん！
-                        </Typography>
-                    }
-                    <Box sx={{ display: { xs: 'none', sm: 'flex' } }} className={classes.button}>
-                        {props.authchecker !== 'guest' &&
-                            <Button 
-                                variant={"contained"} 
-                                className={classes.button}
-                                component={Link}
-                                to="/mypage"
-                                startIcon={<AccountCircleIcon />}
+        <ThemeProvider theme={theme}>
+            <Box sx={{ flexGrow: 1 }}>
+                <AppBar position="fixed" color="primary">
+                    <Toolbar>
+                        {props.authchecker !== 'guest' && 
+                            <IconButton
+                                size="large" edge="start" color="inherit"
+                                sx={{ mr: 2 }} onClick={handleMenuOpen}
                             >
-                                マイページ
-                            </Button>
+                                <MenuIcon />
+                            </IconButton>
                         }
-                        <Button 
-                            variant={"contained"} 
-                            className={classes.button}
-                            component={Link}
-                            to="/ranking"
-                            startIcon={<FestivalIcon />}
+                        <Typography
+                            variant="h6" noWrap
+                            component="div" onClick={() => toHome()}
                         >
-                            ランキング
-                        </Button>
-                        <Button 
-                            variant={"contained"} 
-                            className={classes.button}
-                            startIcon={<LogoutIcon />}
-                            onClick={logout}
-                        >
-                            ログアウト
-                        </Button>
-                    </Box>
-                    <Box sx={{ display: { xs: 'flex', sm: 'none' } }}>
-                        <IconButton
-                            size="large"
-                            aria-controls={mobileMenuId}
-                            aria-haspopup="true"
-                            onClick={handleMobileMenuOpen}
-                            color="inherit"
-                        >
-                            <MoreIcon />
-                        </IconButton>
-                    </Box>
-                </Toolbar>
-            </AppBar>
-            {renderMenu}
-            {renderMobileMenu}
-        </Box>
+                            世界遺産アプリ
+                        </Typography>
+                        <Box sx={{ flexGrow: 1 }} />
+                        {props.authchecker === 'guest' &&
+                            <Typography component="div" noWrap sx={{ mr: 2 }} >
+                                ようこそゲストさん！
+                            </Typography>
+                        }
+                        <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
+                            {props.authchecker !== 'guest' &&
+                                <Button variant={"contained"} component={Link} to="/mypage" startIcon={<AccountCircleIcon />}>
+                                    マイページ
+                                </Button>
+                            }
+                            <Button variant={"contained"} component={Link} to="/ranking" startIcon={<FestivalIcon />}>
+                                ランキング
+                            </Button>
+                            <Button variant={"contained"} startIcon={<LogoutIcon />} onClick={logout}>
+                                ログアウト
+                            </Button>
+                        </Box>
+                        <Box sx={{ display: { xs: 'flex', sm: 'none' } }}>
+                            <IconButton size="large" aria-controls={mobileMenuId} aria-haspopup="true" onClick={handleMobileMenuOpen} color="inherit">
+                                <MoreIcon />
+                            </IconButton>
+                        </Box>
+                    </Toolbar>
+                </AppBar>
+                {renderMenu}
+                {renderMobileMenu}
+            </Box>
+        </ThemeProvider>
     );
 };
 

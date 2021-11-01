@@ -1,4 +1,5 @@
 import React from 'react';
+import { makeStyles } from '@mui/styles';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -8,7 +9,17 @@ import Checkbox from '@mui/material/Checkbox';
 import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
 
+const useStyles = makeStyles({
+   root: {
+       backgroundColor: 'rgb(40,40,45)',
+       color: 'rgb(255,255,255)',
+   } 
+});
+
+
 const CurrenciesList = (props) => {
+    const classes = useStyles();
+    
     
     // チェックボックスの切り替え
     const handleToggle = (value) => () => {
@@ -26,7 +37,7 @@ const CurrenciesList = (props) => {
     
     
     return (
-        <List component={Paper} elevation={3}>
+        <List component={Paper} elevation={3} className={classes.root}>
             {props.currenciesList.map((currency, index) => {
                 return (
                     <div key={currency.id}>

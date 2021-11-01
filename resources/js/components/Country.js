@@ -10,9 +10,15 @@ import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import { AlertInfo, CheckModal, CountryInformation, Header, HeritageCard } from '../parts/index';
 
 const useStyles = makeStyles({
-   root: {
-       justifyContent: 'center',
-   } 
+    root: {
+        justifyContent: 'center',
+    },
+    paper: {
+        backgroundColor: 'rgb(40,40,45)',
+        height: 40,
+        margin: '0 auto 20px',
+        maxWidth: 330,
+    } 
 });
 
 
@@ -34,6 +40,9 @@ const Country = () => {
     const [images, setImages] = useState([]);
     const [niced, setNiced] = useState(false);
     const [collected, setCollected] = useState(false);
+    const [heritageCollected, setHeritageCollected] = useState([]);
+    const [niceCount, setNiceCount] = useState(0);
+    const [collectCount, setCollectCount] = useState(0);
     
     
     useEffect(() => {
@@ -44,6 +53,9 @@ const Country = () => {
             setCurrencies(res.data.currencies);
             setImages(res.data.images);
             setAuthId(res.data.auth);
+            setHeritageCollected(res.data.heritageCollected);
+            setNiceCount(res.data.niceCount);
+            setCollectCount(res.data.collectCount);
             
             switch (res.data.auth) {
                 case null:
@@ -93,11 +105,13 @@ const Country = () => {
         await axios
             .post('/api/country/' + countryId + '/user/' + authId + '/collect')
             .then(response => {
+                setCollected(true);
+                const cc = collectCount + 1;
+                setCollectCount(cc);
                 history.push({
                     pathname: '/country/' + countryId,
                     state: response.data,
                 });
-                setCollected(true);
             })
             .catch(error => {
                 console.log(error);
@@ -109,11 +123,13 @@ const Country = () => {
         await axios
             .post('/api/country/' + countryId+ '/user/' + authId + '/nocollect')
             .then(response => {
+                setCollected(false);
+                const cc = collectCount - 1;
+                setCollectCount(cc);
                 history.push({
                     pathname: '/country/' + countryId,
                     state: response.data,
                 });
-                setCollected(false);
             })
             .catch(error => {
                 console.log(error);
@@ -125,11 +141,13 @@ const Country = () => {
         await axios
             .post('/api/country/' + countryId + '/user/' + authId + '/nice')
             .then(response => {
+                setNiced(true);
+                const nc = niceCount + 1;
+                setNiceCount(nc);
                 history.push({
                     pathname: '/country/' + countryId,
                     state: response.data,
                 });
-                setNiced(true);
             })
             .catch(error => {
                 console.log(error);
@@ -141,11 +159,13 @@ const Country = () => {
         await axios
             .post('/api/country/' + countryId + '/user/' + authId + '/unnice')
             .then(response => {
+                setNiced(false);
+                const nc = niceCount - 1;
+                setNiceCount(nc);
                 history.push({
                     pathname: '/country/' + countryId,
                     state: response.data,
                 });
-                setNiced(false);
             })
             .catch(error => {
                 console.log(error);
@@ -164,6 +184,7 @@ const Country = () => {
             
             <h2>{country.name}</h2>
             <CountryInformation
+                countryName={country.name}
                 officialName={country.official_name}
                 capital={country.capital}
                 currencies={currencies}
@@ -171,16 +192,20 @@ const Country = () => {
                 planeMovement={country.plane_movement}
             />
             {authchecker === 'guest' ?
-                <Button color="error" variant={niced ? "contained" : "outlined"} endIcon={<ThumbUpAltIcon />} onClick={niced ? () => setNiced(false) : () => setNiced(true)}>お気に入り</Button>
+                <Stack direction="row" spacing={1} className={classes.root}>
+                                <Button color="warning" variant={collected ? "contained" : "outlined"} endIcon={<AirplaneTicketIcon />} onClick={collected ? () => setCollected(false): () => setCollected(true)}>コレクト</Button>
+                                <Button color="error" variant={niced ? "contained" : "outlined"} endIcon={<ThumbUpAltIcon />} onClick={niced ? () => setNiced(false) : () => setNiced(true)}>お気に入り</Button>
+                            </Stack>
             :
                 <Stack direction="row" spacing={1} className={classes.root}>
                     <Button color="warning" variant={collected ? "contained" : "outlined"} endIcon={<AirplaneTicketIcon />} onClick={collected ? () => nocollect() : () => collect()}>コレクト</Button>
                     <Button color="error" variant={niced ? "contained" : "outlined"} endIcon={<ThumbUpAltIcon />} onClick={niced ? () => unnice() : () => nice()}>お気に入り</Button>
                 </Stack>
             }
+            <p className="count">「コレクト」{collectCount}件 「お気に入り」{niceCount}件</p>
             <div className="images-list">
-                {images.length === 0 ?
-                    <Paper className="noting-data" elevation={5}><p>登録されている世界遺産はありません</p></Paper>
+                {images.length == 0 ?
+                    <Paper className={classes.paper} elevation={5}><p className="noting-data">登録されている世界遺産はありません</p></Paper>
                 :
                     <div className="image-split">
                         {images.map((image, index) => {
@@ -189,7 +214,7 @@ const Country = () => {
                                     key={image.id} 
                                     image={image.image} 
                                     heritageName={heritages[index].name} 
-                                    collected={collected}
+                                    collected={heritageCollected.includes(image.heritage_id)}
                                     countryId={countryId} 
                                     heritageId={heritages[index].id} 
                                 />
@@ -202,7 +227,7 @@ const Country = () => {
             <footer>
                 <Stack direction="row" spacing={2} className={classes.root}>
                     <Button variant="outlined" component={Link} to={`/country/state/${country.state}`}>国を選ぶ</Button>
-                    <Button variant="outlined" component={Link} to="/">州を選ぶ</Button>
+                    <Button variant="outlined" component={Link} to="/home">州を選ぶ</Button>
                 </Stack>
                 {authchecker === 'admin' && 
                     <div className="mt15">

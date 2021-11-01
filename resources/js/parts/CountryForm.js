@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { makeStyles } from '@mui/styles';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -20,8 +21,18 @@ const MenuProps = {
     },
 };
 
+const useStyles = makeStyles({
+    root: {
+        border: "2px solid blue",
+        borderRadius: 4,
+        height: 55,
+        margin: 0,
+    },
+});
+
 
 const CountryForm = (props) => {
+    const classes = useStyles();
     const [checked, setChecked] = useState(false);
     const [errorNameCheck, setErrorNameCheck] = useState(false);
     const [errorNameMessage, setErrorNameMessage] = useState('');
@@ -134,11 +145,12 @@ const CountryForm = (props) => {
     return (
         <>
             <div className="create_country">
-                <div>
+                <div className="mb8">
                     <label className="required">国名</label>
                     <TextField
                         autoComplete='off'
                         autoFocus={true}
+                        className={classes.root}
                         error={errorNameCheck}
                         fullWidth={true}
                         helperText={errorNameMessage}
@@ -148,10 +160,11 @@ const CountryForm = (props) => {
                         value={props.name}
                     />
                 </div>
-                <div>
+                <div className="mb8">
                     <label className="required">正式名称</label>
                     <TextField
                         autoComplete='off'
+                        className={classes.root}
                         error={errorOfficialNameCheck}
                         fullWidth={true}
                         helperText={errorOfficialNameMessage}
@@ -161,10 +174,11 @@ const CountryForm = (props) => {
                         value={props.officialName}
                     />
                 </div>
-                <div>
+                <div className="mb8">
                     <label className="required">首都</label>
                     <TextField
                         autoComplete='off'
+                        className={classes.root}
                         error={errorCapitalCheck}
                         fullWidth={true}
                         helperText={errorCapitalMessage}
@@ -174,10 +188,11 @@ const CountryForm = (props) => {
                         value={props.capital}
                     />
                 </div>
-                <div>
+                <div className="mb8">
                     <label className="required">通貨</label>
                     <FormControl sx={{ m: 0, width: 290, height: 55 }}>
                         <Select
+                            className={classes.root}
                             error={errorCurrenciesCheck}
                             required
                             multiple
@@ -200,11 +215,12 @@ const CountryForm = (props) => {
                     </FormControl>
                 </div>
                 {checked &&
-                    <div>
+                    <div className="mb8">
                         <label>新たに追加する通貨</label>
                         <p className="warning">複数の通貨を追加する場合はカンマで区切る</p>
                         <TextField
                             autoComplete='off'
+                            className={classes.root}
                             fullWidth={true}
                             onChange={inputNewCurrencies}
                             type='text'
@@ -212,11 +228,12 @@ const CountryForm = (props) => {
                         />
                     </div>
                 }
-                <div>
+                <div className="mb8">
                     <label className="required">時差(時間)</label>
                     <p className="warning">数字入力</p>
                     <TextField
                         autoComplete='off'
+                        className={classes.root}
                         error={errorTimeDifferenceCheck}
                         fullWidth={true}
                         helperText={errorTimeDifferenceMessage}
@@ -226,11 +243,12 @@ const CountryForm = (props) => {
                         value={props.timeDifference}
                     />
                 </div>
-                <div>
+                <div className="mb8">
                     <label className="required">飛行機時間(時間)</label>
                     <p className="warning">数字入力</p>
                     <TextField
                         autoComplete='off'
+                        className={classes.root}
                         error={errorPlaneMovementCheck}
                         fullWidth={true}
                         helperText={errorPlaneMovementMessage}
@@ -240,7 +258,7 @@ const CountryForm = (props) => {
                         value={props.planeMovement}
                     />
                 </div>
-                <div>
+                <div className="mb8">
                     <FormControl component="fieldset" fullWidth={true}>
                         <label className="required">州</label>
                         <RadioGroup name="row-radio-buttons-group" defaultValue={props.stateId} onChange={handleState}>

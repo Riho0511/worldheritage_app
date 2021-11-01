@@ -8,6 +8,7 @@ use App\Currency;
 use App\Image;
 use App\Nice;
 use App\Collect;
+use App\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -77,13 +78,26 @@ class CountryController extends Controller
         foreach($col as $c) {
             array_push($heritageCollected, $c->heritage_id);
         }
-        $return_info = ['country' => $country, 'heritages' => $heritages, 'currencies' => $currencies, 'images' => $images, 'auth' => $auth, 'niced' => $niced, 'collected' => $collected, 'heritageCollected' => $heritageCollected];
+        $niceCount = $nice->where('country_id', $country->id)->count();
+        $collectCount = $collect->where('country_id', $country->id)->count();
         
+        $return_info = [
+            'country' => $country, 
+            'heritages' => $heritages, 
+            'currencies' => $currencies, 
+            'images' => $images, 
+            'auth' => $auth, 
+            'niced' => $niced, 
+            'collected' => $collected, 
+            'heritageCollected' => $heritageCollected,
+            'niceCount' => $niceCount,
+            'collectCount' => $collectCount,
+        ];
         return response()->json($return_info);
     }
     
     // 世界遺産情報画面
-    public function heritage(Country $country, Heritage $heritage, Image $image, Nice $nice, Collect $collect) {
+    public function heritage(Country $country, Heritage $heritage, Image $image, Nice $nice, Collect $collect, Comment $comment) {
         $currency = $country->currencies()->first();
         $images = $image->where('heritage_id', $heritage->id)->get();
         if (Auth::check()) {
@@ -93,7 +107,22 @@ class CountryController extends Controller
         }
         $niced = $nice->where('heritage_id', $country->id)->where('user_id', $auth)->first();
         $collected = $collect->where('heritage_id', $country->id)->where('user_id', $auth)->first();
-        $return_info = ['country' => $country, 'heritage' => $heritage, 'currency' => $currency, 'images' => $images, 'state' => $country->state, 'auth' => $auth, 'niced' => $niced, 'collected' => $collected];
+        $comments = $comment->where('heritage_id', $heritage->id)->orderBy('created_at', 'desc')->get();
+        $niceCount = $nice->where('heritage_id', $heritage->id)->count();
+        $collectCount = $collect->where('heritage_id', $heritage->id)->count();
+        $return_info = [
+            'country' => $country, 
+            'heritage' => $heritage, 
+            'currency' => $currency, 
+            'images' => $images, 
+            'state' => $country->state, 
+            'auth' => $auth, 
+            'niced' => $niced, 
+            'collected' => $collected, 
+            'comments' => $comments,
+            'niceCount' => $niceCount,
+            'collectCount' => $collectCount,
+        ];
         
         return response()->json($return_info);
     }
