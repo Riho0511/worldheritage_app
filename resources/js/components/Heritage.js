@@ -329,7 +329,7 @@ const Heritage = () => {
                         <p className="count">「コレクト」{collectCount}件 「お気に入り」{niceCount}件</p>
                         </div>
                         <div>
-                            <LoadScript googleMapsApiKey="AIzaSyDJi4YBo3hyfZM5Gym2jj3CbEAtvzGUwQQ">
+                            <LoadScript googleMapsApiKey="*********"> // Google Maps APIkey
                                 <GoogleMap
                                     mapContainerStyle={containerStyle}
                                     center={{
