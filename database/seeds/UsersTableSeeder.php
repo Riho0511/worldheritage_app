@@ -18,7 +18,7 @@ class UsersTableSeeder extends Seeder
             [
                 'name' => '管理者',
                 'email' => 'admin@admin.com',
-                // 'image' => 'no-profile.png',
+                'image' => 'no-profile.png',
                 'password' => Hash::make('admin-password'),
                 'remember_token' => Str::random(60),
                 'created_at' => $now,
@@ -27,7 +27,7 @@ class UsersTableSeeder extends Seeder
             [
                 'name' => 'ユーザー1',
                 'email' => 'test1@test.com',
-                // 'image' => 'no-profile.png',
+                'image' => 'no-profile.png',
                 'password' => Hash::make('testpassword1'),
                 'remember_token' => Str::random(60),
                 'created_at' => $now,
@@ -36,7 +36,7 @@ class UsersTableSeeder extends Seeder
             [
                 'name' => 'ユーザー2',
                 'email' => 'test2@test.com',
-                // 'image' => 'no-profile.png',
+                'image' => 'no-profile.png',
                 'password' => Hash::make('testpassword2'),
                 'remember_token' => Str::random(60),
                 'created_at' => $now,

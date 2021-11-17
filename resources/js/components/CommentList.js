@@ -29,6 +29,8 @@ const CommentList = () => {
     const [authchecker, setAuthchecker] = useState('');
     const headerMenu = {'menu1':false, 'menu2':false, 'menu3':false, 'menu4':false, 'menu5':false, 'check':false};
     const [comments, setComments] = useState([]);
+    const [commentUsername, setCommentUsername] = useState([]);
+    const [commentAvatar, setCommentAvatar] = useState([]);
     
     
     useEffect(() => {
@@ -36,6 +38,8 @@ const CommentList = () => {
             const res = await axios.get(`/api/country/${countryId}/heritage/${heritageId}`);
             setAuthId(res.data.auth);
             setComments(res.data.comments);
+            setCommentUsername(res.data.commentsUsername);
+            setCommentAvatar(res.data.commentsAvatar);
             
             switch (res.data.auth) {
                 case null:
@@ -84,7 +88,7 @@ const CommentList = () => {
             
             <div className="comment_field">
                 <List sx={{ bgcolor: 'background.paper' }} className={classes.root}>
-                    <Comment comments={comments} authId={authId} deleteComment={deleteComment} />
+                    <Comment comments={comments} username={commentUsername} avatar={commentAvatar} authId={authId} deleteComment={deleteComment} />
                 </List>
             </div>
             <footer>

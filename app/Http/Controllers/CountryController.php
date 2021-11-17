@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Country;
 use App\Heritage;
 use App\Currency;
@@ -23,25 +24,25 @@ class CountryController extends Controller
         } else {
             $auth = null;
         }
-        $return_info = ['auth' => $auth];
         
+        $return_info = ['auth' => $auth];
         return response()->json($return_info);
     }
     
     // 州別国一覧画面
     public function state($state, Country $country, Collect $collect) {
-        $countries = $country->where('state', $state)->get();
         if (Auth::check()) {
             $auth = Auth::id();
         } else {
             $auth = null;
         }
-        $col = $collect->whereNotNull('country_id')->where('user_id', $auth)->get();
+        $countries = $country->where('state', $state)->get();
+        $collects = $collect->whereNotNull('country_id')->where('user_id', $auth)->get();
         $collected = [];
-        foreach($col as $c) {
+        foreach($collects as $c) {
             array_push($collected, $c->country_id);
         }
-        $return_info = ['countries' => $countries, 'auth' => $auth, 'collected' => $collected];
+        $return_info = ['auth' => $auth, 'collected' => $collected, 'countries' => $countries];
         
         return response()->json($return_info);
     }
@@ -49,7 +50,9 @@ class CountryController extends Controller
     // 国追加画面
     public function countryCreate(Currency $currency) {
         $currencies = $currency->get();
-        return response()->json($currencies);
+        
+        $return_info = ['currencies' => $currencies];
+        return response()->json($return_info);
     }
     
     // 世界遺産追加画面
@@ -108,6 +111,15 @@ class CountryController extends Controller
         $niced = $nice->where('heritage_id', $country->id)->where('user_id', $auth)->first();
         $collected = $collect->where('heritage_id', $country->id)->where('user_id', $auth)->first();
         $comments = $comment->where('heritage_id', $heritage->id)->orderBy('created_at', 'desc')->get();
+        $comments_username = [];
+        $comments_avatar = [];
+        foreach($comments as $comment) {
+            $user = new User;
+            $array1 = $user->where('id', $comment->user_id)->first()->name;
+            $array2 = $user->where('id', $comment->user_id)->first()->image;
+            array_push($comments_username, $array1);
+            array_push($comments_avatar, $array2);
+        }
         $niceCount = $nice->where('heritage_id', $heritage->id)->count();
         $collectCount = $collect->where('heritage_id', $heritage->id)->count();
         $return_info = [
@@ -120,6 +132,8 @@ class CountryController extends Controller
             'niced' => $niced, 
             'collected' => $collected, 
             'comments' => $comments,
+            'commentsUsername' => $comments_username,
+            'commentsAvatar' => $comments_avatar,
             'niceCount' => $niceCount,
             'collectCount' => $collectCount,
         ];
@@ -130,22 +144,36 @@ class CountryController extends Controller
     // 国保存
     public function store(Request $request, Country $country) {
         $now = Carbon::now();
-        $input = $request['data'];
-        $country_info['name'] = $input['name'];
-        $country_info['official_name'] = $input['officialName'];
-        $country_info['capital'] = $input['capital'];
-        $country_info['time_difference'] = $input['timeDifference'];
-        $country_info['plane_movement'] = $input['planeMovement'];
-        $country_info['state'] = $input['state'];
-        $exist_currencies = $input['currencies'];
-        $new_currencies = $input['newCurrencies'];
+        $country_info['name'] = $request['name'];
+        $country_info['official_name'] = $request['official_name'];
+        $country_info['capital'] = $request['capital'];
+        $country_info['time_difference'] = $request['time_difference'];
+        $country_info['plane_movement'] = $request['plane_movement'];
+        $country_info['state'] = $request['state'];
+        $exist_currencies = $request['currencies'];
+        $new_currencies = $request['new_currencies'];
         $country->fill($country_info)->save();
         
         // 既に存在している通貨から選択したものを登録
         if (!empty($exist_currencies)) {
-            foreach($exist_currencies as $exist) {
+            $return = array();
+            $word_array = array(',', '、', ' ', '　');
+            $array = array($exist_currencies);
+            foreach ($word_array as $value1){
+                foreach ($array as $key => $value2) {
+                    $return = array_merge($return, explode($value1, $value2));
+                    if(count($array) - 1 === $key) {
+                        $array = $return;
+                        $return = array();
+                    }
+                }
+            }
+            foreach($array as $new) {
+                if ($new == null) {
+                    continue;
+                }
                 $currency = new Currency;
-                $curId = $currency->where('unit', $exist)->first()->id;
+                $curId = $currency->where('unit', $new)->first()->id;
                 $country->currencies()->attach(
                     ['country_id' => $country->id],
                     ['currency_id' => $curId],
@@ -215,13 +243,13 @@ class CountryController extends Controller
         $now = Carbon::now();
         $input = $request['data'];
         $country_info['name'] = $input['name'];
-        $country_info['official_name'] = $input['officialName'];
+        $country_info['official_name'] = $input['official_name'];
         $country_info['capital'] = $input['capital'];
-        $country_info['time_difference'] = $input['timeDifference'];
-        $country_info['plane_movement'] = $input['planeMovement'];
+        $country_info['time_difference'] = $input['time_difference'];
+        $country_info['plane_movement'] = $input['plane_movement'];
         $country_info['state'] = $input['state'];
         $exist_currencies = $input['currencies'];
-        $new_currencies = $input['newCurrencies'];
+        $new_currencies = $input['new_currencies'];
         $country->fill($country_info)->save();
         
         // 既に存在している通貨から選択したものを登録
@@ -272,7 +300,8 @@ class CountryController extends Controller
             }
         }
         
-        return response()->json("国情報が更新されました！");
+        $return_info = ['message' => '国情報が更新されました！'];
+        return response()->json($return_info);
     }
     
     // 国削除
@@ -295,6 +324,6 @@ class CountryController extends Controller
         // 国削除
         $country->delete();
         
-        return response()->json("国情報が更新されました！");
+        return response()->json("国が削除されました！");
     }
 }

@@ -112,7 +112,7 @@ const HeritageEdit = () => {
                 setImages={setImages}
             />
             {images.length > 0 &&
-                <p>現在選択されている画像 {images.length}枚</p>
+                <p className="white">現在選択されている画像 {images.length}枚</p>
             }
             <DeleteImagesList existImages={existImages} setExistImages={setExistImages} />
             <footer className="mt15 buttons">

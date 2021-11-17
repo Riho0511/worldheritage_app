@@ -12,7 +12,6 @@ class Comment extends Model
     protected $fillable = [
         'heritage_id',
         'user_id',
-        'username',
         'rate',
         'comment',
         'anonymous',

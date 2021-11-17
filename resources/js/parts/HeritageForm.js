@@ -5,7 +5,6 @@ import Button from '@mui/material/Button';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import TextField from '@mui/material/TextField';
 
-let count=0;
 const Input = styled('input')({
   display: 'none',
 });
@@ -17,6 +16,12 @@ const useStyles = makeStyles({
         height: 55,
         margin: 0,
     },
+    bgColor: {
+        backgroundColor: 'rgb(60,60,60)',
+        '&:hover': {
+            backgroundColor: 'rgba(50,50,50,0.6)',
+        }
+    }
 });
 
 
@@ -39,7 +44,7 @@ const HeritageForm = (props) => {
         }
         setErrorNameMessage(error);
         props.setName(event.target.value);
-    }
+    };
     
     // 入場料入力
     const inputEntranceFee = (event) => {
@@ -55,20 +60,20 @@ const HeritageForm = (props) => {
     };
     
     // 写真プレビュー
-    const previewFile = (file, num) => {
-        const preview = document.getElementById('preview');
-        const reader = new FileReader();
+    // const previewFile = (file, num) => {
+    //     const preview = document.getElementById('preview');
+    //     const reader = new FileReader();
         
-        reader.onload = function (e) {
-            const imageUrl = e.target.result;
-            const img = document.createElement('img'); 
-            img.src = imageUrl;
-            img.setAttribute("id", `deleteImage${num}`);
-            img.setAttribute("onClick", `deleteImage(${num})`);
-            preview.appendChild(img);
-        }
-        reader.readAsDataURL(file);
-    }
+    //     reader.onload = function (e) {
+    //         const imageUrl = e.target.result;
+    //         const img = document.createElement('img'); 
+    //         img.src = imageUrl;
+    //         img.setAttribute("id", `deleteImage${num}`);
+    //         img.setAttribute("onClick", `deleteImage(${num})`);
+    //         preview.appendChild(img);
+    //     }
+    //     reader.readAsDataURL(file);
+    // }
     
     // 写真選択
     const selectImages = (e) => {
@@ -77,7 +82,6 @@ const HeritageForm = (props) => {
         for (let i=0; i < filesList.length; i++) {
             imgs.push(filesList[i]);
             // previewFile(filesList[i], count);
-            count++;
         }
         props.setImages(imgs);
     };
@@ -120,7 +124,7 @@ const HeritageForm = (props) => {
                     <label className="required">世界遺産画像</label>
                     <label htmlFor="contained-button-file" className="photo">
                         <Input accept="image/*" id="contained-button-file" multiple type="file" onChange={selectImages} />
-                        <Button color="inherit" variant="contained" component="span" startIcon={<PhotoCamera/>}>画像保存</Button>
+                        <Button color="inherit" variant="contained" component="span" startIcon={<PhotoCamera/>} className={classes.bgColor}>画像保存</Button>
                     </label>
                 </div>
                 <div id="preview"></div>

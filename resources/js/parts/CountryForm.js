@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@mui/styles';
-import MenuItem from '@mui/material/MenuItem';
+import Checkbox from '@mui/material/Checkbox';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import ListItemText from '@mui/material/ListItemText';
+import MenuItem from '@mui/material/MenuItem';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import Select from '@mui/material/Select';
-import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
 
 const ITEM_HEIGHT = 48;
@@ -34,17 +34,6 @@ const useStyles = makeStyles({
 const CountryForm = (props) => {
     const classes = useStyles();
     const [checked, setChecked] = useState(false);
-    const [errorNameCheck, setErrorNameCheck] = useState(false);
-    const [errorNameMessage, setErrorNameMessage] = useState('');
-    const [errorOfficialNameCheck, setErrorOfficialNameCheck] = useState(false);
-    const [errorOfficialNameMessage, setErrorOfficialNameMessage] = useState('');
-    const [errorCapitalCheck, setErrorCapitalCheck] = useState(false);
-    const [errorCapitalMessage, setErrorCapitalMessage] = useState('');
-    const [errorCurrenciesCheck, setErrorCurrenciesCheck] = useState(false);
-    const [errorTimeDifferenceCheck, setErrorTimeDifferenceCheck] = useState(false);
-    const [errorTimeDifferenceMessage, setErrorTimeDifferenceMessage] = useState('');
-    const [errorPlaneMovementCheck, setErrorPlaneMovementCheck] = useState(false);
-    const [errorPlaneMovementMessage, setErrorPlaneMovementMessage] = useState('');
     
     
     // 国名入力
@@ -52,11 +41,11 @@ const CountryForm = (props) => {
         let error = '';
         if (event.target.value === '') {
             error = '国名を入力してください';
-            setErrorNameCheck(true);
+            props.setErrorNameCheck(true);
         } else {
-            setErrorNameCheck(false);
+            props.setErrorNameCheck(false);
         }
-        setErrorNameMessage(error);
+        props.setErrorNameMessage(error);
         props.setName(event.target.value);
     };
     
@@ -65,11 +54,11 @@ const CountryForm = (props) => {
         let error = '';
         if (event.target.value === '') {
             error = '正式名称を入力してください';
-            setErrorOfficialNameCheck(true);
+            props.setErrorOfficialNameCheck(true);
         } else {
-            setErrorOfficialNameCheck(false);
+            props.setErrorOfficialNameCheck(false);
         }
-        setErrorOfficialNameMessage(error);
+        props.setErrorOfficialNameMessage(error);
         props.setOfficialName(event.target.value);
     };
     
@@ -78,11 +67,11 @@ const CountryForm = (props) => {
         let error = '';
         if (event.target.value === '') {
             error = '首都を入力してください';
-            setErrorCapitalCheck(true);
+            props.setErrorCapitalCheck(true);
         } else {
-            setErrorCapitalCheck(false);
+            props.setErrorCapitalCheck(false);
         }
-        setErrorCapitalMessage(error);
+        props.setErrorCapitalMessage(error);
         props.setCapital(event.target.value)
     };
     
@@ -109,14 +98,17 @@ const CountryForm = (props) => {
         let error = '';
         if (event.target.value === '') {
             error = '時差を入力してください';
-            setErrorTimeDifferenceCheck(true);
+            props.setErrorTimeDifferenceCheck(true);
         } else if (event.target.value < 0 || event.target.value > 24) {
             error = '0〜23の数字で入力してください';
-            setErrorTimeDifferenceCheck(true);
+            props.setErrorTimeDifferenceCheck(true);
+        } else if (isNaN(event.target.value)) {
+            error = '数字を入力してください';
+            props.setErrorTimeDifferenceCheck(true);
         } else {
-            setErrorTimeDifferenceCheck(false);
+            props.setErrorTimeDifferenceCheck(false);
         }
-        setErrorTimeDifferenceMessage(error);
+        props.setErrorTimeDifferenceMessage(error);
         props.setTimeDifference(event.target.value);
     };
     
@@ -125,14 +117,17 @@ const CountryForm = (props) => {
         let error = '';
         if (event.target.value === '') {
             error = '飛行機時間を入力してください';
-            setErrorPlaneMovementCheck(true);
+            props.setErrorPlaneMovementCheck(true);
         } else if (event.target.value < 0) {
             error = '0以上の数字で入力してください';
-            setErrorTimeDifferenceCheck(true);
+            props.setErrorTimeDifferenceCheck(true);
+        } else if (isNaN(event.target.value)) {
+            error = '数字を入力してください';
+            props.setErrorPlaneMovementCheck(true);
         } else {
-            setErrorPlaneMovementCheck(false);
+            props.setErrorPlaneMovementCheck(false);
         }
-        setErrorPlaneMovementMessage(error);
+        props.setErrorPlaneMovementMessage(error);
         props.setPlaneMovement(event.target.value);
     };
     
@@ -151,9 +146,9 @@ const CountryForm = (props) => {
                         autoComplete='off'
                         autoFocus={true}
                         className={classes.root}
-                        error={errorNameCheck}
+                        error={props.errorNameCheck}
                         fullWidth={true}
-                        helperText={errorNameMessage}
+                        helperText={props.errorNameMessage}
                         onChange={inputName}
                         required={true}
                         type='text'
@@ -165,9 +160,9 @@ const CountryForm = (props) => {
                     <TextField
                         autoComplete='off'
                         className={classes.root}
-                        error={errorOfficialNameCheck}
+                        error={props.errorOfficialNameCheck}
                         fullWidth={true}
-                        helperText={errorOfficialNameMessage}
+                        helperText={props.errorOfficialNameMessage}
                         onChange={inputOfficialName}
                         required={true}
                         type='text'
@@ -179,9 +174,9 @@ const CountryForm = (props) => {
                     <TextField
                         autoComplete='off'
                         className={classes.root}
-                        error={errorCapitalCheck}
+                        error={props.errorCapitalCheck}
                         fullWidth={true}
-                        helperText={errorCapitalMessage}
+                        helperText={props.errorCapitalMessage}
                         onChange={inputCapital}
                         required={true}
                         type='text'
@@ -193,13 +188,14 @@ const CountryForm = (props) => {
                     <FormControl sx={{ m: 0, width: 290, height: 55 }}>
                         <Select
                             className={classes.root}
-                            error={errorCurrenciesCheck}
+                            error={props.errorCurrenciesCheck}
                             required
                             multiple
                             value={props.currencies}
                             onChange={handleCurrencies}
                             renderValue={(selected) => selected.join(', ')}
                             MenuProps={MenuProps}
+                            sx={{ color: 'rgb(255,255,255)' }}
                         >
                             {props.currenciesList.map(currency => (
                                 <MenuItem key={currency.unit} value={currency.unit}>
@@ -234,9 +230,9 @@ const CountryForm = (props) => {
                     <TextField
                         autoComplete='off'
                         className={classes.root}
-                        error={errorTimeDifferenceCheck}
+                        error={props.errorTimeDifferenceCheck}
                         fullWidth={true}
-                        helperText={errorTimeDifferenceMessage}
+                        helperText={props.errorTimeDifferenceMessage}
                         onChange={inputTimeDifference}
                         required={true}
                         type='number'
@@ -249,9 +245,9 @@ const CountryForm = (props) => {
                     <TextField
                         autoComplete='off'
                         className={classes.root}
-                        error={errorPlaneMovementCheck}
+                        error={props.errorPlaneMovementCheck}
                         fullWidth={true}
-                        helperText={errorPlaneMovementMessage}
+                        helperText={props.errorPlaneMovementMessage}
                         onChange={inputPlaneMovement}
                         required={true}
                         type='number'
