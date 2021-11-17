@@ -23,9 +23,9 @@ const useStyles = makeStyles({
 });
 
 const containerStyle = {
-  width: "65%",
-  height: "250px",
-  margin: "0 auto 10px"
+    width: "65%",
+    height: "250px",
+    margin: "0 auto 10px"
 };
 
 
@@ -203,7 +203,7 @@ const Country = () => {
                     timeDifference={country.time_difference}
                     planeMovement={country.plane_movement}
                 />
-                <LoadScript googleMapsApiKey="******"> // Google Maps APIkey
+                <LoadScript googleMapsApiKey={process.env.MIX_GOOGLE_MAPS_API_KEY}>
                     <GoogleMap
                         mapContainerStyle={containerStyle}
                         center={{
