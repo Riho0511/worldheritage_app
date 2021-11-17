@@ -65,8 +65,8 @@ const Country = () => {
             setHeritageCollected(res.data.heritageCollected);
             setNiceCount(res.data.niceCount);
             setCollectCount(res.data.collectCount);
-            setLatitude(res.data.country.latitude);
-            setLongitude(res.data.country.longitude);
+            setLatitude(parseFloat(res.data.country.latitude));
+            setLongitude(parseFloat(res.data.country.longitude));
             
             switch (res.data.auth) {
                 case null:

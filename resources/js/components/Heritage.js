@@ -109,8 +109,8 @@ const Heritage = () => {
             setCollectCount(res.data.collectCount);
             setCommentUsername(res.data.commentsUsername);
             setCommentAvatar(res.data.commentsAvatar);
-            setLatitude(res.data.heritage.latitude);
-            setLongitude(res.data.heritage.longitude);
+            setLatitude(parseFloat(res.data.heritage.latitude));
+            setLongitude(parseFloat(res.data.heritage.longitude));
             
             let array = [];
             for (let i=0; i<2; i++) {
