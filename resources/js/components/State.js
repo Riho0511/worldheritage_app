@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@mui/styles';
+import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { makeStyles } from '@mui/styles';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
-import { Link, useParams } from 'react-router-dom';
 import { Header } from '../parts/index'; 
 
 const useStyles = makeStyles({
@@ -20,9 +20,9 @@ const State = () => {
     const classes = useStyles();
     const stateId = parseInt(useParams().id);
     const [authchecker, setAuthchecker] = useState('');
-    const [countries, setCountries] = useState([]);
     const headerMenu = authchecker === 'admin' && {'menu1':false, 'menu2':true, 'menu3':false, 'menu4':false, 'menu5':false, 'check':true};
     const [state, setState] = useState('');
+    const [countries, setCountries] = useState([]);
     const [collected, setCollected] = useState([]);
     
     
@@ -44,13 +44,13 @@ const State = () => {
                     break;
         }
         setState(stateName);
-    }
+    };
     
     useEffect(() => {
         const getData = async () => {
             const res = await axios.get(`/api/country/state/${stateId}`);
-            setCountries(res.data.countries);
             setCollected(res.data.collected);
+            setCountries(res.data.countries);
             switch (res.data.auth) {
                 case null:
                     setAuthchecker('guest');
@@ -75,12 +75,16 @@ const State = () => {
             <div className="countries">
                 <h2>{state}</h2>
                 {countries.length == 0 ? 
-                    <Paper className={classes.root} elevation={5}><p className="noting-data">登録されている国はありません</p></Paper>
+                    <Paper className={classes.root} elevation={5}>
+                        <p className="noting-data">登録されている国はありません</p>
+                    </Paper>
                 :
                     <ul className="button-large">
                         {countries.map(country => {
                             return (
-                                <li key={country.id} className={collected.includes(country.id) ? "collected" : ""}><Link to={`/country/${country.id}`}>{country.name}</Link></li>
+                                <li key={country.id} className={collected.includes(country.id) ? "collected" : "no-collected"}>
+                                    <Link to={`/country/${country.id}`}>{country.name}</Link>
+                                </li>
                             );
                         })}
                     </ul>

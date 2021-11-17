@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Link, useLocation } from 'react-router-dom';
+import axios from 'axios';
 import { AlertInfo, Header } from '../parts/index';
 
 
@@ -42,16 +42,16 @@ const Home = () => {
             
             <div className="states">
                 <ul className="button-large">
-                    <li><Link to="/country/state/1">アジア</Link></li>
-                    <li><Link to="/country/state/2">ヨーロッパ</Link></li>
-                    <li><Link to="/country/state/3">アフリカ</Link></li>
-                    <li><Link to="/country/state/4">北アメリカ</Link></li>
-                    <li><Link to="/country/state/5">南アメリカ</Link></li>
-                    <li><Link to="/country/state/6">オセアニア</Link></li>
+                    <li className="asia"><Link to="/country/state/1">アジア</Link></li>
+                    <li className="europe"><Link to="/country/state/2">ヨーロッパ</Link></li>
+                    <li className="africa"><Link to="/country/state/3">アフリカ</Link></li>
+                    <li className="north"><Link to="/country/state/4">北アメリカ</Link></li>
+                    <li className="south"><Link to="/country/state/5">南アメリカ</Link></li>
+                    <li className="oceania"><Link to="/country/state/6">オセアニア</Link></li>
                 </ul>
             </div>
         </>
     );
-}
+};
 
 export default Home;

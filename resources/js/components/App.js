@@ -13,6 +13,7 @@ import {
     Home,
     Login,
     Mypage,
+    MypageEdit,
     Ranking,
     State 
 } from './index'; 
@@ -25,6 +26,7 @@ function App() {
                     <Route exact path="/" component={Login} />
                     <Route exact path="/home" component={Home} />
                     <Route exact path="/mypage" component={Mypage} />
+                    <Route exact path="/mypage/edit" component={MypageEdit} />
                     <Route exact path="/ranking" component={Ranking} />
                     <Route exact path="/country/currency/list" component={CurrenciesEdit} />
                     <Route path="/country/state/:id" component={State} />

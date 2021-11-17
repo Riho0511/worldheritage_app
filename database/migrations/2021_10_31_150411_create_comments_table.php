@@ -17,7 +17,6 @@ class CreateCommentsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('heritage_id');
             $table->unsignedInteger('user_id');
-            $table->string('username');
             $table->integer('rate');
             $table->text('comment');
             $table->string('anonymous', 2);

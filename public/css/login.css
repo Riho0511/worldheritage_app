@@ -1,0 +1,49 @@
+#anime-warp {
+    color: white;
+    height: 500px;
+}
+
+#appear-block {
+    padding-top: 30px;
+}
+
+.appear {
+    animation: show 1s both;
+    transform-origin: center top;
+}
+
+p.appear {
+    font-size: 40px;
+    margin: 0;
+}
+
+p.appear:nth-child(3) {
+    margin-bottom: 80px;
+}
+
+.dh { animation-delay: .5s; }
+.d1h { animation-delay: 1.5s; }
+.d2h { animation-delay: 2.5s; }
+.bh { animation-delay: 4.8s; }
+
+@keyframes show {
+    0% {
+        transform: translate(0,50px);
+        opacity: 0;
+    }
+  
+    100% {
+        transform: translate(0,0);
+        opacity: 1;
+    }
+}
+
+.warn {
+    border: 1px solid red;
+    border-radius: 4px;
+    color: red;
+    font-size: 14px;
+    margin: 40px auto 0;
+    text-align: center;
+    width: calc(340px - 2px);
+}

@@ -9,5 +9,6 @@ export { default as HeritageEdit } from './HeritageEdit';
 export { default as Home } from './Home';
 export { default as Login } from './Login';
 export { default as Mypage } from './Mypage';
+export { default as MypageEdit } from './MypageEdit';
 export { default as Ranking } from './Ranking';
 export { default as State } from './State';

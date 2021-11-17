@@ -20,6 +20,9 @@ class CreateCountriesTable extends Migration
             $table->string('capital', 50);
             $table->integer('time_difference');
             $table->integer('plane_movement');
+            $table->double('latitude');
+            $table->double('longitude');
+            $table->integer('zoom');
             $table->integer('state');
             $table->timestamp('created_at')->useCurrent()->nullable();
             $table->timestamp('updated_at')->useCurrent()->nullable();

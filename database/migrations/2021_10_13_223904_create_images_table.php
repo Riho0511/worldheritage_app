@@ -17,11 +17,13 @@ class CreateImagesTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('heritage_id');
             $table->text('image');
+            $table->unsignedInteger('user_id');
             $table->timestamp('created_at')->useCurrent()->nullable();
             $table->timestamp('updated_at')->useCurrent()->nullable();
             $table->softDeletes();
             
             $table->foreign('heritage_id')->references('id')->on('heritages')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

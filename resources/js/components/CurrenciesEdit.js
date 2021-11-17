@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
-import { CheckModal, CurrenciesList, Header } from '../parts/index'; 
+import axios from 'axios';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
+import { CheckModal, CurrenciesList, Header } from '../parts/index'; 
 
 
 const CurrenciesEdit = () => {
     const history = useHistory();
-    const headerMenu = {'menu1':false, 'menu2':false, 'menu3':false, 'menu4':false, 'menu5':false, 'check':false};
     const authchecker = 'admin';
+    const headerMenu = {'menu1':false, 'menu2':false, 'menu3':false, 'menu4':false, 'menu5':false, 'check':false};
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [open, setOpen] = useState(false);
@@ -43,7 +43,8 @@ const CurrenciesEdit = () => {
                 });
             })
             .catch(error => {
-                console.log(error)
+                alert("削除に失敗しました");
+                console.log(error);
             });
     });
     
