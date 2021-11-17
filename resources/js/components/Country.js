@@ -203,7 +203,7 @@ const Country = () => {
                     timeDifference={country.time_difference}
                     planeMovement={country.plane_movement}
                 />
-                <LoadScript googleMapsApiKey="AIzaSyDJi4YBo3hyfZM5Gym2jj3CbEAtvzGUwQQ">
+                <LoadScript googleMapsApiKey="******"> // Google Maps APIkey
                     <GoogleMap
                         mapContainerStyle={containerStyle}
                         center={{
