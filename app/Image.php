@@ -12,6 +12,7 @@ class Image extends Model
     protected $fillable = [
         'heritage_id',
         'image',
+        'user_id'
     ];
     
     public function heritage() {

@@ -2,14 +2,13 @@ import React from 'react';
 import { makeStyles } from '@mui/styles';
 import Avatar from '@mui/material/Avatar';
 import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
+import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 
 const useStyles = makeStyles({
     root: {
@@ -29,16 +28,16 @@ const Comment = (props) => {
     
     return (
         <>
-            {props.comments.map(comment => {
+            {props.comments.map((comment, index) => {
                 return (
                     <div key={comment.comment}>
                         <Divider variant="inset" component="li" />
                         <ListItem alignItems="flex-start">
                             <ListItemAvatar>
-                                <Avatar src="https://world-heritage-images.s3.ap-northeast-1.amazonaws.com/no-profile.png" />
+                                <Avatar src={`https://world-heritage-images.s3.ap-northeast-1.amazonaws.com/${props.avatar[index]}`} />
                             </ListItemAvatar>
                             <ListItemText
-                                primary={comment.anonymous == "T" ? "匿名希望" : comment.username}
+                                primary={comment.anonymous == "T" ? "匿名希望" : props.username[index]}
                                 secondary={
                                     <Typography
                                         sx={{ display: 'inline' }}

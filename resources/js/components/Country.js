@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { GoogleMap, LoadScript } from "@react-google-maps/api";
 import { Link, useLocation, useParams, useHistory } from "react-router-dom";
 import axios from 'axios';
 import { makeStyles } from '@mui/styles';
@@ -20,6 +21,12 @@ const useStyles = makeStyles({
         maxWidth: 330,
     } 
 });
+
+const containerStyle = {
+  width: "65%",
+  height: "250px",
+  margin: "0 auto 10px"
+};
 
 
 const Country = () => {
@@ -43,6 +50,8 @@ const Country = () => {
     const [heritageCollected, setHeritageCollected] = useState([]);
     const [niceCount, setNiceCount] = useState(0);
     const [collectCount, setCollectCount] = useState(0);
+    const [latitude, setLatitude] = useState(0.00);
+    const [longitude, setLongitude] = useState(0.00);
     
     
     useEffect(() => {
@@ -56,6 +65,8 @@ const Country = () => {
             setHeritageCollected(res.data.heritageCollected);
             setNiceCount(res.data.niceCount);
             setCollectCount(res.data.collectCount);
+            setLatitude(res.data.country.latitude);
+            setLongitude(res.data.country.longitude);
             
             switch (res.data.auth) {
                 case null:
@@ -91,12 +102,12 @@ const Country = () => {
             .post('/api/country/' + countryId)
             .then(response => {
                 history.push({
-                    pathname: '/',
+                    pathname: '/home',
                     state: response.data,
                 });
             })
             .catch(error => {
-                console.log(error)
+                console.log(error);
             });
     });
     
@@ -183,23 +194,64 @@ const Country = () => {
             }
             
             <h2>{country.name}</h2>
-            <CountryInformation
-                countryName={country.name}
-                officialName={country.official_name}
-                capital={country.capital}
-                currencies={currencies}
-                timeDifference={country.time_difference}
-                planeMovement={country.plane_movement}
-            />
+            <div>
+                <CountryInformation
+                    countryName={country.name}
+                    officialName={country.official_name}
+                    capital={country.capital}
+                    currencies={currencies}
+                    timeDifference={country.time_difference}
+                    planeMovement={country.plane_movement}
+                />
+                <LoadScript googleMapsApiKey="AIzaSyDJi4YBo3hyfZM5Gym2jj3CbEAtvzGUwQQ">
+                    <GoogleMap
+                        mapContainerStyle={containerStyle}
+                        center={{
+                            lat: latitude,
+                            lng: longitude,
+                        }}
+                        zoom={country.zoom}
+                    >
+                    </GoogleMap>
+                </LoadScript>
+            </div>
             {authchecker === 'guest' ?
                 <Stack direction="row" spacing={1} className={classes.root}>
-                                <Button color="warning" variant={collected ? "contained" : "outlined"} endIcon={<AirplaneTicketIcon />} onClick={collected ? () => setCollected(false): () => setCollected(true)}>コレクト</Button>
-                                <Button color="error" variant={niced ? "contained" : "outlined"} endIcon={<ThumbUpAltIcon />} onClick={niced ? () => setNiced(false) : () => setNiced(true)}>お気に入り</Button>
-                            </Stack>
+                    <Button 
+                        color="warning" 
+                        variant={collected ? "contained" : "outlined"} 
+                        endIcon={<AirplaneTicketIcon />} 
+                        onClick={collected ? () => setCollected(false): () => setCollected(true)}
+                    >
+                        コレクト
+                    </Button>
+                    <Button 
+                        color="error" 
+                        variant={niced ? "contained" : "outlined"} 
+                        endIcon={<ThumbUpAltIcon />} 
+                        onClick={niced ? () => setNiced(false) : () => setNiced(true)}
+                    >
+                        お気に入り
+                    </Button>
+                </Stack>
             :
                 <Stack direction="row" spacing={1} className={classes.root}>
-                    <Button color="warning" variant={collected ? "contained" : "outlined"} endIcon={<AirplaneTicketIcon />} onClick={collected ? () => nocollect() : () => collect()}>コレクト</Button>
-                    <Button color="error" variant={niced ? "contained" : "outlined"} endIcon={<ThumbUpAltIcon />} onClick={niced ? () => unnice() : () => nice()}>お気に入り</Button>
+                    <Button 
+                        color="warning" 
+                        variant={collected ? "contained" : "outlined"} 
+                        endIcon={<AirplaneTicketIcon />} 
+                        onClick={collected ? () => nocollect() : () => collect()}
+                    >
+                        コレクト
+                    </Button>
+                    <Button 
+                        color="error" 
+                        variant={niced ? "contained" : "outlined"} 
+                        endIcon={<ThumbUpAltIcon />} 
+                        onClick={niced ? () => unnice() : () => nice()}
+                    >
+                        お気に入り
+                    </Button>
                 </Stack>
             }
             <p className="count">「コレクト」{collectCount}件 「お気に入り」{niceCount}件</p>

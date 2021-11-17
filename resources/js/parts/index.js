@@ -8,6 +8,8 @@ export { default as DeleteImagesList } from './DeleteImagesList';
 export { default as Header } from './Header';
 export { default as HeritageCard } from './HeritageCard';
 export { default as HeritageInformation } from './HeritageInformation';
+export { default as MyCard } from './MyCard';
+export { default as MyList } from './MyList';
 export { default as PostComment } from './PostComment';
 export { default as RankTable } from './RankTable'; 
 export { default as SwiperImages } from './SwiperImages';

@@ -48,7 +48,6 @@ const PostComment = (props) => {
         
         const data = new FormData();
         data.append("heritage_id", props.heritageId);
-        data.append("user_id", authId);
         data.append("rate", rate);
         data.append("comment", text);
         if (anonymous) {
@@ -84,6 +83,12 @@ const PostComment = (props) => {
                 }
                 array2.unshift(com);
                 props.setTwoComments(array2);
+                let array3 = props.username;
+                array3.unshift(response.data.username);
+                props.setUsername(array3);
+                let array4 = props.avatar;
+                array4.unshift(response.data.avatar);
+                props.setAvatar(array4);
                 history.push({
                     pathname: '/country/' + props.countryId + '/heritage/' + props.heritageId,
                     state: response.data.message,

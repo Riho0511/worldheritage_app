@@ -84,7 +84,7 @@ const Header = (props) => {
                 vertical: 'top',
                 horizontal: 'right',
             }}
-            open={headerMenu.check !== undefined && isMenuOpen}
+            open={headerMenu.check == true && isMenuOpen}
             onClose={handleMenuClose}
         >
         {headerMenu.menu1 && (
