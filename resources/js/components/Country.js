@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { GoogleMap, LoadScript } from "@react-google-maps/api";
 import { Link, useLocation, useParams, useHistory } from "react-router-dom";
 import axios from 'axios';
 import { makeStyles } from '@mui/styles';
@@ -203,17 +202,6 @@ const Country = () => {
                     timeDifference={country.time_difference}
                     planeMovement={country.plane_movement}
                 />
-                <LoadScript googleMapsApiKey={process.env.MIX_GOOGLE_MAPS_API_KEY}>
-                    <GoogleMap
-                        mapContainerStyle={containerStyle}
-                        center={{
-                            lat: latitude,
-                            lng: longitude,
-                        }}
-                        zoom={country.zoom}
-                    >
-                    </GoogleMap>
-                </LoadScript>
             </div>
             {authchecker === 'guest' ?
                 <Stack direction="row" spacing={1} className={classes.root}>
