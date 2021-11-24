@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { styled } from '@mui/material/styles';
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import { makeStyles } from '@mui/styles';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import AddCommentIcon from '@mui/icons-material/AddComment';
@@ -299,6 +298,7 @@ const Heritage = () => {
                 <div className="split">
                     <div className="images">
                         <SwiperImages images={images} />
+                        {authchecker != 'guest' &&
                         <Stack direction="row" spacing={1} className={classes.right}>
                             <label htmlFor="icon-button-file">
                                 <Input accept="image/*" id="icon-button-file" type="file" multiple onChange={selectImages} />
@@ -308,6 +308,7 @@ const Heritage = () => {
                             </label>
                             <Button variant="outlined" disabled={postImages.length > 0 ? false : true} startIcon={<NearMeIcon />} size="small" onClick={() => imagesPost(postImages)}>投稿</Button>
                         </Stack>
+                        }
                     </div>
                     <div className="heritage-info">
                         <div>
@@ -327,25 +328,6 @@ const Heritage = () => {
                             </Stack>
                         }
                         <p className="count">「コレクト」{collectCount}件 「お気に入り」{niceCount}件</p>
-                        </div>
-                        <div>
-                            <LoadScript googleMapsApiKey={process.env.MIX_GOOGLE_MAPS_API_KEY}>
-                                <GoogleMap
-                                    mapContainerStyle={containerStyle}
-                                    center={{
-                                        lat: latitude,
-                                        lng: longitude,
-                                    }}
-                                    zoom={heritage.zoom}
-                                >
-                                    <Marker 
-                                        position={{
-                                            lat: latitude,
-                                            lng: longitude,
-                                        }}
-                                    />
-                                </GoogleMap>
-                            </LoadScript>
                         </div>
                     </div>
                 </div>
