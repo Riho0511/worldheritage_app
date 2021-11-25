@@ -19,9 +19,6 @@ class CountriesTableSeeder extends Seeder
                 'capital' => '東京',
                 'time_difference' => '0',
                 'plane_movement' => '0',
-                'latitude' => '38.75612970967659',
-                'longitude' => '139.17692349264246',
-                'zoom' => '4',
                 'state' => '1',
             ],
             [
@@ -30,9 +27,6 @@ class CountriesTableSeeder extends Seeder
                 'capital' => '北京',
                 'time_difference' => '1',
                 'plane_movement' => '4',
-                'latitude' => '34.59513010818025',
-                'longitude' => '103.43430998609807',
-                'zoom' => '3',
                 'state' => '1',
             ],
             [
@@ -41,9 +35,6 @@ class CountriesTableSeeder extends Seeder
                 'capital' => 'ソウル',
                 'time_difference' => '0',
                 'plane_movement' => '2',
-                'latitude' => '36.83804981711889',
-                'longitude' => '128.01220296843084',
-                'zoom' => '5',
                 'state' => '1',
             ],
             [
@@ -52,9 +43,6 @@ class CountriesTableSeeder extends Seeder
                 'capital' => 'ロンドン',
                 'time_difference' => '8',
                 'plane_movement' => '12',
-                'latitude' => '55.23497213527957',
-                'longitude' => '-3.056417717692271',
-                'zoom' => '4',
                 'state' => '2',
             ],
             [
@@ -63,9 +51,6 @@ class CountriesTableSeeder extends Seeder
                 'capital' => 'ローマ',
                 'time_difference' => '7',
                 'plane_movement' => '13',
-                'latitude' => '42.87234619386739',
-                'longitude' => '11.647004362257412',
-                'zoom' => '4',
                 'state' => '2',
             ],
             [
@@ -74,9 +59,6 @@ class CountriesTableSeeder extends Seeder
                 'capital' => 'パリ',
                 'time_difference' => '8',
                 'plane_movement' => '12',
-                'latitude' =>'46.80265216851677',
-                'longitude' => '2.797269584293459',
-                'zoom' => '4',
                 'state' => '2',
             ],
             [
@@ -85,9 +67,6 @@ class CountriesTableSeeder extends Seeder
                 'capital' => 'カイロ',
                 'time_difference' => '7',
                 'plane_movement' => '14',
-                'latitude' => '26.900775087108567',
-                'longitude' => '29.778708237062762',
-                'zoom' => '4',
                 'state' => '3',
             ],
             [
@@ -96,9 +75,6 @@ class CountriesTableSeeder extends Seeder
                 'capital' => 'プレトリア',
                 'time_difference' => '7',
                 'plane_movement' => '14',
-                'latitude' => '-30.867508101569722',
-                'longitude' => '24.70175811529005',
-                'zoom' => '4',
                 'state' => '3',
             ],
             [
@@ -107,9 +83,6 @@ class CountriesTableSeeder extends Seeder
                 'capital' => 'ワシントンD.C.',
                 'time_difference' => '13',
                 'plane_movement' => '14',
-                'latitude' => '38.60557485026277',
-                'longitude' => '-101.76328480544593',
-                'zoom' => '3',
                 'state' => '4',
             ],
             [
@@ -118,9 +91,6 @@ class CountriesTableSeeder extends Seeder
                 'capital' => 'オタワ',
                 'time_difference' => '13',
                 'plane_movement' => '12',
-                'latitude' => '38.75612970967659',
-                'longitude' => '139.17692349264246',
-                'zoom' => '3',
                 'state' => '4',
             ],
             [
@@ -129,9 +99,6 @@ class CountriesTableSeeder extends Seeder
                 'capital' => 'メキシコシティ',
                 'time_difference' => '14',
                 'plane_movement' => '15',
-                'latitude' => '24.189117111020764',
-                'longitude' => '-102.87368870821308',
-                'zoom' => '4',
                 'state' => '4',
             ],
             [
@@ -140,9 +107,6 @@ class CountriesTableSeeder extends Seeder
                 'capital' => 'ブラジリア',
                 'time_difference' => '12',
                 'plane_movement' => '25',
-                'latitude' => '-9.653461259454708',
-                'longitude' => '-55.55927064499153',
-                'zoom' => '3',
                 'state' => '5',
             ],
             [
@@ -151,9 +115,6 @@ class CountriesTableSeeder extends Seeder
                 'capital' => 'ブエノスアイレス',
                 'time_difference' => '12',
                 'plane_movement' => '24',
-                'latitude' => '-34.97145993396934',
-                'longitude' => '-65.27562397345277',
-                'zoom' => '3',
                 'state' => '5',
             ],
             [
@@ -162,9 +123,6 @@ class CountriesTableSeeder extends Seeder
                 'capital' => 'リマ',
                 'time_difference' => '14',
                 'plane_movement' => '20',
-                'latitude' => '-11.10779492647483',
-                'longitude' => '-75.83687744989956',
-                'zoom' => '4',
                 'state' => '5',
             ],
             [
@@ -173,9 +131,6 @@ class CountriesTableSeeder extends Seeder
                 'capital' => 'キャンベラ',
                 'time_difference' => '1',
                 'plane_movement' => '10',
-                'latitude' => '-25.29225676364153',
-                'longitude' => '136.58495022153906',
-                'zoom' => '3',
                 'state' => '6',
             ],
             [
@@ -184,9 +139,6 @@ class CountriesTableSeeder extends Seeder
                 'capital' => 'ウェリントン',
                 'time_difference' => '3',
                 'plane_movement' => '11',
-                'latitude' => '-41.40045698963333',
-                'longitude' => '173.77160902608708',
-                'zoom' => '4',
                 'state' => '6',
             ],
         ];

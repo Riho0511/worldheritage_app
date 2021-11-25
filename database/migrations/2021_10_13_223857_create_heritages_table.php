@@ -18,9 +18,6 @@ class CreateHeritagesTable extends Migration
             $table->unsignedInteger('country_id');
             $table->string('name', 100);
             $table->integer('entrance_fee');
-            $table->double('latitude');
-            $table->double('longitude');
-            $table->integer('zoom');
             $table->timestamp('created_at')->useCurrent()->nullable();
             $table->timestamp('updated_at')->useCurrent()->nullable();
             $table->softDeletes();
