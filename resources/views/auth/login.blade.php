@@ -13,7 +13,7 @@
             @enderror
         </div>
         <div class="input-form">
-            <label class="ml30" for="password">password</label>
+            <label class="ml30" for="password">Password</label>
             <input id="password" type="password" name="password" autocomplete="current-password">
             @error('password')
                 <p class="error-message ml30">{{ $message }}</p>
