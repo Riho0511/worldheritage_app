@@ -12,8 +12,10 @@
 <body>
     <div id="application">
         <main>
-            <div class="box">
-                @yield('content')
+            <div class="big-box">
+                <div class="box">
+                    @yield('content')
+                </div>
             </div>
         </main>
     </div>
