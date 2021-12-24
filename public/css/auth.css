@@ -19,9 +19,7 @@ main {
   background: rgba(255, 255, 255, 0.5);
 }
 
-.box {
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 4px;
+.big-box {
     height: calc(540px - 20px);
     margin: auto;
     padding: 10px;
@@ -30,7 +28,13 @@ main {
     right: 0;
     bottom: 0;
     left: 0;
-    width: calc(310px - 20px);
+    width: calc(310px);
+}
+
+.box {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+    padding: 10px;
 }
 
 label {
@@ -135,7 +139,7 @@ a:hover {
 
 .login, .register, .password-reset {
     margin: 0 auto;
-    width: 290px;
+    
 }
 
 .check-label {
@@ -148,7 +152,6 @@ a:hover {
 
 .password-reset h1 {
     font-size: 25px;
-    margin-top: 110px;
 }
 
 .reset-form {
