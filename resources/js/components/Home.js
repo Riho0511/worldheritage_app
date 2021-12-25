@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { AlertInfo, Header } from '../parts/index';
+import BottomBar from '../common/BottomBar';
 
 
 const Home = () => {
@@ -50,6 +51,8 @@ const Home = () => {
                     <li className="oceania"><Link to="/country/state/6">オセアニア</Link></li>
                 </ul>
             </div>
+            
+            <BottomBar />
         </>
     );
 };
