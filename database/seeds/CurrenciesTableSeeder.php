@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Carbon\Carbon;
 
 class CurrenciesTableSeeder extends Seeder
 {
@@ -13,28 +12,83 @@ class CurrenciesTableSeeder extends Seeder
     public function run()
     {
         $params = [
-            ['unit' => '円'],
-            ['unit' => '元'],
-            ['unit' => 'ウォン'],
-            ['unit' => 'イギリスポンド'],
-            ['unit' => 'ユーロ'],
-            ['unit' => 'エジプトポンド'],
-            ['unit' => 'ランド'],
-            ['unit' => 'アメリカ合衆国ドル'],
-            ['unit' => 'カナダドル'],
-            ['unit' => 'メキシコ・ペソ'],
-            ['unit' => 'レアル'],
-            ['unit' => 'アルゼンチン・ペソ'],
-            ['unit' => 'ソル'],
-            ['unit' => 'オーストラリア・ドル'],
-            ['unit' => 'ニュージーランド・ドル'],
+            [
+                'unit' => '円',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
+            ],
+            [
+                'unit' => '元',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
+            ],
+            [
+                'unit' => 'ウォン',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
+            ],
+            [
+                'unit' => 'イギリスポンド',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
+            ],
+            [
+                'unit' => 'ユーロ',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
+            ],
+            [
+                'unit' => 'エジプトポンド',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
+            ],
+            [
+                'unit' => 'ランド',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
+            ],
+            [
+                'unit' => 'アメリカ合衆国ドル',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
+            ],
+            [
+                'unit' => 'カナダドル',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
+            ],
+            [
+                'unit' => 'メキシコ・ペソ',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
+            ],
+            [
+                'unit' => 'レアル',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
+            ],
+            [
+                'unit' => 'アルゼンチン・ペソ',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
+            ],
+            [
+                'unit' => 'ソル',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
+            ],
+            [
+                'unit' => 'オーストラリア・ドル',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
+            ],
+            [
+                'unit' => 'ニュージーランド・ドル',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
+            ],
         ];
         
-        $now = Carbon::now();
-        foreach($params as $param) {
-            $param['created_at'] = $now;
-            $param['updated_at'] = $now;
-        }
         DB::table('currencies')->insert($params);
     }
 }

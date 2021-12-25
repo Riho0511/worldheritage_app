@@ -13,19 +13,32 @@ class StatesTableSeeder extends Seeder
     public function run()
     {
         $params = [
-            ['name' => 'アジア'],
-            ['name' => 'ヨーロッパ'],
-            ['name' => 'アフリカ'],
-            ['name' => '北アメリカ'],
-            ['name' => '南アメリカ'],
-            ['name' => 'オセアニア']
+            [
+                'name' => 'アジア',
+                'created_at' => new DateTime(),
+            ],
+            [
+                'name' => 'ヨーロッパ',
+                'created_at' => new DateTime(),
+            ],
+            [
+                'name' => 'アフリカ',
+                'created_at' => new DateTime(),
+            ],
+            [
+                'name' => '北アメリカ',
+                'created_at' => new DateTime(),
+            ],
+            [
+                'name' => '南アメリカ',
+                'created_at' => new DateTime(),
+            ],
+            [
+                'name' => 'オセアニア',
+                'created_at' => new DateTime(),
+            ]
         ];
         
-        $now = Carbon::now();
-        foreach($params as $param) {
-            $param['created_at'] = $now;
-            $param['updated_at'] = $now;
-        }
         DB::table('states')->insert($params);
     }
 }
