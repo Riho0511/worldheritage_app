@@ -13,6 +13,7 @@ class Currency extends Model
         'unit'
     ];
     
+    // 通貨→国（多対多）
     public function countries() {
         return $this->belongsToMany('App\Country');
     }

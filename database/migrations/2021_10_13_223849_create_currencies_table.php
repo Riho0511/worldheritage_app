@@ -16,8 +16,7 @@ class CreateCurrenciesTable extends Migration
         Schema::create('currencies', function (Blueprint $table) {
             $table->increments('id');
             $table->string('unit', 50);
-            $table->timestamp('created_at')->useCurrent()->nullable();
-            $table->timestamp('updated_at')->useCurrent()->nullable();
+            $table->timestamps();
             $table->softDeletes();
         });
     }

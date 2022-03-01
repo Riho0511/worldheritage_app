@@ -93,7 +93,6 @@ class ImagesTableSeeder extends Seeder
                 'image' => '9URSb9qlpSoyzwNRpuo15WpxZBOjrpiNNk09IgBb.jpg',
                 'user_id' => '1'
             ],
-            
         ];
         
         $now = Carbon::now();
