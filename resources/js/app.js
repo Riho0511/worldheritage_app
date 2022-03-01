@@ -1,48 +1,81 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes React and other helpers. It's a great starting point while
- * building robust, powerful web applications using React + Laravel.
- */
+// ルーティング
+require('./Router');
+require('./index');
 
-require('./bootstrap');
 
-/**
- * Next, we will create a fresh React component instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+// ページ
+// 共通
+// ログイン画面
+require('./Login/Login');
 
-require('./components/App');
-require('./components/CommentList');
-require('./components/Country');
-require('./components/CountryCreate');
-require('./components/CountryEdit');
-require('./components/CurrenciesEdit');
-require('./components/Heritage');
-require('./components/HeritageCreate');
-require('./components/HeritageEdit');
-require('./components/Home');
-require('./components/Login');
-require('./components/Mypage');
-require('./components/MypageEdit');
-require('./components/Ranking');
-require('./components/State');
-require('./components/index');
+// ホームページ
+require('./Home/Home');
+require('./Home/State');
 
-require('./parts/AlertInfo');
-require('./parts/CheckModal');
-require('./parts/Comment');
-require('./parts/CountryForm');
-require('./parts/CountryInformation');
-require('./parts/CurrenciesList');
-require('./parts/DeleteImagesList');
-require('./parts/Header');
-require('./parts/HeritageCard');
-require('./parts/HeritageForm');
-require('./parts/HeritageInformation');
-require('./parts/MyCard');
-require('./parts/MyList');
-require('./parts/PostComment');
-require('./parts/RankTable');
-require('./parts/SwiperImages');
-require('./parts/index');
+// 国ページ
+require('./Country/Country');
+
+// 世界遺産ページ
+require('./Heritage/Heritage');
+require('./Heritage/CommentList');
+
+// マイページ
+require('./Mypage/Mypage');
+require('./Mypage/MypageEdit');
+
+// ランキングページ
+require('./Ranking/Ranking');
+
+// 管理者
+// 通貨編集ページ
+require('./Admin/Currency/CurrenciesEdit');
+
+// 入力フォームページ
+require('./Admin/Form/CreateInfo');
+
+
+// コンポーネント
+// 共通ページ用
+require('./Common_components/alertInfo');
+require('./Common_components/bottomBar');
+require('./Common_components/checkModal');
+require('./Common_components/comments');
+require('./Common_components/likeandcollect');
+require('./Common_components/noRegisterInformation');
+require('./Common_components/operations');
+require('./Common_components/sideMenu');
+require('./Common_components/upBar');
+
+// 国ページ用
+require('./Country/countryInformation');
+require('./Country/heritageCard');
+
+// 世界遺産ページ用
+require('./Heritage/heritageInformation');
+require('./Heritage/postImages');
+require('./Heritage/postComment');
+require('./Heritage/swiperImages');
+
+// マイページ用
+require('./Mypage/myCard');
+require('./Mypage/mypageOperations');
+require('./Mypage/selectedMypageItem');
+require('./Mypage/showData');
+
+// ランキングページ用
+require('./Ranking/rankTable');
+
+// 通貨編集ページ用
+require('./Admin/Currency/currenciesList');
+
+// 入力フォームページ用
+require('./Admin/Form/countryForm');
+require('./Admin/Form/deleteImagesList');
+require('./Admin/Form/heritageForm');
+
+
+// 将来的に消すページ
+require('./delete/CountryCreate');
+require('./delete/CountryEdit');
+require('./delete/HeritageCreate');
+require('./delete/HeritageEdit');

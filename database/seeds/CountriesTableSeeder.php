@@ -19,7 +19,7 @@ class CountriesTableSeeder extends Seeder
                 'capital' => '東京',
                 'time_difference' => '0',
                 'plane_movement' => '0',
-                'state' => '1',
+                'state_id' => '1',
             ],
             [
                 'name' => '中国',
@@ -27,7 +27,7 @@ class CountriesTableSeeder extends Seeder
                 'capital' => '北京',
                 'time_difference' => '1',
                 'plane_movement' => '4',
-                'state' => '1',
+                'state_id' => '1',
             ],
             [
                 'name' => '韓国',
@@ -35,7 +35,7 @@ class CountriesTableSeeder extends Seeder
                 'capital' => 'ソウル',
                 'time_difference' => '0',
                 'plane_movement' => '2',
-                'state' => '1',
+                'state_id' => '1',
             ],
             [
                 'name' => 'イギリス',
@@ -43,7 +43,7 @@ class CountriesTableSeeder extends Seeder
                 'capital' => 'ロンドン',
                 'time_difference' => '8',
                 'plane_movement' => '12',
-                'state' => '2',
+                'state_id' => '2',
             ],
             [
                 'name' => 'イタリア',
@@ -51,7 +51,7 @@ class CountriesTableSeeder extends Seeder
                 'capital' => 'ローマ',
                 'time_difference' => '7',
                 'plane_movement' => '13',
-                'state' => '2',
+                'state_id' => '2',
             ],
             [
                 'name' => 'フランス',
@@ -59,7 +59,7 @@ class CountriesTableSeeder extends Seeder
                 'capital' => 'パリ',
                 'time_difference' => '8',
                 'plane_movement' => '12',
-                'state' => '2',
+                'state_id' => '2',
             ],
             [
                 'name' => 'エジプト',
@@ -67,7 +67,7 @@ class CountriesTableSeeder extends Seeder
                 'capital' => 'カイロ',
                 'time_difference' => '7',
                 'plane_movement' => '14',
-                'state' => '3',
+                'state_id' => '3',
             ],
             [
                 'name' => '南アフリカ',
@@ -75,7 +75,7 @@ class CountriesTableSeeder extends Seeder
                 'capital' => 'プレトリア',
                 'time_difference' => '7',
                 'plane_movement' => '14',
-                'state' => '3',
+                'state_id' => '3',
             ],
             [
                 'name' => 'アメリカ',
@@ -83,7 +83,7 @@ class CountriesTableSeeder extends Seeder
                 'capital' => 'ワシントンD.C.',
                 'time_difference' => '13',
                 'plane_movement' => '14',
-                'state' => '4',
+                'state_id' => '4',
             ],
             [
                 'name' => 'カナダ',
@@ -91,7 +91,7 @@ class CountriesTableSeeder extends Seeder
                 'capital' => 'オタワ',
                 'time_difference' => '13',
                 'plane_movement' => '12',
-                'state' => '4',
+                'state_id' => '4',
             ],
             [
                 'name' => 'メキシコ',
@@ -99,7 +99,7 @@ class CountriesTableSeeder extends Seeder
                 'capital' => 'メキシコシティ',
                 'time_difference' => '14',
                 'plane_movement' => '15',
-                'state' => '4',
+                'state_id' => '4',
             ],
             [
                 'name' => 'ブラジル',
@@ -107,7 +107,7 @@ class CountriesTableSeeder extends Seeder
                 'capital' => 'ブラジリア',
                 'time_difference' => '12',
                 'plane_movement' => '25',
-                'state' => '5',
+                'state_id' => '5',
             ],
             [
                 'name' => 'アルゼンチン',
@@ -115,7 +115,7 @@ class CountriesTableSeeder extends Seeder
                 'capital' => 'ブエノスアイレス',
                 'time_difference' => '12',
                 'plane_movement' => '24',
-                'state' => '5',
+                'state_id' => '5',
             ],
             [
                 'name' => 'ペルー',
@@ -123,7 +123,7 @@ class CountriesTableSeeder extends Seeder
                 'capital' => 'リマ',
                 'time_difference' => '14',
                 'plane_movement' => '20',
-                'state' => '5',
+                'state_id' => '5',
             ],
             [
                 'name' => 'オーストラリア',
@@ -131,7 +131,7 @@ class CountriesTableSeeder extends Seeder
                 'capital' => 'キャンベラ',
                 'time_difference' => '1',
                 'plane_movement' => '10',
-                'state' => '6',
+                'state_id' => '6',
             ],
             [
                 'name' => 'ニュージーランド',
@@ -139,12 +139,13 @@ class CountriesTableSeeder extends Seeder
                 'capital' => 'ウェリントン',
                 'time_difference' => '3',
                 'plane_movement' => '11',
-                'state' => '6',
+                'state_id' => '6',
             ],
         ];
         
         $now = Carbon::now();
         foreach($params as $param) {
+            $param['created_at'] = $now;
             $param['updated_at'] = $now;
         }
         DB::table('countries')->insert($params);
