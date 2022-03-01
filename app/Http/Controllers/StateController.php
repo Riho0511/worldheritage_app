@@ -21,7 +21,7 @@ class StateController extends Controller
             $likes = Auth::user()->getCountriesLike();
             $collects = Auth::user()->getCountriesCollect();
         } else {
-            $like = [];
+            $likes = [];
             $collects = [];
         }
         

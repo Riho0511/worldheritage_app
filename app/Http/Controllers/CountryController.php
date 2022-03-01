@@ -32,18 +32,18 @@ class CountryController extends Controller
         }
         // 国の通貨
         $currencies = $country->currencies()->get();
-        // お気に入りしているか, コレクトしているかどうかを取得
+        // お気に入りしているか, コレクトしているかどうかを取得（国と世界遺産）
         if (Auth::check()) {
             $country_liked = $country->isLiked(User::where('id', Auth::id())->first());
             $country_collected = $country->isCollected(User::where('id', Auth::id())->first());
+            $heritage_liked = $heritage_table->isCheck('like_users', Auth::id(), $country->id);
+            $heritage_collected = $heritage_table->isCheck('collect_users', Auth::id(), $country->id);
         } else {
-            $countryliked = false;
+            $country_liked = false;
             $country_collected = false;
+            $heritage_liked = [];
+            $heritage_collected = [];
         }
-        // 世界遺産をお気に入りしているかどうかを取得
-        $heritage_liked = $heritage_table->isCheck('like_users', Auth::id(), $country->id);
-        // 世界遺産をコレクトしているかどうかを取得
-        $heritage_collected = $heritage_table->isCheck('collect_users', Auth::id(), $country->id);
         // お気に入り総数取得（国）
         $like_count = $country->getLikeCount();
         // コレクト総数取得（国）
