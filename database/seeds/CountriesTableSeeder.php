@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Carbon\Carbon;
 
 class CountriesTableSeeder extends Seeder
 {
@@ -20,6 +19,8 @@ class CountriesTableSeeder extends Seeder
                 'time_difference' => '0',
                 'plane_movement' => '0',
                 'state_id' => '1',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
             ],
             [
                 'name' => '中国',
@@ -28,6 +29,8 @@ class CountriesTableSeeder extends Seeder
                 'time_difference' => '1',
                 'plane_movement' => '4',
                 'state_id' => '1',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
             ],
             [
                 'name' => '韓国',
@@ -36,6 +39,8 @@ class CountriesTableSeeder extends Seeder
                 'time_difference' => '0',
                 'plane_movement' => '2',
                 'state_id' => '1',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
             ],
             [
                 'name' => 'イギリス',
@@ -44,6 +49,8 @@ class CountriesTableSeeder extends Seeder
                 'time_difference' => '8',
                 'plane_movement' => '12',
                 'state_id' => '2',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
             ],
             [
                 'name' => 'イタリア',
@@ -52,6 +59,8 @@ class CountriesTableSeeder extends Seeder
                 'time_difference' => '7',
                 'plane_movement' => '13',
                 'state_id' => '2',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
             ],
             [
                 'name' => 'フランス',
@@ -60,6 +69,8 @@ class CountriesTableSeeder extends Seeder
                 'time_difference' => '8',
                 'plane_movement' => '12',
                 'state_id' => '2',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
             ],
             [
                 'name' => 'エジプト',
@@ -68,6 +79,8 @@ class CountriesTableSeeder extends Seeder
                 'time_difference' => '7',
                 'plane_movement' => '14',
                 'state_id' => '3',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
             ],
             [
                 'name' => '南アフリカ',
@@ -76,6 +89,8 @@ class CountriesTableSeeder extends Seeder
                 'time_difference' => '7',
                 'plane_movement' => '14',
                 'state_id' => '3',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
             ],
             [
                 'name' => 'アメリカ',
@@ -84,6 +99,8 @@ class CountriesTableSeeder extends Seeder
                 'time_difference' => '13',
                 'plane_movement' => '14',
                 'state_id' => '4',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
             ],
             [
                 'name' => 'カナダ',
@@ -92,6 +109,8 @@ class CountriesTableSeeder extends Seeder
                 'time_difference' => '13',
                 'plane_movement' => '12',
                 'state_id' => '4',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
             ],
             [
                 'name' => 'メキシコ',
@@ -100,6 +119,8 @@ class CountriesTableSeeder extends Seeder
                 'time_difference' => '14',
                 'plane_movement' => '15',
                 'state_id' => '4',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
             ],
             [
                 'name' => 'ブラジル',
@@ -108,6 +129,8 @@ class CountriesTableSeeder extends Seeder
                 'time_difference' => '12',
                 'plane_movement' => '25',
                 'state_id' => '5',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
             ],
             [
                 'name' => 'アルゼンチン',
@@ -116,6 +139,8 @@ class CountriesTableSeeder extends Seeder
                 'time_difference' => '12',
                 'plane_movement' => '24',
                 'state_id' => '5',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
             ],
             [
                 'name' => 'ペルー',
@@ -124,6 +149,8 @@ class CountriesTableSeeder extends Seeder
                 'time_difference' => '14',
                 'plane_movement' => '20',
                 'state_id' => '5',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
             ],
             [
                 'name' => 'オーストラリア',
@@ -132,6 +159,8 @@ class CountriesTableSeeder extends Seeder
                 'time_difference' => '1',
                 'plane_movement' => '10',
                 'state_id' => '6',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
             ],
             [
                 'name' => 'ニュージーランド',
@@ -140,14 +169,11 @@ class CountriesTableSeeder extends Seeder
                 'time_difference' => '3',
                 'plane_movement' => '11',
                 'state_id' => '6',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
             ],
         ];
         
-        $now = Carbon::now();
-        foreach($params as $param) {
-            $param['created_at'] = $now;
-            $param['updated_at'] = $now;
-        }
         DB::table('countries')->insert($params);
     }
 }
