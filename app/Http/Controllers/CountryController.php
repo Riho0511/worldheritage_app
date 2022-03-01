@@ -5,11 +5,8 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Country;
 use App\Heritage;
-use App\Currency;
 use App\Image;
-use App\Nice;
-use App\Collect;
-use App\Comment;
+use LikeCountry;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -17,35 +14,44 @@ use Carbon\Carbon;
 
 class CountryController extends Controller
 {
-    // ホーム画面
-    public function index() {
-        if (Auth::check()) {
-            $auth = Auth::id();
-        } else {
-            $auth = null;
+    // 国情報画面
+    public function show(Country $country) {
+        $heritage_table = new Heritage;
+        // 世界遺産情報
+        $heritages = $country->heritages()->get();
+        $images = Image::get();
+        $country_heritages = [];
+        foreach($heritages as $heritage) {
+            foreach($images as $image) {
+                if ($heritage->id == $image->heritage_id) {
+                    $h_collected = empty($heritage->collect_users);
+                    array_push($country_heritages, ['heritage' => $heritage, 'heritage_images' => $image, 'collected' => $h_collected]);
+                    break;
+                }
+            }
         }
-        
-        $return_info = ['auth' => $auth];
-        return response()->json($return_info);
+        // 国の通貨
+        $currencies = $country->currencies()->get();
+        // お気に入りしているか, コレクトしているかどうかを取得
+        if (Auth::check()) {
+            $country_liked = $country->isLiked(User::where('id', Auth::id())->first());
+            $country_collected = $country->isCollected(User::where('id', Auth::id())->first());
+        } else {
+            $countryliked = false;
+            $country_collected = false;
+        }
+        // 世界遺産をお気に入りしているかどうかを取得
+        $heritage_liked = $heritage_table->isCheck('like_users', Auth::id(), $country->id);
+        // 世界遺産をコレクトしているかどうかを取得
+        $heritage_collected = $heritage_table->isCheck('collect_users', Auth::id(), $country->id);
+        // お気に入り総数取得（国）
+        $like_count = $country->getLikeCount();
+        // コレクト総数取得（国）
+        $collect_count = $country->getCollectCount();
+        return response()->json(compact('country', 'country_heritages', 'currencies', 'country_liked', 'country_collected', 'heritage_liked', 'heritage_collected', 'like_count', 'collect_count'));
     }
     
-    // 州別国一覧画面
-    public function state($state, Country $country, Collect $collect) {
-        if (Auth::check()) {
-            $auth = Auth::id();
-        } else {
-            $auth = null;
-        }
-        $countries = $country->where('state', $state)->get();
-        $collects = $collect->whereNotNull('country_id')->where('user_id', $auth)->get();
-        $collected = [];
-        foreach($collects as $c) {
-            array_push($collected, $c->country_id);
-        }
-        $return_info = ['auth' => $auth, 'collected' => $collected, 'countries' => $countries];
-        
-        return response()->json($return_info);
-    }
+    
     
     // 国追加画面
     public function countryCreate(Currency $currency) {
@@ -59,86 +65,6 @@ class CountryController extends Controller
     public function heritageCreate(Country $country) {
         $currency = $country->currencies()->first();
         return response()->json($currency);
-    }
-    
-    // 国情報画面
-    public function country(Country $country, Image $image, Nice $nice, Collect $collect) {
-        $heritages = $country->heritages()->get();
-        $currencies = $country->currencies()->get();
-        $images = [];
-        foreach ($heritages as $heritage) {
-            array_push($images, $image->where('heritage_id', $heritage->id)->first());
-        }
-        if (Auth::check()) {
-            $auth = Auth::id();
-        } else {
-            $auth = null;
-        }
-        $niced = $nice->where('country_id', $country->id)->where('user_id', $auth)->first();
-        $collected = $collect->where('country_id', $country->id)->where('user_id', $auth)->first();
-        $col = $collect->whereNotNull('heritage_id')->where('user_id', $auth)->get();
-        $heritageCollected = [];
-        foreach($col as $c) {
-            array_push($heritageCollected, $c->heritage_id);
-        }
-        $niceCount = $nice->where('country_id', $country->id)->count();
-        $collectCount = $collect->where('country_id', $country->id)->count();
-        
-        $return_info = [
-            'country' => $country, 
-            'heritages' => $heritages, 
-            'currencies' => $currencies, 
-            'images' => $images, 
-            'auth' => $auth, 
-            'niced' => $niced, 
-            'collected' => $collected, 
-            'heritageCollected' => $heritageCollected,
-            'niceCount' => $niceCount,
-            'collectCount' => $collectCount,
-        ];
-        return response()->json($return_info);
-    }
-    
-    // 世界遺産情報画面
-    public function heritage(Country $country, Heritage $heritage, Image $image, Nice $nice, Collect $collect, Comment $comment) {
-        $currency = $country->currencies()->first();
-        $images = $image->where('heritage_id', $heritage->id)->get();
-        if (Auth::check()) {
-            $auth = Auth::id();
-        } else {
-            $auth = null;
-        }
-        $niced = $nice->where('heritage_id', $country->id)->where('user_id', $auth)->first();
-        $collected = $collect->where('heritage_id', $country->id)->where('user_id', $auth)->first();
-        $comments = $comment->where('heritage_id', $heritage->id)->orderBy('created_at', 'desc')->get();
-        $comments_username = [];
-        $comments_avatar = [];
-        foreach($comments as $comment) {
-            $user = new User;
-            $array1 = $user->where('id', $comment->user_id)->first()->name;
-            $array2 = $user->where('id', $comment->user_id)->first()->image;
-            array_push($comments_username, $array1);
-            array_push($comments_avatar, $array2);
-        }
-        $niceCount = $nice->where('heritage_id', $heritage->id)->count();
-        $collectCount = $collect->where('heritage_id', $heritage->id)->count();
-        $return_info = [
-            'country' => $country, 
-            'heritage' => $heritage, 
-            'currency' => $currency, 
-            'images' => $images, 
-            'state' => $country->state, 
-            'auth' => $auth, 
-            'niced' => $niced, 
-            'collected' => $collected, 
-            'comments' => $comments,
-            'commentsUsername' => $comments_username,
-            'commentsAvatar' => $comments_avatar,
-            'niceCount' => $niceCount,
-            'collectCount' => $collectCount,
-        ];
-        
-        return response()->json($return_info);
     }
     
     // 国保存

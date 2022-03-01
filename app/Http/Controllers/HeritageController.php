@@ -7,12 +7,41 @@ use App\User;
 use App\Country;
 use App\Heritage;
 use App\Image;
+use App\Comment;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 class HeritageController extends Controller
 {
+    // 世界遺産情報画面
+    public function show(Country $country, Heritage $heritage) {
+        $comment_table = new Comment;
+        // 世界遺産の属する国の通貨
+        $currency = $country->currencies()->first();
+        // 世界遺産画像
+        $images = Image::where('heritage_id', $heritage->id)->get();
+        // お気に入りしているか, コレクトしているかどうかを取得
+        if (Auth::check()) {
+            $liked = $heritage->isLiked(User::where('id', Auth::id())->first());
+            $collected = $heritage->isCollected(User::where('id', Auth::id())->first());
+        } else {
+            $liked = false;
+            $collected = false;
+        }
+        // コメント（2つ）
+        $comments_info = $comment_table->setComments($heritage->id, 2, "");
+        // コメントの総数取得
+        $comment_count = $heritage->comments()->count();
+        // お気に入り総数取得（世界遺産）
+        $like_count = $heritage->getLikeCount();
+        // コレクト総数取得（世界遺産）
+        $collect_count = $heritage->getCollectCount();
+        
+        return response()->json(compact('country', 'heritage', 'currency', 'images', 'liked', 'collected', 'comments_info', 'like_count', 'collect_count', 'comment_count'));
+    }
+    
+    
     // 世界遺産保存
     public function store(Request $request, Heritage $heritage) {
         $auth = Auth::id();
@@ -34,25 +63,6 @@ class HeritageController extends Controller
         }
         
         $return_info = ['newId' => $heritage->id, 'message' => "世界遺産が追加されました！"];
-        return response()->json($return_info);
-    }
-    
-    // 画像投稿
-    public function postImages(Request $request, Heritage $heritage, User $user) {
-        $heritage_images = $request->file('images');
-        foreach($heritage_images as $heritage_image) {
-            $add_image = [];
-            $image1 = new Image;
-            $path = Storage::disk('s3')->putFile('/', $heritage_image, 'public');
-            $add_image['heritage_id'] = $heritage->id;
-            $add_image['image'] = $path;
-            $add_image['user_id'] = $user->id;
-            $image1->fill($add_image)->save();
-        }
-        $image2 = new Image;
-        $images = $image2->where('heritage_id', $heritage->id)->get();
-        
-        $return_info = ['images' => $images, 'message' => "画像が投稿されました！"];
         return response()->json($return_info);
     }
     

@@ -12,50 +12,44 @@ use Carbon\Carbon;
 
 class CommentController extends Controller
 {
-    // コメント投稿
-    public function comment(Request $request, Heritage $heritage, User $user, Comment $comment) {
-        $comment_info["heritage_id"] = $request["heritage_id"];
-        $comment_info["user_id"] = $user->id;
-        $comment_info["rate"] = $request["rate"];
-        $comment_info["comment"] = $request["comment"];
-        $comment_info["anonymous"] = $request["anonymous"];
-        $comment->fill($comment_info)->save();
-        $username = $user->name;
-        $avatar = $user->avatar;
+    // コメント一覧表示
+    public function index(Country $country, Heritage $heritage) {
+        $comment_table = new Comment;
+        // 全コメント最新順
+        $comments = $comment_table->setComments($heritage->id, 5000, "");
+        // コメントの総数取得
+        $comment_count = $heritage->comments()->count();
         
-        $return_info = ['comment' => $comment, 'username' => $username, 'avatar' => $avatar, 'message' => "コメントが投稿されました！"];
-        return response()->json($return_info);
+        return response()->json(compact('comments', 'comment_count'));
     }
     
-    // コメント一覧表示
-    public function commentList(Country $country, Heritage $heritage, Comment $comment) {
-        if (Auth::check()) {
-            $auth = Auth::id();
-        } else {
-            $auth = null;
-        }
-        $comments = $comment->where('heritage_id', $heritage->id)->orderBy('created_at', 'desc')->get();
-        $comments_username = [];
-        $comments_avatar = [];
-        foreach($comments as $comment) {
-            $user = new User;
-            $array1 = $user->where('id', $comment->user_id)->first()->name;
-            $array2 = $user->where('id', $comment->user_id)->first()->image;
-            array_push($comments_username, $array1);
-            array_push($comments_avatar, $array2);
-        }
+    // コメント投稿
+    public function comment(Request $request, Heritage $heritage) {
+        $comment = new Comment;
+        $comment_table = new Comment;
+        $comment->heritage_id = $heritage->id;
+        $comment->user_id = Auth::id();
+        $comment->rate = $request['rate'];
+        $comment->comment = $request['comment'];
+        $comment->anonymous = $request["anonymous"];
+        $comment->save();
         
-        $return_info = ['auth' => $auth, 'comments' => $comments, 'commentsUsername' => $comments_username, 'commentsAvatar' => $comments_avatar];
-        return response()->json($return_info);
+        $message = "コメントが投稿されました！";
+        $comment_count = $heritage->comments()->count();
+        $two_comments = $comment_table->setComments($heritage->id, 2, "");
+        
+        return response()->json(compact('message', 'comment_count', 'two_comments'));
     }
     
     // コメント削除
-    public function delete(Request $request, Heritage $heritage, User $user, Comment $comment) {
-        $comment->where('id', $request['id'])->delete();
-        $comments = $comment->where('heritage_id', $heritage->id)->orderBy('created_at', 'desc')->get();
-        $twoComments = $comment->where('heritage_id', $heritage->id)->orderBy('created_at', 'desc')->limit(2)->get();
+    public function delete(Request $request, Heritage $heritage) {
+        Comment::where('id', $request['id'])->delete();
+        $comment_table = new Comment;
         
-        $return_info = ['comments' => $comments, 'twoComments' => $twoComments, 'message' => "コメントが削除されました！"];
-        return response()->json($return_info);
+        $message = "コメントが削除されました！";
+        $comment_count = $heritage->comments()->count();
+        $two_comments = $comment_table->setComments($heritage->id, 2, "");
+        
+        return response()->json(compact('message', 'two_comments', 'comment_count'));
     }
 }
