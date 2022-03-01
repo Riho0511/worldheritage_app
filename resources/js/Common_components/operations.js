@@ -28,7 +28,7 @@ const Operations = (props) => {
             operation = (
                 <React.Fragment>
                     <Stack direction="row" spacing={2} className={classes.root}>
-                        <Button variant="outlined" component={Link} to={`/country/state/${id1}`}>国を選ぶ</Button>
+                        <Button variant="outlined" component={Link} to={`/state/${id1}`}>国を選ぶ</Button>
                         <Button variant="outlined" component={Link} to="/home">州を選ぶ</Button>
                     </Stack>
                 </React.Fragment>
@@ -40,7 +40,7 @@ const Operations = (props) => {
             operation = (
                 <Stack direction="row" spacing={3} className={classes.root}>
                     <Button variant="outlined" component={Link} to={`/country/${id1}`}>国情報</Button>
-                    <Button variant="outlined" component={Link} to={`/country/state/${id2}`}>国を選ぶ</Button>
+                    <Button variant="outlined" component={Link} to={`/state/${id2}`}>国を選ぶ</Button>
                     <Button variant="outlined" component={Link} to="/home">州を選ぶ</Button>
                 </Stack>
             );
