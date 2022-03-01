@@ -11,27 +11,48 @@
 |
 */
 
-// Route::get('guest', 'Auth\LoginController@guestLogin')->name('login.guest');
-
 Auth::routes();
 
-// ゲスト、会員共通
+// ゲスト、会員共通 // なくて良い（バグチェックが終了次第）
 Route::get('/', function () {
     return view('app');
 });
 Route::get('/home', function () {
     return view('app');
 });
-Route::get('/api/home', 'CountryController@index');
+
+Route::get('/api/user', 'UserController@user'); // ユーザー情報取得
+Route::get('/api/states', 'StateController@index'); // 州一覧取得
+Route::get('/api/state/{state}', 'StateController@state'); // 州別国情報取得
+Route::get('/api/country/{country}', 'CountryController@show'); // 国情報取得
+Route::get('/api/country/{country}/heritage/{heritage}', 'HeritageController@show'); // 世界遺産情報取得
+Route::get('/api/country/{country}/heritage/{heritage}/comments', 'CommentController@index'); // コメント一覧取得
 Route::get('/api/ranking', 'UserController@ranking');
-Route::get('/api/country/state/{state}', 'CountryController@state');
-Route::get('/api/country/{country}', 'CountryController@country');
-Route::get('/api/country/{country}/heritage/{heritage}/comments', 'CommentController@commentList');
-Route::get('/api/country/{country}/heritage/{heritage}', 'CountryController@heritage');
 
 // 会員限定
 Route::group(['middleware' => 'auth'], function() {
+    
+    // お気に入り、コレクト
+    Route::post('/api/country/{country}/like', 'LikeController@like_country');
+    Route::post('/api/country/{country}/unlike', 'LikeController@unlike_country');
+    Route::post('/api/country/{country}/collect', 'CollectController@collect_country');
+    Route::post('/api/country/{country}/uncollect', 'CollectController@uncollect_country');
+    Route::post('/api/heritage/{heritage}/like', 'LikeController@like_heritage');
+    Route::post('/api/heritage/{heritage}/unlike', 'LikeController@unlike_heritage');
+    Route::post('/api/heritage/{heritage}/collect', 'CollectController@collect_heritage');
+    Route::post('/api/heritage/{heritage}/uncollect', 'CollectController@uncollect_heritage');
+    
+    // コメント投稿
+    Route::post('/api/heritage/{heritage}/comment', 'CommentController@comment');
+    Route::post('/api/heritage/{heritage}/uncomment', 'CommentController@delete');
+    
+    // 画像投稿
+    Route::post('/api/heritage/{heritage}/images', 'ImageController@store');
+    
+    // マイページ
     Route::get('/api/mypage', 'UserController@mypage');
+    
+    
     Route::post('/api/currency', 'CurrencyController@delete'); // 管理者限定
     Route::post('/api/country', 'CountryController@store'); // 管理者限定
     Route::post('/api/heritage', 'HeritageController@store'); // 管理者限定
@@ -42,18 +63,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::put('/api/country/{country}',  'CountryController@update');
     Route::post('/api/country/{country}', 'CountryController@delete'); // 管理者限定
     Route::get('/api/country/{country}/edit', 'CountryController@countryEdit');
-    Route::post('/api/country/{country}/user/{user}/nice', 'NiceController@niceCountry');
-    Route::post('/api/country/{country}/user/{user}/unnice', 'NiceController@unniceCountry');
-    Route::post('/api/country/{country}/user/{user}/collect', 'CollectController@collectCountry');
-    Route::post('/api/country/{country}/user/{user}/nocollect', 'CollectController@nocollectCountry');
     Route::get('/api/country/{country}/heritage/{heritage}/edit', 'CountryController@heritageEdit');
     Route::put('/api/country/{country}/heritage/{heritage}', 'HeritageController@update');
     Route::post('/api/country/{country}/heritage/{heritage}', 'HeritageController@delete'); // 管理者限定
-    Route::post('/api/heritage/{heritage}/user/{user}/nice', 'NiceController@niceHeritage');
-    Route::post('/api/heritage/{heritage}/user/{user}/unnice', 'NiceController@unniceHeritage');
-    Route::post('/api/heritage/{heritage}/user/{user}/collect', 'CollectController@collectHeritage');
-    Route::post('/api/heritage/{heritage}/user/{user}/nocollect', 'CollectController@nocollectHeritage');
-    Route::post('/api/heritage/{heritage}/user/{user}/comment', 'CommentController@comment');
-    Route::post('/api/heritage/{heritage}/user/{user}/comment/delete', 'CommentController@delete');
-    Route::post('/api/heritage/{heritage}/user/{user}/images', 'HeritageController@postImages');
+
 });

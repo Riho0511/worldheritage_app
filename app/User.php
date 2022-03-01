@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Country;
+use App\Heritage;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -39,14 +41,88 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     
-    public function collects() {
-        return $this->hasMany('App\Collect');
-    }
- 
-    public function nices() {
-        return $this->hasMany('App\Nice');
+    
+    // ユーザーのお気に入り、コレクトに関する国、世界遺産情報取得
+    public function getInfo(User $user, String $info, String $genre) {
+        $return_info = [];
+        
+        if ($info == "country") {
+            if ($genre == "like") {
+                $information = $user->like_countries()->get();
+            } else {
+                $information = $user->collect_countries()->get();
+            }
+            
+            foreach($information as $inf) {
+                array_push($return_info, Country::where('id', $inf->country_id)->first());
+            }
+        } else {
+            if ($genre == "like") {
+                $information = $user->like_heritages()->get();
+            } else {
+                $information = $user->collect_heritages()->get();
+            }
+            
+            foreach($information as $inf) {
+                array_push($return_info, Heritage::where('id', $inf->heritage_id)->first());
+            }
+        }
+        
+        return $return_info;
     }
     
+    // 州別国お気に入り情報取得
+    public function getCountriesLike() {
+        $likes = $this->like_countries()->where('liked', 1);
+        if ($likes !== []) {
+            return $likes->get(['country_id']);
+        } else {
+            return [];
+        }
+    }
+    
+    // 州別国コレクト情報取得
+    public function getCountriesCollect() {
+        $collects = $this->collect_countries()->where('collected', 1);
+        if ($collects !== []) {
+            return $collects->get(['country_id']);
+        } else {
+            return [];
+        }
+    }
+    
+    // 名前を取得
+    public function getName(int $user_id) {
+        return $this->where('id', $user_id)->first()->name;
+    }
+    
+    // ユーザーアイコン画像を取得
+    public function getIcon(int $user_id) {
+        return $this->where('id', $user_id)->first()->image;
+    }
+    
+    
+    // ユーザー→コレクト(国)（1対多）
+    public function collect_countries() {
+        return $this->hasMany('App\CollectCountry');
+    }
+    
+    // ユーザー→コレクト(世界遺産)（1対多）
+    public function collect_heritages() {
+        return $this->hasMany('App\CollectHeritage');
+    }
+ 
+    // ユーザー→お気に入り(国)（1対多）
+    public function like_countries() {
+        return $this->hasMany('App\LikeCountry');
+    }
+    
+    // ユーザー→お気に入り(世界遺産)（1対多）
+    public function like_heritages() {
+        return $this->hasMany('App\LikeHeritage');
+    }
+    
+    // ユーザー→コメント（1対多）
     public function comments() {
         return $this->hasMany('App\Comment');
     }

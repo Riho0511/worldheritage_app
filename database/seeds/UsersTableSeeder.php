@@ -21,8 +21,6 @@ class UsersTableSeeder extends Seeder
                 'image' => 'no-profile.png',
                 'password' => Hash::make('admin-password'),
                 'remember_token' => Str::random(60),
-                'created_at' => $now,
-                'updated_at' => $now
             ],
             [
                 'name' => 'ユーザー1',
@@ -30,8 +28,6 @@ class UsersTableSeeder extends Seeder
                 'image' => 'no-profile.png',
                 'password' => Hash::make('testpassword1'),
                 'remember_token' => Str::random(60),
-                'created_at' => $now,
-                'updated_at' => $now
             ],
             [
                 'name' => 'ユーザー2',
@@ -39,11 +35,14 @@ class UsersTableSeeder extends Seeder
                 'image' => 'no-profile.png',
                 'password' => Hash::make('testpassword2'),
                 'remember_token' => Str::random(60),
-                'created_at' => $now,
-                'updated_at' => $now
             ],
         ];
         
+        $now = Carbon::now();
+        foreach($params as $param) {
+            $param['created_at'] = $now;
+            $param['updated_at'] = $now;
+        }
         DB::table('users')->insert($params);
     }
 }
