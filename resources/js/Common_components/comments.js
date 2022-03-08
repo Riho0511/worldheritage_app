@@ -73,6 +73,12 @@ const Comments = (props) => {
     return (
         <List sx={{ bgcolor: 'background.paper' }} className={classes.root}>
             {comments.map(comment => {
+                let primary;
+                if (props.page == "mypage") {
+                    primary = comment.heritage_name;
+                } else {
+                    primary = comment.comment.anonymous == 1 ? "匿名希望" : comment.username;
+                }
                 return (
                     <React.Fragment key={comment.comment.id}>
                         <ListItem alignItems="flex-start">
@@ -80,7 +86,7 @@ const Comments = (props) => {
                                 <Avatar src={`https://world-heritage-images.s3.ap-northeast-1.amazonaws.com/${comment.avatar}`} />
                             </ListItemAvatar>
                             <ListItemText
-                                primary={comment.comment.anonymous == 1 ? "匿名希望" : comment.username}
+                                primary={primary}
                                 secondary={
                                     <Typography
                                         sx={{ display: 'inline' }}

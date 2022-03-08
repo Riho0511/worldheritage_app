@@ -59,7 +59,7 @@ const UpBar = (props) => {
                             </React.Fragment>
                         }
                         <Box sx={{ flexGrow: 1 }} />
-                        {/*{settings}*/}
+                        {settings}
                         <SideMenu />
                     </Toolbar>
                 </AppBar>
