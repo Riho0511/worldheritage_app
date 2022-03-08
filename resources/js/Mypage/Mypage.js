@@ -18,6 +18,7 @@ const Mypage = () => {
     const [likeHeritages, setLikeHeritages] = useState([]); // お気に入りしている世界遺産
     const [comments, setComments] = useState([]); // 投稿したコメント
     const [heritageImages, setHeritageImages] = useState([]); // 投稿した世界遺産画像
+    const [state, setState] = useState(5);
     
     
     const toggleDrawer = useCallback((open) => () => {
@@ -63,12 +64,12 @@ const Mypage = () => {
                     <MyCard type="nice" genre="世界遺産" data={likeHeritages.length} />
                 </div>
                 <Operations page="mypageEdit" />
-                {/*<SelectedMypageItem 
+                <SelectedMypageItem 
                     collectCountries={collectCountries} collectHeritages={collectHeritages}
                     likeCountries={likeCountries} likeHeritages={likeHeritages}
-                    comments={comments} heritageImages={heritageImages} user={user}
-                />*/}
-                {open && <MypageOperations toggleDrawer={toggleDrawer} />}
+                    comments={comments} heritageImages={heritageImages} user={user} state={state}
+                />
+                {open && <MypageOperations open={open} toggleDrawer={toggleDrawer} setState={setState} />}
             </div>
             <Operations page="mypage" />
         </React.Fragment>

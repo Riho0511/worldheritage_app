@@ -21,16 +21,12 @@ class UserController extends Controller
         $comment_table = new Comment;
         $user_table = new User;
         // お気に入りしている国
-        // $like_countries = Auth::user()->like_countries()->get();
         $like_countries = $user_table->getInfo(User::where('id', Auth::id())->first(), 'country', 'like');
         // お気に入りしている世界遺産
-        // $like_heritages = Auth::user()->like_heritages()->get();
         $like_heritages = $user_table->getInfo(User::where('id', Auth::id())->first(), 'heritage', 'like');
         // コレクトしている国
-        // $collect_countries = Auth::user()->collect_countries()->get();
         $collect_countries = $user_table->getInfo(User::where('id', Auth::id())->first(), 'country', 'collect');
         // コレクトしている世界遺産
-        // $collect_heritages = Auth::user()->collect_heritages()->get();
         $collect_heritages = $user_table->getInfo(User::where('id', Auth::id())->first(), 'heritage', 'collect');
         // 投稿した画像
         $images = Image::where('user_id', Auth::id())->get();
