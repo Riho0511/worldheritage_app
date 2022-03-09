@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useRouteMatch, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { AlertInfo, CheckModal, Comments, HeritageInformation, Likeandcollect, Operations, PostComment, PostImages, SwiperImages, UpBar } from '../index';
-import { LoginUser } from '../Router';
 
 
 const Heritage = () => {
@@ -11,7 +10,7 @@ const Heritage = () => {
     const heritageId = parseInt(url.split('/')[4]);
     const location = useLocation();
     const message = location.state;
-    const user = useContext(LoginUser);
+    const [user, setUser] = useState([]);
     const [country, setCountry] = useState([]);
     const [heritage, setHeritage] = useState([]);
     const [currency, setCurrency] = useState([]);
@@ -29,6 +28,7 @@ const Heritage = () => {
             await axios
                 .get(`/api/country/${countryId}/heritage/${heritageId}`)
                 .then(res => {
+                    setUser(res.data.user);
                     setCountry(res.data.country);
                     setHeritage(res.data.heritage);
                     setCurrency(res.data.currency);
@@ -51,7 +51,7 @@ const Heritage = () => {
         
     return (
         <React.Fragment>
-            <UpBar />
+            <UpBar user={user} />
             {/* 国追加通知アラート */}
             {message !== undefined && 
                 <AlertInfo message={message} />

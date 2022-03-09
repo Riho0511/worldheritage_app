@@ -1,16 +1,15 @@
-import React, { useEffect, useState, useContext, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import Avatar from '@mui/material/Avatar';
 import { useLocation } from 'react-router-dom';
 import { AlertInfo, MyCard, MypageOperations, Operations, SelectedMypageItem, UpBar } from '../index';
-import { LoginUser } from '../Router';
 
 
 // マイページ
 const Mypage = () => {
     const location = useLocation();
     const message = location.state;
-    const user = useContext(LoginUser);
+    const [user, setUser] = useState([]);
     const [open, setOpen] = useState(false);
     const [collectCountries, setCollectCountries] = useState([]); // コレクトしている国
     const [collectHeritages, setCollectHeritages] = useState([]); // コレクトしている世界遺産
@@ -30,6 +29,7 @@ const Mypage = () => {
             await axios
                 .get('/api/mypage')
                 .then(res => {
+                    setUser(res.data.user);
                     setLikeCountries(res.data.like_countries);
                     setLikeHeritages(res.data.like_heritages);
                     setCollectCountries(res.data.collect_countries);
@@ -48,7 +48,7 @@ const Mypage = () => {
     
     return (
         <React.Fragment>
-            <UpBar page="mypage" toggleDrawer={toggleDrawer} />
+            <UpBar page="mypage" toggleDrawer={toggleDrawer} user={user} />
             {/* 削除通知アラート */}
             {message !== undefined && 
                 <AlertInfo message={message} />

@@ -14,14 +14,9 @@
 Auth::routes();
 
 // ゲスト、会員共通 // なくて良い（バグチェックが終了次第）
-Route::get('/', function () {
-    return view('app');
-});
-Route::get('/home', function () {
-    return view('app');
-});
+Route::get('/', function() { return view('app'); });
+Route::get('/home', function () { return view('app'); });
 
-Route::get('/api/user', 'UserController@user'); // ユーザー情報取得
 Route::get('/api/states', 'StateController@index'); // 州一覧取得
 Route::get('/api/state/{state}', 'StateController@state'); // 州別国情報取得
 Route::get('/api/country/{country}', 'CountryController@show'); // 国情報取得
@@ -51,13 +46,14 @@ Route::group(['middleware' => 'auth'], function() {
     
     // マイページ
     Route::get('/api/mypage', 'UserController@mypage');
+    Route::get('/api/mypage/edit', 'UserController@edit');
+    Route::post('/api/user/delete', 'UserController@delete');
+    Route::post('/api/user/{user}/update', 'UserController@update');
     
     
     Route::post('/api/currency', 'CurrencyController@delete'); // 管理者限定
     Route::post('/api/country', 'CountryController@store'); // 管理者限定
     Route::post('/api/heritage', 'HeritageController@store'); // 管理者限定
-    Route::post('/api/mypage/{user}/update', 'UserController@update');
-    Route::get('/api/mypage/edit', 'UserController@edit');
     Route::get('/api/country/currency/list', 'CurrencyController@list'); // 管理者限定
     Route::get('/api/country/create/{state}', 'CountryController@countryCreate'); // 管理者限定
     Route::put('/api/country/{country}',  'CountryController@update');

@@ -17,6 +17,7 @@ const useStyles = makeStyles({
 const State = () => {
     const classes = useStyles();
     const stateId = parseInt(useParams().id);
+    const [user, setUser] = useState([]);
     const [countries, setCountries] = useState([]); // 国一覧
     const [liked, setLiked] = useState([]); // 国のお気に入り情報
     const [collected, setCollected] = useState([]); // 国のコレクト情報
@@ -28,6 +29,7 @@ const State = () => {
             await axios
                 .get(`/api/state/${stateId}`)
                 .then(res => {
+                    setUser(res.data.user);
                     setLiked(res.data.likes);
                     setCollected(res.data.collects);
                     setCountries(res.data.countries);
@@ -44,7 +46,7 @@ const State = () => {
         
     return (
         <React.Fragment>
-            <UpBar />
+            <UpBar user={user} />
             <div className="countries">
                 <h2>{state.name}</h2>
                 
@@ -54,18 +56,17 @@ const State = () => {
                 :
                     <ul className="button-large">
                         {countries.map(country => {
+                            let collect;
+                            if (liked.some(l => l.country_id == country.id)) {
+                                collect = <ThumbUpAltIcon color="error" className={classes.like} />
+                            }
+
                             return (
                                 <li key={country.id} className={collected.some((c) => c.country_id === country.id) ? "collected" : "no-collected"}>
-                                    {liked.some((l) => l.country_id === country.id) ? 
-                                        <Link to={`/country/${country.id}`}>
-                                            <ThumbUpAltIcon color="error" className={classes.like} />
-                                            {country.name}
-                                        </Link>
-                                    :
-                                        <Link to={`/country/${country.id}`}>
-                                            {country.name}
-                                        </Link>
-                                    }
+                                    <Link to={`/country/${country.id}`}>
+                                        {collect}
+                                        {country.name}
+                                    </Link>
                                 </li>
                             );
                         })}

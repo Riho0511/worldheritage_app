@@ -8,6 +8,7 @@ import { AlertInfo, UpBar } from '../index';
 const Home = () => {
     const location = useLocation();
     const message = location.state;
+    const [user, setUser] = useState([]);
     const [states, setStates] = useState([]);
     const stateClass = ["asia", "europe", "africa", "north", "south", "oceania"];
     
@@ -17,7 +18,8 @@ const Home = () => {
             axios
                 .get(`/api/states`)
                 .then(res => {
-                    setStates(res.data);
+                    setUser(res.data.user);
+                    setStates(res.data.states);
                 })
                 .catch(err => {
                     console.log(err);
@@ -30,7 +32,7 @@ const Home = () => {
     
     return (
         <React.Fragment>
-            <UpBar />
+            <UpBar user={user} />
             {/* 削除通知アラート */}
             {message !== undefined && 
                 <AlertInfo message={message} />

@@ -10,12 +10,14 @@ class StateController extends Controller
 {
     // ホーム画面
     public function index() {
-        $states = new State;
-        return response()->json($states->get());
+        $user = Auth::user();
+        $states = State::get();
+        return response()->json(compact('user', 'states'));
     }
     
     // 州別国一覧画面
     public function state(State $state) {
+        $user = Auth::user();
         $countries = $state->countries()->get();
         if (Auth::check()) {
             $likes = Auth::user()->getCountriesLike();
@@ -25,6 +27,6 @@ class StateController extends Controller
             $collects = [];
         }
         
-        return response()->json(compact('state', 'countries', 'likes', 'collects'));
+        return response()->json(compact('user', 'state', 'countries', 'likes', 'collects'));
     }
 }

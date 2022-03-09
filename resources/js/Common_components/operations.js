@@ -56,6 +56,9 @@ const Operations = (props) => {
         case "mypageEdit":
             operation = (<Button variant="outlined" component={Link} to="/mypage/edit">ユーザー編集</Button>);
             break;
+        case "tomypage":
+            operation = (<Button variant="outlined" component={Link} to="/mypage">戻る</Button>);
+            break;
     }
     
     

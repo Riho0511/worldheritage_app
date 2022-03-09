@@ -14,13 +14,14 @@ class CommentController extends Controller
 {
     // コメント一覧表示
     public function index(Country $country, Heritage $heritage) {
+        $user = Auth::user();
         $comment_table = new Comment;
         // 全コメント最新順
         $comments = $comment_table->setComments($heritage->id, 5000, "");
         // コメントの総数取得
         $comment_count = $heritage->comments()->count();
         
-        return response()->json(compact('comments', 'comment_count'));
+        return response()->json(compact('user', 'comments', 'comment_count'));
     }
     
     // コメント投稿
