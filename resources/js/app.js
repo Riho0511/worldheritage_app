@@ -37,6 +37,7 @@ require('./Admin/Form/CreateInfo');
 // コンポーネント
 // 共通ページ用
 require('./Common_components/alertInfo');
+
 require('./Common_components/checkModal');
 require('./Common_components/comments');
 require('./Common_components/likeandcollect');

@@ -20,13 +20,13 @@ class Heritage extends Model
         $all = $this->with($type)->where('country_id', $country_id)->get();
         foreach($all as $part) {
             if ($type == 'like_users') {
-                if ($part->like_users->where('user_id', $user_id) == [] || $part->like_users->where('user_id', $user_id)->first() == null) {
+                if ($part->like_users->where('user_id', $user_id)->where('liked', 1) == [] || $part->like_users->where('user_id', $user_id)->where('liked', 1)->first() == null) {
                     array_push($array, false);
                 } else {
                     array_push($array, (bool)$part->like_users->first()->liked);
                 }
             } else if ($type == 'collect_users') {
-                if ($part->collect_users->where('user_id', $user_id) == [] || $part->collect_users->where('user_id', $user_id)->first() == null) {
+                if ($part->collect_users->where('user_id', $user_id)->where('collected', 1) == [] || $part->collect_users->where('user_id', $user_id)->where('collected', 1)->first() == null) {
                     array_push($array, false);
                 } else {
                     array_push($array, (bool)$part->collect_users->first()->collected);
@@ -94,6 +94,11 @@ class Heritage extends Model
     // 世界遺産→お気に入り(ユーザー)（1対多）
     public function like_users() {
         return $this->hasMany('App\LikeHeritage');
+    }
+    
+    // 世界遺産→コメント（1対多）
+    public function comments() {
+        return $this->hasMany('App\Comment');
     }
     
     // 世界遺産→コメント（1対多）

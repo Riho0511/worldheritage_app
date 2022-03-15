@@ -1,16 +1,15 @@
-import React, { useEffect, useState, useContext, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import Avatar from '@mui/material/Avatar';
 import { useLocation } from 'react-router-dom';
 import { AlertInfo, MyCard, MypageOperations, Operations, SelectedMypageItem, UpBar } from '../index';
-import { LoginUser } from '../Router';
 
 
 // マイページ
 const Mypage = () => {
     const location = useLocation();
     const message = location.state;
-    const user = useContext(LoginUser);
+    const [user, setUser] = useState([]);
     const [open, setOpen] = useState(false);
     const [collectCountries, setCollectCountries] = useState([]); // コレクトしている国
     const [collectHeritages, setCollectHeritages] = useState([]); // コレクトしている世界遺産
@@ -18,6 +17,7 @@ const Mypage = () => {
     const [likeHeritages, setLikeHeritages] = useState([]); // お気に入りしている世界遺産
     const [comments, setComments] = useState([]); // 投稿したコメント
     const [heritageImages, setHeritageImages] = useState([]); // 投稿した世界遺産画像
+    const [state, setState] = useState(5);
     
     
     const toggleDrawer = useCallback((open) => () => {
@@ -29,6 +29,7 @@ const Mypage = () => {
             await axios
                 .get('/api/mypage')
                 .then(res => {
+                    setUser(res.data.user);
                     setLikeCountries(res.data.like_countries);
                     setLikeHeritages(res.data.like_heritages);
                     setCollectCountries(res.data.collect_countries);
@@ -47,7 +48,7 @@ const Mypage = () => {
     
     return (
         <React.Fragment>
-            <UpBar page="mypage" toggleDrawer={toggleDrawer} />
+            <UpBar page="mypage" toggleDrawer={toggleDrawer} user={user} />
             {/* 削除通知アラート */}
             {message !== undefined && 
                 <AlertInfo message={message} />
@@ -63,12 +64,12 @@ const Mypage = () => {
                     <MyCard type="nice" genre="世界遺産" data={likeHeritages.length} />
                 </div>
                 <Operations page="mypageEdit" />
-                {/*<SelectedMypageItem 
+                <SelectedMypageItem 
                     collectCountries={collectCountries} collectHeritages={collectHeritages}
                     likeCountries={likeCountries} likeHeritages={likeHeritages}
-                    comments={comments} heritageImages={heritageImages} user={user}
-                />*/}
-                {open && <MypageOperations toggleDrawer={toggleDrawer} />}
+                    comments={comments} heritageImages={heritageImages} user={user} state={state}
+                />
+                {open && <MypageOperations open={open} toggleDrawer={toggleDrawer} setState={setState} />}
             </div>
             <Operations page="mypage" />
         </React.Fragment>

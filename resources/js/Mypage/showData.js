@@ -6,7 +6,7 @@ const ShowData = (props) => {
         <React.Fragment>
             {props.data.map((d, index) => {
                 return (
-                    <p>{index+1}. {d.name}</p>
+                    <p key={d.name}>{index+1}. {d.name}</p>
                 );
             })}
         </React.Fragment>

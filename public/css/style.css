@@ -101,9 +101,14 @@ a {
     margin: 0;
 }
 
+.mb5 {
+    margin-bottom: 5px;
+}
+
 .mb8 {
     margin-bottom: 25px;
 }
+
 
 .ml15 {
     margin-left: 15px;
@@ -155,6 +160,139 @@ a {
 	margin: 10px 15px 30px;
 	width: calc(100% / 3 - 34px);
 	background-size: cover;
+}
+
+.states .button-large a:hover {
+	background-color: rgba(70,70,70,0.3);
+}
+
+.asia {
+    background: url(https://world-heritage-images.s3.ap-northeast-1.amazonaws.com/background-image/asia-button.jpeg) no-repeat center center;
+}
+
+.europe {
+    background: url(https://world-heritage-images.s3.ap-northeast-1.amazonaws.com/background-image/europe-button.jpg) no-repeat center center;
+}
+
+.africa {
+    background: url(https://world-heritage-images.s3.ap-northeast-1.amazonaws.com/background-image/africa-button.jpg) no-repeat center center;
+}
+
+.north {
+    background: url(https://world-heritage-images.s3.ap-northeast-1.amazonaws.com/background-image/north-button.jpg) no-repeat center center;
+}
+
+.south {
+    background: url(https://world-heritage-images.s3.ap-northeast-1.amazonaws.com/background-image/south-button.jpg) no-repeat center center;
+}
+
+.oceania {
+    background: url(https://world-heritage-images.s3.ap-northeast-1.amazonaws.com/background-image/oseania-button.jpg) no-repeat center center;
+}
+
+.states .button-large a:hover {
+	background-color: rgba(70,70,70,0.3);
+}
+
+.asia {
+    background: url(https://world-heritage-images.s3.ap-northeast-1.amazonaws.com/background-image/asia-button.jpeg) no-repeat center center;
+	background-size: cover;
+}
+
+.europe {
+    background: url(https://world-heritage-images.s3.ap-northeast-1.amazonaws.com/background-image/europe-button.jpg) no-repeat center center;
+	background-size: cover;
+}
+
+.africa {
+    background: url(https://world-heritage-images.s3.ap-northeast-1.amazonaws.com/background-image/africa-button.jpg) no-repeat center center;
+	background-size: cover;
+}
+
+.north {
+    background: url(https://world-heritage-images.s3.ap-northeast-1.amazonaws.com/background-image/north-button.jpg) no-repeat center center;
+	background-size: cover;
+}
+
+.south {
+    background: url(https://world-heritage-images.s3.ap-northeast-1.amazonaws.com/background-image/south-button.jpg) no-repeat center center;
+	background-size: cover;
+}
+
+.oceania {
+    background: url(https://world-heritage-images.s3.ap-northeast-1.amazonaws.com/background-image/oseania-button.jpg) no-repeat center center;
+	background-size: cover;
+}
+
+
+/* mypage */
+.mypage {
+    color: white;
+    margin: 0 auto;
+}
+
+.card-split {
+    display: flex;
+	flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+
+/* mypage edit */
+.mypage_edit {
+    color: white;
+    margin: 0 auto;
+    width: 290px;
+}
+
+.mypage_edit div {
+    margin-bottom: 10px;
+}
+
+.mypage_edit input[type="text"], .mypage_edit input[type="email"], .mypage_edit input[type="password"] {
+    color: white;
+}
+
+/*.tab span {*/
+/*    display: block;*/
+/*}*/
+
+
+
+.mypage_info {
+ /*   display: flex;*/
+	/*flex-wrap: wrap;*/
+ /*   justify-content: space-between;*/
+    margin: 20px auto;
+    width: 80%;
+}
+
+.post_comments {
+    margin: 0 auto;
+    width: 300px;
+}
+
+.post_images {
+    overflow-y: scroll;
+}
+
+
+/* ranking */
+.ranking_tables {
+    margin: 0 auto;
+    width: 90%;
+}
+
+.table_split {
+    display: flex;
+}
+
+.ranking {
+    color: white;
+    margin: 0 auto 20px;
+    width: 35%;
+    min-width: 320px;
 }
 
 .states .button-large a:hover {
@@ -249,7 +387,6 @@ a {
 }
 
 .ranking {
-    color: white;
     margin: 0 auto 20px;
     width: 35%;
     min-width: 320px;
@@ -378,6 +515,10 @@ a {
     margin-bottom: 5px;
 }
 
+.images-list p {
+    font-size: 17px;
+    text-align: center;
+}
 
 /* heritage create page */
 .create_heritage {
@@ -488,6 +629,10 @@ a {
     .split {
         display: block;
         margin-top: 130px;
+    }
+    
+    .image-split div {
+        width: 50%;
     }
     
     .image-split div {

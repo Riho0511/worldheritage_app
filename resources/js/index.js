@@ -30,6 +30,7 @@ export { default as CreateInfo } from './Admin/Form/CreateInfo';
 // コンポーネント
 // 共通コンポーネント
 export { default as AlertInfo } from './Common_components/alertInfo';
+
 export { default as CheckModal } from './Common_components/checkModal';
 export { default as Comments } from './Common_components/comments';
 export { default as Likeandcollect } from './Common_components/likeandcollect';

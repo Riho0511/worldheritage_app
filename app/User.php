@@ -48,9 +48,9 @@ class User extends Authenticatable
         
         if ($info == "country") {
             if ($genre == "like") {
-                $information = $user->like_countries()->get();
+                $information = $user->like_countries()->where('liked', 1)->get();
             } else {
-                $information = $user->collect_countries()->get();
+                $information = $user->collect_countries()->where('collected', 1)->get();
             }
             
             foreach($information as $inf) {
@@ -58,9 +58,9 @@ class User extends Authenticatable
             }
         } else {
             if ($genre == "like") {
-                $information = $user->like_heritages()->get();
+                $information = $user->like_heritages()->where('liked', 1)->get();
             } else {
-                $information = $user->collect_heritages()->get();
+                $information = $user->collect_heritages()->where('collected', 1)->get();
             }
             
             foreach($information as $inf) {
@@ -120,6 +120,11 @@ class User extends Authenticatable
     // ユーザー→お気に入り(世界遺産)（1対多）
     public function like_heritages() {
         return $this->hasMany('App\LikeHeritage');
+    }
+    
+    // ユーザー→コメント（1対多）
+    public function comments() {
+        return $this->hasMany('App\Comment');
     }
     
     // ユーザー→コメント（1対多）

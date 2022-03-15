@@ -16,6 +16,7 @@ class HeritageController extends Controller
 {
     // 世界遺産情報画面
     public function show(Country $country, Heritage $heritage) {
+        $user = Auth::user();
         $comment_table = new Comment;
         // 世界遺産の属する国の通貨
         $currency = $country->currencies()->first();
@@ -38,7 +39,9 @@ class HeritageController extends Controller
         // コレクト総数取得（世界遺産）
         $collect_count = $heritage->getCollectCount();
         
-        return response()->json(compact('country', 'heritage', 'currency', 'images', 'liked', 'collected', 'comments_info', 'like_count', 'collect_count', 'comment_count'));
+        return response()->json(
+            compact('user', 'country', 'heritage', 'currency', 'images', 'liked', 'collected', 
+                    'comments_info', 'like_count', 'collect_count', 'comment_count'));
     }
     
     

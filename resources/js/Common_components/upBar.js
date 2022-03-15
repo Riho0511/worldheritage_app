@@ -1,5 +1,4 @@
-import React, { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
 import AppBar from '@mui/material/AppBar';
@@ -9,7 +8,6 @@ import Typography from '@mui/material/Typography';
 import WindowIcon from '@mui/icons-material/Window';
 import IconButton from '@mui/material/IconButton';
 import { SideMenu } from '../index';
-import { LoginUser } from '../Router';
 
 const theme = createTheme({
     palette: {
@@ -23,7 +21,7 @@ const theme = createTheme({
 // ヘッダー
 const UpBar = (props) => {
     const [screen_width, setScreenWidth] = useState(window.innerWidth); // 画面サイズ取得
-    const user = useContext(LoginUser) === {} ? {'image': 'no-profile.png', 'name': 'ゲストさん'} : useContext(LoginUser); // ユーザー情報
+    const user = props.user === [] ? {'image': 'no-profile.png', 'name': 'ゲストさん'} : props.user; // ユーザー情報
     
     let settings = props.page == "mypage" && (
         <IconButton color="inherit" onClick={props.toggleDrawer(true)}>
@@ -59,7 +57,7 @@ const UpBar = (props) => {
                             </React.Fragment>
                         }
                         <Box sx={{ flexGrow: 1 }} />
-                        {/*{settings}*/}
+                        {settings}
                         <SideMenu />
                     </Toolbar>
                 </AppBar>

@@ -16,9 +16,10 @@ class Comment extends Model
         $method = $met == "mypage" ? $this->where('user_id', $id)->get() : $this->getOrderbyComment($id, $limit);
         foreach($method as $comment) {
             $user_table = new User;
+            $heritage_name = $this->with('heritage')->first()->heritage->name;
             array_push(
                 $array, 
-                ['comment' => $comment, 'username' => $user_table->getName($comment->user_id), 'avatar' => $user_table->getIcon($comment->user_id)]
+                ['comment' => $comment, 'username' => $user_table->getName($comment->user_id), 'avatar' => $user_table->getIcon($comment->user_id), 'heritage_name' => $heritage_name]
             );
         }
         return $array;

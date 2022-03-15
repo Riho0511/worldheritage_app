@@ -21,28 +21,28 @@ import {
     State 
 } from './index';
 
-export const LoginUser = createContext();
+// export const LoginUser = createContext();
 
 
 const Router = () => {
-    const [user, setUser] = useState([]); // ユーザー情報
+    // const [user, setUser] = useState([]); // ユーザー情報
     
     
     // ユーザー情報取得
-    useEffect(() => {
-        axios
-            .get('/api/user')
-            .then(res => {
-                setUser(res.data);
-            }).catch(error => {
-                console.log(error);
-            });
-    }, []);
+    // useEffect(() => {
+    //     axios
+    //         .get('/api/user')
+    //         .then(res => {
+    //             setUser(res.data);
+    //         }).catch(error => {
+    //             console.log(error);
+    //         });
+    // }, []);
     
     
     return (
         <BrowserRouter>
-            <LoginUser.Provider value={ user }>
+            {/*<LoginUser.Provider value={ user }>*/}
                 <Switch>
                 　  {/* ログイン前画面 */}
                     <Route exact path="/" component={Login} />
@@ -71,7 +71,7 @@ const Router = () => {
                     <Route path="/country/:id/edit" component={CountryEdit} />
                     */}
                 </Switch>
-            </LoginUser.Provider>
+            {/*</LoginUser.Provider>*/}
         </BrowserRouter>
     );
 };

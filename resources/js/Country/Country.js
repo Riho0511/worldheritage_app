@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useParams } from "react-router-dom";
 import axios from 'axios';
 import { AlertInfo, CheckModal, CountryInformation, HeritageCard, Likeandcollect, NoRegisterInformation, Operations, UpBar } from '../index';
-import { LoginUser } from '../Router.js';
 
 
 // 国情報画面
@@ -10,7 +9,7 @@ const Country = () => {
     const countryId = parseInt(useParams().id);
     const location = useLocation();
     const message = location.state;
-    const user = useContext(LoginUser);
+    const [user, setUser] = useState([]);
     const [country, setCountry] = useState([]); // 国情報
     const [heritages, setHeritages] = useState([]); // 国の世界遺産情報
     const [currencies, setCurrencies] = useState([]); // 国の通貨
@@ -27,6 +26,7 @@ const Country = () => {
             await axios
                 .get(`/api/country/${countryId}`)
                 .then(res => {
+                    setUser(res.data.user);
                     setCountry(res.data.country);
                     setHeritages(res.data.country_heritages);
                     setCurrencies(res.data.currencies);
@@ -48,7 +48,7 @@ const Country = () => {
         
     return (
         <React.Fragment>
-            <UpBar />
+            <UpBar user={user} />
             {/* 国追加通知アラート */}
             {message !== undefined && 
                 <AlertInfo message={message} />

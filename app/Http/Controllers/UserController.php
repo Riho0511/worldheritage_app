@@ -5,72 +5,78 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Image;
 use App\Comment;
+use App\LikeCountry;
+use App\LikeHeritage;
+use App\CollectCountry;
+use App\CollectHeritage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-    // ユーザー情報取得
-    public function user() {
-        $user = Auth::user();
-        return response()->json($user);
-    }
-    
     // マイページ
     public function mypage() {
         $comment_table = new Comment;
         $user_table = new User;
+        $user = Auth::user();
         // お気に入りしている国
-        // $like_countries = Auth::user()->like_countries()->get();
         $like_countries = $user_table->getInfo(User::where('id', Auth::id())->first(), 'country', 'like');
         // お気に入りしている世界遺産
-        // $like_heritages = Auth::user()->like_heritages()->get();
         $like_heritages = $user_table->getInfo(User::where('id', Auth::id())->first(), 'heritage', 'like');
         // コレクトしている国
-        // $collect_countries = Auth::user()->collect_countries()->get();
         $collect_countries = $user_table->getInfo(User::where('id', Auth::id())->first(), 'country', 'collect');
         // コレクトしている世界遺産
-        // $collect_heritages = Auth::user()->collect_heritages()->get();
         $collect_heritages = $user_table->getInfo(User::where('id', Auth::id())->first(), 'heritage', 'collect');
         // 投稿した画像
         $images = Image::where('user_id', Auth::id())->get();
         // 投稿したコメント
         $comments = $comment_table->setComments(Auth::id(), 5000, "mypage");
 
-        return response()->json(compact('like_countries', 'like_heritages', 'collect_countries', 'collect_heritages', 'images', 'comments'));
+        return response()->json(compact('user', 'like_countries', 'like_heritages', 'collect_countries', 'collect_heritages', 'images', 'comments'));
     }
     
-    // // ユーザー情報編集
-    // public function edit(User $user) {
-    //     $auth = Auth::id();
-    //     $user_info = $user->where('id', $auth)->first();
-        
-    //     $return_info = ['user' => $user_info];
-    //     return response()->json($return_info);
-    // }
+    // マイページ編集
+    public function edit() {
+        $user = Auth::user();
+
+        return response()->json(compact('user'));
+    }
     
-    // // ユーザー情報更新
-    // public function update(Request $request, User $user) {
-    //     $check_image = $request['image_update'];
-    //     $check_password = $request['password_update'];
+    // ユーザー情報更新
+    public function update(Request $request, User $user) {
+        $check_image = $request['image_update'];
+        $check_password = $request['password_update'];
         
-    //     if ($check_image == "T") {
-    //         $image = $request->file('image');
-    //         Storage::disk('s3')->delete($user->image);
-    //         $path = Storage::disk('s3')->putFile('user', $image, 'public');
-    //     }
+        // アイコン変更
+        if ($check_image == "T") {
+            $image = $request->file('image');
+            Storage::disk('s3')->delete($user->image);
+            $path = Storage::disk('s3')->putFile('user', $image, 'public');
+            $user->image = $path;
+        }
         
-    //     $user_info['name'] = $request['name'];
-    //     if (isset($path)) {
-    //         $user_info['image'] = $path;
-    //     }
-    //     $user_info['email'] = $request['email'];
-    //     if ($check_password == "T") {
-    //         $user_info['password'] = bcrypt($request['password']);
-    //     }
-    //     $user->fill($user_info)->save();
-    //     return response()->json("ユーザー情報が更新されました！");
-    // }
+        // パスワード変更
+        if ($check_password == "T") {
+            $user->password = bcrypt($request['password']);
+        }
+        
+        $user->name = $request['name'];
+        $user->email = $request['email'];
+        $user->save();
+        return response()->json("ユーザー情報が更新されました！");
+    }
+    
+    // ユーザー削除
+    public function delete() {
+        LikeCountry::where('user_id', Auth::id())->delete();
+        LikeHeritage::where('user_id', Auth::id())->delete();
+        CollectCountry::where('user_id', Auth::id())->delete();
+        CollectHeritage::where('user_id', Auth::id())->delete();
+        Comment::where('user_id', Auth::id())->delete();
+        Storage::disk('s3')->delete(Auth::user()->image);
+        Auth::user()->delete();
+    }
     
     // // ランキング
     // public function ranking(Country $country, Heritage $heritage, Nice $nice, Collect $collect) {
