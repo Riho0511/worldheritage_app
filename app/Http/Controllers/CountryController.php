@@ -255,5 +255,5 @@ class CountryController extends Controller
     //     $country->delete();
         
     //     return response()->json("国が削除されました！");
-    // }
+    }
 }

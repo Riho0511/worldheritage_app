@@ -126,9 +126,4 @@ class User extends Authenticatable
     public function comments() {
         return $this->hasMany('App\Comment');
     }
-    
-    // ユーザー→コメント（1対多）
-    public function comments() {
-        return $this->hasMany('App\Comment');
-    }
 }

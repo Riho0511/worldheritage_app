@@ -100,9 +100,4 @@ class Heritage extends Model
     public function comments() {
         return $this->hasMany('App\Comment');
     }
-    
-    // 世界遺産→コメント（1対多）
-    public function comments() {
-        return $this->hasMany('App\Comment');
-    }
 }
