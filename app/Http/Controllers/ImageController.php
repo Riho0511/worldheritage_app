@@ -26,4 +26,19 @@ class ImageController extends Controller
         
         return response()->json(compact('message', 'images'));
     }
+    
+    // 画像削除
+    public function delete(Request $request) {
+        $delete_images = explode(",", $request['images']);
+        foreach($delete_images as $id) {
+            $image_table = new Image;
+            $delete_image = $image_table->where('id', $id)->first();
+            Storage::disk('s3')->delete($delete_image->image);
+            $delete_image->delete();
+        }
+        $message = "画像が削除されました！";
+        $images = Image::where('user_id', Auth::id())->get();
+        
+        return response()->json(compact('message', 'images'));
+    }
 }

@@ -1,12 +1,44 @@
-import React from 'react';
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
-import { Comments, ShowData } from '../index';
+import React, { useState, useCallback } from 'react';
+import axios from 'axios';
+import { useHistory } from 'react-router-dom';
+import { CheckModal, Comments, MypageImages, ShowData } from '../index';
 
 
 const SelectedMypageItem = (props) => {
-    let show;
+    const history = useHistory();
+    const [deleteImages, setDeleteImages] = useState([]);
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
     
+    
+    // 画像削除
+    const deleteImage = useCallback(async () => {
+        handleClose();
+        // 削除する写真がなければ実行しない
+        if (deleteImages.length == 0) {
+            return;
+        }
+        
+        const data = new FormData();
+        data.append("images", deleteImages);
+        
+        await axios
+            .post('/api/images/delete', data)
+            .then(res => {
+                setDeleteImages([]);
+                props.setHeritageImages(res.data.images);
+                history.push({
+                    pathname: '/mypage',
+                    state: res.data.message,
+                });
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    });
+    
+    let show;
     switch (parseInt(props.state)) {
         case 0:
             show = (
@@ -59,13 +91,7 @@ const SelectedMypageItem = (props) => {
                     <h3>投稿画像</h3>
                     <p>{props.heritageImages.length}件</p>
                     {props.heritageImages.length > 0 &&
-                        <ImageList sx={{ minWidth: 300, maxWidth: 480, height: 380, bgcolor: 'rgb(50,50,60)', m: '0 auto' }} cols={2} rowHeight={125} className="post_images">
-                            {props.heritageImages.map(image => (
-                                <ImageListItem key={image.image}>
-                                    <img src={`https://world-heritage-images.s3.ap-northeast-1.amazonaws.com/${image.image}`} />
-                                </ImageListItem>
-                            ))}
-                        </ImageList>
+                        <MypageImages handleOpen={handleOpen} heritageImages={props.heritageImages} deleteImages={deleteImages} setDeleteImages={setDeleteImages} />
                     }
                 </React.Fragment>
             );
@@ -78,6 +104,7 @@ const SelectedMypageItem = (props) => {
 
     return (
         <div className="mypage_info">
+            <CheckModal open={open} handleClose={handleClose} deleted={deleteImage} />
             {show}
         </div>
     );

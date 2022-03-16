@@ -68,6 +68,7 @@ const Mypage = () => {
                     collectCountries={collectCountries} collectHeritages={collectHeritages}
                     likeCountries={likeCountries} likeHeritages={likeHeritages}
                     comments={comments} heritageImages={heritageImages} user={user} state={state}
+                    setHeritageImages={setHeritageImages}
                 />
                 {open && <MypageOperations open={open} toggleDrawer={toggleDrawer} setState={setState} />}
             </div>

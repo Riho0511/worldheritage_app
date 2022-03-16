@@ -51,6 +51,7 @@ export { default as SwiperImages } from './Heritage/swiperImages';
 
 // マイページコンポーネント
 export { default as MyCard } from './Mypage/myCard';
+export { default as MypageImages } from './Mypage/mypageImages';
 export { default as MypageOperations } from './Mypage/mypageOperations';
 export { default as SelectedMypageItem } from './Mypage/selectedMypageItem';
 export { default as ShowData } from './Mypage/showData';

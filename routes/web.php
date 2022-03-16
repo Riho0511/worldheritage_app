@@ -50,6 +50,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/api/mypage/edit', 'UserController@edit');
     Route::post('/api/user/delete', 'UserController@delete');
     Route::post('/api/user/{user}/update', 'UserController@update');
+    Route::post('/api/images/delete', 'ImageController@delete');
     
     
     Route::post('/api/currency', 'CurrencyController@delete'); // 管理者限定
