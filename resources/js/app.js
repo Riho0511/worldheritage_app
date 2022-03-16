@@ -58,6 +58,7 @@ require('./Heritage/swiperImages');
 
 // マイページ用
 require('./Mypage/myCard');
+require('./Mypage/mypageImages');
 require('./Mypage/mypageOperations');
 require('./Mypage/selectedMypageItem');
 require('./Mypage/showData');
